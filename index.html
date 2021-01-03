@@ -21,27 +21,22 @@
 
 
 
-    <title>Mortgage Payment Calculator</title>
+    <title>Rent vs Buy Calculator</title>
 </head>
 
 <body>
 
     <div class="container">
-        <h1>Mortgage Payment Calculator</h1>
+        <h1>Is it Better to Rent or Buy?</h1>
         <br />
         <div class="accordion">
             <div class="card card-default">
                 <div class="card-header">
-                    <h4 class="card-title m-0">
-                        <a class="accordion">
-                            What is a Mortgage Payment
-                        </a>
-                    </h4>
                 </div>
                 <div id="mortgagePaymentCalculator" class="collapse show">
                     <div class="card-body">
-                        <p>TEXT TEXT TEXT </p>
-                        <p>Write new stuff here</p>
+                        
+                        <p>Owning Case</p>
                     
                             <label for="add__debt_value">Mortgage Amount</label>
                         <div class="input-group mb-3">
@@ -116,10 +111,32 @@
                             </select>
                         </div>
 
+                        <p>Renting Case</p>
+                    
+                        <label for="add__debt_value">Mortgage Amount</label>
+                    <div class="input-group mb-3">
+                     
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        
+                        <input type="text" class="add__debt_value form-control" id="add__debt_value" aria-label="Amount"
+                            placeholder="Total of Mortgage Debts">
+                    </div>
+
+                    <label for="add__interest_rate">Interest Rate</label>
+                    <div class="input-group mb-3">
+                       
+                        <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
+                            placeholder="Mortgage Interest Rate">
+                        <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
 
 
 
-                        </p>
+                        
                         <div style="text-align: center; margin-bottom:10px">
                             <button class="btn btn-primary mr-2 add__btn">Calculate Your Mortgage Payment</button>
                             <p class="LTV-Calc-Results">
@@ -180,7 +197,7 @@
         src='https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/vendor/bootstrap/js/bootstrap.min.js'></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-    <script src="app.js"></script>
+    <!-- <script src="app.js"></script> -->
 </body>
 
 </html>
