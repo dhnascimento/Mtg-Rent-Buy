@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link type="text/css" rel="stylesheet" href="style.css">
+
+    <link type="text/css" rel="stylesheet"
+        href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/custom-style.css">
+    <link type="text/css" rel="stylesheet"
+        href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/theme-elements.css">
+    <link type="text/css" rel="stylesheet"
+        href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/theme.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--Chart JS CSS CDN Import-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
+
+
+
+    <title>Mortgage Payment Calculator</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Mortgage Payment Calculator</h1>
+        <br />
+        <div class="accordion">
+            <div class="card card-default">
+                <div class="card-header">
+                    <h4 class="card-title m-0">
+                        <a class="accordion">
+                            What is a Mortgage Payment
+                        </a>
+                    </h4>
+                </div>
+                <div id="mortgagePaymentCalculator" class="collapse show">
+                    <div class="card-body">
+                        <p>TEXT TEXT TEXT </p>
+                        <p>Write new stuff here</p>
+                    
+                            <label for="add__debt_value">Mortgage Amount</label>
+                        <div class="input-group mb-3">
+                         
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            
+                            <input type="text" class="add__debt_value form-control" id="add__debt_value" aria-label="Amount"
+                                placeholder="Total of Mortgage Debts">
+                        </div>
+
+                        <label for="add__interest_rate">Interest Rate</label>
+                        <div class="input-group mb-3">
+                           
+                            <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
+                                placeholder="Mortgage Interest Rate">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                        <label for="add__interest_rate">Amortization Period</label>
+                       
+                        <div class="input-group mb-3">
+                            <select name="add__amort_period" class="add__amort_period form-control" id="add__amort_period" aria-label="Amount"
+                                placeholder="Please select">
+                                <option label="Interest Only" type="number" value="0">Interest Only</option>
+                                <option label="1 year" type="number" value="1">1 year</option>
+                                <option label="2 years" type="number" value="2">2 years</option>
+                                <option label="3 years" type="number" value="3">3 years</option>
+                                <option label="4 years" type="number" value="4">4 years</option>
+                                <option label="5 years" type="number" value="5">5 years</option>
+                                <option label="6 years" type="number" value="6">6 years</option>
+                                <option label="7 years" type="number" value="7">7 years</option>
+                                <option label="8 years" type="number" value="8">8 years</option>
+                                <option label="9 years" type="number" value="9">9 years</option>
+                                <option label="10 years" type="number" value="10">10 years</option>
+                                <option label="11 years" type="number" value="11">11 years</option>
+                                <option label="12 years" type="number" value="12">12 years</option>
+                                <option label="13 years" type="number" value="13">13 years</option>
+                                <option label="14 years" type="number" value="14">14 years</option>
+                                <option label="15 years" type="number" value="15">15 years</option>
+                                <option label="16 years" type="number" value="16">16 years</option>
+                                <option label="17 years" type="number" value="17">17 years</option>
+                                <option label="18 years" type="number" value="18">18 years</option>
+                                <option label="19 years" type="number" value="19">19 years</option>
+                                <option label="20 years" type="number" value="20">20 years</option>
+                                <option label="21 years" type="number" value="21">21 years</option>
+                                <option label="22 years" type="number" value="22">22 years</option>
+                                <option label="23 years" type="number" value="23">23 years</option>
+                                <option label="24 years" type="number" value="24">24 years</option>
+                                <option label="25 years" type="number" value="25">25 years</option>
+                                <option label="26 years" type="number" value="26">26 years</option>
+                                <option label="27 years" type="number" value="27">27 years</option>
+                                <option label="28 years" type="number" value="28">28 years</option>
+                                <option label="29 years" type="number" value="29">29 years</option>
+                                <option label="30 years" type="number" value="30">30 years</option>
+                            </select>
+
+                        </div>
+                        <label for="add__interest_rate">Payment Frequency</label>
+                        <div class="input-group mb-3">
+                           
+                            <select class="add__payment_freq form-control" id="add__payment_freq" name="add__payment_freq"
+                                id="add__payment_freq" title="Payment Frequency" placeholder="Please select"
+                                required="">
+                                <option label="Weekly" value="52">Weekly</option>
+                                <option label="Rapid Weekly" value="52">Rapid Weekly</option>
+                                <option label="Bi-Weekly" value="26">Bi-Weekly</option>
+                                <option label="Rapid Bi-Weekly" value="26">Rapid Bi-Weekly</option>
+                                <option label="Monthly" value="12" selected="selected">Monthly</option>
+                            </select>
+                        </div>
+
+
+
+
+                        </p>
+                        <div style="text-align: center; margin-bottom:10px">
+                            <button class="btn btn-primary mr-2 add__btn">Calculate Your Mortgage Payment</button>
+                            <p class="LTV-Calc-Results">
+                                <!-- JS script in insert code for results here -->
+                            </p>
+                            <style>
+                                canvas {
+                                   margin-bottom: 25px; 
+                                }
+                                label{
+                                    font-size: 16px;
+                                }
+                            </style>
+                            <div id="Mortgage-Payment-Graphics"  style="display: none;">
+                                <div class="row">
+                                    <div id="Mortgage-Balance-Chart-Parent" class="col-sm-7" >
+                                        <canvas id="mortgageBalanceChart"></canvas>
+                                    </div>
+                                    <div id="Interest-Principal-Chart-Parent" class="col-sm-5">
+                                        <canvas id="interestPrincipalChart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p class="Mortgage-Amort-Table" class="col-sm-12">
+                                        <!-- JS script in insert code for results here -->
+                                    </p>
+                                </div>
+                            </div>
+    
+    
+                        </div>
+                        
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!-- tons of JS imports-->
+    <!-- end bulk js imports-->
+
+
+
+
+
+    </div>
+    <!--Accordian breaks without this-->
+    <script type='text/javascript'
+        src='https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/vendor/jquery/jquery.min.js'></script>
+    <script type='text/javascript'
+        src='https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/vendor/bootstrap/js/bootstrap.min.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
