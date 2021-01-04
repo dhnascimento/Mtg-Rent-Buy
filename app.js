@@ -4,6 +4,7 @@
 const UIController = function () {
   //Getting the variables from the input fields
   const DOMstrings = {
+    //Owning Case
     inputBtn: ".add__btn",
     inputHouseValue: ".add__house_value",
     inputDownPayment: ".add__down_payment",
@@ -18,6 +19,11 @@ const UIController = function () {
     inputPropertyTax: ".add__property_tax",
     inputHouseInsurance: ".add__house_insurance",
     inputAppreciationRate: ".add__appreciation_rate",
+    // Renting Case
+    inputRentValue: ".add__rent_value",
+    inputInvestmentReturns: ".add__investment_returns",
+    inputCpiRate: ".add__cpi_rate",
+    inputRentersInsurance: ".add__renters_insurance",
   };
 };
 
