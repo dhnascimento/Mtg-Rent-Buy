@@ -1,7 +1,7 @@
 //Business Logic Controller
 
 // UI Controller
-const UIController = function () {
+const UIController = (function () {
   //Getting the variables from the input fields
   const DOMstrings = {
     //Owning Case
@@ -10,10 +10,10 @@ const UIController = function () {
     inputDownPayment: ".add__down_payment",
     inputRate: ".add__interest_rate",
     inputAmort: ".add__amort_period",
-    inputIsToronto: ".add__is_toronto",
-    inputTitleInsurance: ".add__title_insurance",
+    inputIsToronto: "input[name=gridRadios]:checked",
+    inputTitleInsurance: ".add__title_insurance", //
     inputLegalFees: ".add__legal_fees",
-    inputHomeInspection: ".add__home_inspection",
+    inputHomeInspection: ".add__home_inspection", //
     inputComissionRate: ".add__comission_rate",
     inputMaintenanceRate: ".add__maintenance_rate",
     inputPropertyTax: ".add__property_tax",
@@ -54,60 +54,101 @@ const UIController = function () {
         ),
         isToronto: document.querySelector(DOMstrings.inputIsToronto).value,
         titleInsurance: parseFloat(
-          document.querySelector(DOMstrings.inputTitleInsurance)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputTitleInsurance)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         legalFees: parseFloat(
-          document.querySelector(DOMstrings.inputLegalFees)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputLegalFees)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         homeInspection: parseFloat(
-          document.querySelector(DOMstrings.inputHomeInspection)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputHomeInspection)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         comissionRate: parseFloat(
-          document.querySelector(DOMstrings.inputComissionRate)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputComissionRate)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         maintenanceRate: parseFloat(
-          document.querySelector(DOMstrings.inputMaintenanceRate)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputMaintenanceRate)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         propertyTax: parseFloat(
-          document.querySelector(DOMstrings.inputPropertyTax)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputPropertyTax)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         houseInsurance: parseFloat(
-          document.querySelector(DOMstrings.inputHouseInsurance)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputHouseInsurance)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         appreciationRate: parseFloat(
-          document.querySelector(DOMstrings.inputAppreciationRate)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputAppreciationRate)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         // Renting Case
         rentValue: parseFloat(
-          document.querySelector(DOMstrings.inputRentValue)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputRentValue)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         investmentReturns: parseFloat(
-          document.querySelector(DOMstrings.inputInvestmentReturns)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputInvestmentReturns)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         cpiRate: parseFloat(
-          document.querySelector(DOMstrings.inputCpiRate)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputCpiRate)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
         rentersInsurance: parseFloat(
-          document.querySelector(DOMstrings.inputRentersInsurance)
-        ).value.replace(/(?!\.)\D/g, ""),
+          document
+            .querySelector(DOMstrings.inputRentersInsurance)
+            .value.replace(/(?!\.)\D/g, "")
+        ),
       };
     },
+
+    addElement: function (parentId, elementTag, elementId, html) {
+      // Adds an element to the document
+      const p = document.getElementById(parentId);
+      const newElement = document.createElement(elementTag);
+      newElement.setAttribute("id", elementId);
+      newElement.innerHTML = html;
+      p.appendChild(newElement);
+    },
   };
-};
+})();
 
 //Global App Controller
 const controller = (function (UICtrl) {
   const setupEventListeners = function () {
     const DOM = UICtrl.getDOMstrings();
+    console.log(DOM);
+    console.log("Before Click");
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
+    console.log("After Click");
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
+        console.log("Passed if statement");
         ctrlAddItem();
+        console.log("Called ctrlAddItem");
       }
     });
   };
 
-  const ctrlAddItem = function () {};
+  const ctrlAddItem = function () {
+    const input = UICtrl.getInput();
+    console.log(input);
+  };
 
   return {
     init: function () {
