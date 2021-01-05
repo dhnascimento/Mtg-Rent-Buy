@@ -52,7 +52,10 @@ const UIController = (function () {
         amortPeriod: parseFloat(
           document.querySelector(DOMstrings.inputAmort).value
         ),
-        isToronto: document.querySelector(DOMstrings.inputIsToronto).value,
+        isToronto:
+          document.querySelector(DOMstrings.inputIsToronto).value === "true"
+            ? true
+            : false,
         titleInsurance: parseFloat(
           document
             .querySelector(DOMstrings.inputTitleInsurance)
