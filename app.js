@@ -1,4 +1,47 @@
+// amortPeriod: 0
+// appreciationRate: NaN
+// comissionRate: NaN
+// cpiRate: NaN
+// downPayment: NaN
+// homeInspection: NaN
+// houseInsurance: NaN
+// houseValue: NaN
+// interestRate: NaN
+// investmentReturns: NaN
+// isToronto: true
+// legalFees: NaN
+// maintenanceRate: NaN
+// propertyTax: NaN
+// rentValue: NaN
+// rentersInsurance: NaN
+// titleInsurance: NaN
+
 //Business Logic Controller
+const Rent = (function () {
+  return {
+    simulate: function (input) {
+      // Cost of renting
+      const factors = [...Array(input.amortPeriod + 1).keys()]
+      const currentYear = new Date().getFullYear();
+      let yearlyRentValue = input.rentValue * 12 * (1 + input.rentersInsurance);
+      const table = factors.map(function(factor) {
+        return {
+          year: factor + currentYear,
+          costRent: Rent.computeCostRent(yearlyRentValue, input.cpiRate, factor) 
+        }
+      })
+      console.log(table);
+    }, 
+
+    computeCostRent: function (rentValue, cpiRate, factor) {        
+      return Math.round(rentValue * (Math.pow(1 + cpiRate, factor)) * 100) / 100;
+    },
+    
+    // Surplus vs owning (annual)
+    
+    // Investment portfolio
+  } 
+})();
 
 // UI Controller
 const UIController = (function () {
@@ -107,15 +150,19 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputInvestmentReturns)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        cpiRate: parseFloat(
-          document
-            .querySelector(DOMstrings.inputCpiRate)
-            .value.replace(/(?!\.)\D/g, "")
+        cpiRate: (
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputCpiRate)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100
         ),
-        rentersInsurance: parseFloat(
-          document
-            .querySelector(DOMstrings.inputRentersInsurance)
-            .value.replace(/(?!\.)\D/g, "")
+        rentersInsurance: (
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputRentersInsurance)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100
         ),
       };
     },
@@ -150,7 +197,9 @@ const controller = (function (UICtrl) {
 
   const ctrlAddItem = function () {
     const input = UICtrl.getInput();
-    console.log(input);
+    const rent = Rent.simulate(input);
+    // const buy = Buy.simulate(input);
+    // console.log("INPUT", input);
   };
 
   return {
