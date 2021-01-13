@@ -1,46 +1,78 @@
-// amortPeriod: 0
-// appreciationRate: NaN
-// comissionRate: NaN
-// cpiRate: NaN
-// downPayment: NaN
-// homeInspection: NaN
-// houseInsurance: NaN
-// houseValue: NaN
-// interestRate: NaN
-// investmentReturns: NaN
+// amortPeriod:
+// appreciationRate:
+// comissionRate:
+// cpiRate:
+// downPayment:
+// homeInspection:
+// houseInsurance:
+// houseValue:
+// interestRate:
+// investmentReturns:
 // isToronto: true
-// legalFees: NaN
-// maintenanceRate: NaN
-// propertyTax: NaN
-// rentValue: NaN
-// rentersInsurance: NaN
-// titleInsurance: NaN
+// legalFees:
+// maintenanceRate:
+// propertyTax:
+// rentValue:
+// rentersInsurance:
+// titleInsurance:
 
 //Business Logic Controller
 const Rent = (function () {
   return {
     simulate: function (input) {
       // Cost of renting
-      const factors = [...Array(input.amortPeriod + 1).keys()]
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       let yearlyRentValue = input.rentValue * 12 * (1 + input.rentersInsurance);
-      const table = factors.map(function(factor) {
+      const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          costRent: Rent.computeCostRent(yearlyRentValue, input.cpiRate, factor) 
-        }
-      })
-      console.log(table);
-    }, 
-
-    computeCostRent: function (rentValue, cpiRate, factor) {        
-      return Math.round(rentValue * (Math.pow(1 + cpiRate, factor)) * 100) / 100;
+          costRent: Rent.computeCostRent(
+            yearlyRentValue,
+            input.cpiRate,
+            factor
+          ),
+        };
+      });
+      console.log("rent cost", table);
     },
-    
+
+    computeCostRent: function (rentValue, cpiRate, factor) {
+      return Math.round(rentValue * Math.pow(1 + cpiRate, factor) * 100) / 100;
+    },
+
     // Surplus vs owning (annual)
-    
+
     // Investment portfolio
-  } 
+  };
+})();
+
+const Owning = (function () {
+  return {
+    houseValue: function (purchasePrice, appreciationRate, factor) {
+      return (
+        Math.round(
+          purchasePrice * Math.pow(1 + appreciationRate, factor) * 100
+        ) / 100
+      );
+    },
+
+    maintenanceCost: function (input) {
+      console.log(input);
+      const years = [...Array(input.amortPeriod + 1).keys()];
+      const currentYear = new Date().getFullYear();
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          maitenance: (
+            input.maintenanceRate *
+            Owning.houseValue(input.houseValue, input.appreciationRate, factor)
+          ).toFixed(2),
+        };
+      });
+      console.log("maintenance", table);
+    },
+  };
 })();
 
 // UI Controller
@@ -119,26 +151,30 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputComissionRate)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        maintenanceRate: parseFloat(
-          document
-            .querySelector(DOMstrings.inputMaintenanceRate)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
-        propertyTax: parseFloat(
-          document
-            .querySelector(DOMstrings.inputPropertyTax)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
-        houseInsurance: parseFloat(
-          document
-            .querySelector(DOMstrings.inputHouseInsurance)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
-        appreciationRate: parseFloat(
-          document
-            .querySelector(DOMstrings.inputAppreciationRate)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
+        maintenanceRate:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputMaintenanceRate)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        propertyTax:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputPropertyTax)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        houseInsurance:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputHouseInsurance)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        appreciationRate:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputAppreciationRate)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
         // Renting Case
         rentValue: parseFloat(
           document
@@ -150,20 +186,18 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputInvestmentReturns)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        cpiRate: (
+        cpiRate:
           parseFloat(
             document
               .querySelector(DOMstrings.inputCpiRate)
               .value.replace(/(?!\.)\D/g, "")
-          ) / 100
-        ),
-        rentersInsurance: (
+          ) / 100,
+        rentersInsurance:
           parseFloat(
             document
               .querySelector(DOMstrings.inputRentersInsurance)
               .value.replace(/(?!\.)\D/g, "")
-          ) / 100
-        ),
+          ) / 100,
       };
     },
 
@@ -197,7 +231,9 @@ const controller = (function (UICtrl) {
 
   const ctrlAddItem = function () {
     const input = UICtrl.getInput();
+    console.log(input);
     const rent = Rent.simulate(input);
+    const maintenance = Owning.maintenanceCost(input);
     // const buy = Buy.simulate(input);
     // console.log("INPUT", input);
   };
