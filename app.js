@@ -94,7 +94,27 @@ const Owning = (function () {
             ) / 100,
         };
       });
-      console.log("insurance", table);
+    },
+
+    propertyTaxCost: function (input) {
+      const years = [...Array(input.amortPeriod + 1).keys()];
+      const currentYear = new Date().getFullYear();
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          costPropertyTax:
+            Math.round(
+              input.propertyTax *
+                Owning.houseValue(
+                  input.houseValue,
+                  input.appreciationRate,
+                  factor
+                ) *
+                100
+            ) / 100,
+        };
+      });
+      console.log(table);
     },
   };
 })();
@@ -259,7 +279,8 @@ const controller = (function (UICtrl) {
     const rent = Rent.simulate(input);
     const maintenance = Owning.maintenanceCost(input);
     const insurance = Owning.insuranceCost(input);
-    console.log(insurance);
+    const propertyTx = Owning.propertyTaxCost(input);
+    console.log(propertyTx);
   };
 
   return {
