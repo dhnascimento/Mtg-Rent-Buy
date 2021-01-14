@@ -34,7 +34,6 @@ const Rent = (function () {
           ),
         };
       });
-      console.log("rent cost", table);
     },
 
     computeCostRent: function (rentValue, cpiRate, factor) {
@@ -58,19 +57,44 @@ const Owning = (function () {
     },
 
     maintenanceCost: function (input) {
-      console.log(input);
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          maitenance: (
-            input.maintenanceRate *
-            Owning.houseValue(input.houseValue, input.appreciationRate, factor)
-          ).toFixed(2),
+          costMaitenance:
+            Math.round(
+              input.maintenanceRate *
+                Owning.houseValue(
+                  input.houseValue,
+                  input.appreciationRate,
+                  factor
+                ) *
+                100
+            ) / 100,
         };
       });
-      console.log("maintenance", table);
+    },
+
+    insuranceCost: function (input) {
+      const years = [...Array(input.amortPeriod + 1).keys()];
+      const currentYear = new Date().getFullYear();
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          costInsurance:
+            Math.round(
+              input.houseInsurance *
+                Owning.houseValue(
+                  input.houseValue,
+                  input.appreciationRate,
+                  factor
+                ) *
+                100
+            ) / 100,
+        };
+      });
+      console.log("insurance", table);
     },
   };
 })();
@@ -234,8 +258,8 @@ const controller = (function (UICtrl) {
     console.log(input);
     const rent = Rent.simulate(input);
     const maintenance = Owning.maintenanceCost(input);
-    // const buy = Buy.simulate(input);
-    // console.log("INPUT", input);
+    const insurance = Owning.insuranceCost(input);
+    console.log(insurance);
   };
 
   return {
