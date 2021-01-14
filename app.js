@@ -56,6 +56,32 @@ const Owning = (function () {
       );
     },
 
+    PMT: function (ir, np, pv, fv, type) {
+      /*
+      Taken from the kindly Stack Overflow user: Vault
+       * ir   - interest rate per month
+       * np   - number of periods (months)
+       * pv   - present value
+       * fv   - future value
+       * type - when the payments are due:
+       *        0: end of the period, e.g. end of month (default)
+       *        1: beginning of period
+       */
+      var pmt, pvif;
+
+      fv || (fv = 0);
+      type || (type = 0);
+
+      if (ir === 0) return -(pv + fv) / np;
+
+      pvif = Math.pow(1 + ir, np);
+      pmt = (-ir * pv * (pvif + fv)) / (pvif - 1);
+
+      if (type === 1) pmt /= 1 + ir;
+
+      return pmt;
+    },
+
     maintenanceCost: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
@@ -114,6 +140,40 @@ const Owning = (function () {
             ) / 100,
         };
       });
+    },
+
+    annualCashOutlay: function (input) {
+      const years = [...Array(input.amortPeriod + 1).keys()];
+      const currentYear = new Date().getFullYear();
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          annualCashOutlay: "",
+        };
+      });
+    },
+
+    // Needs improvement and checking;
+    mortgageCost: function (input) {
+      const CMHCInsurance = 0.024; // Need a function to calculate that;
+      const years = [...Array(input.amortPeriod + 1).keys()];
+      const currentYear = new Date().getFullYear();
+      const mortgageValue =
+        input.houseValue * (1 - input.downPayment) * (1 + CMHCInsurance);
+      const effectiveMonthlyRate = input.interestRate / 12;
+      console.log("value", mortgageValue);
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          mortgageCost: -Owning.PMT(
+            effectiveMonthlyRate,
+            input.amortPeriod * 12,
+            mortgageValue,
+            0,
+            0
+          ),
+        };
+      });
       console.log(table);
     },
   };
@@ -158,16 +218,18 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputHouseValue)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        downPayment: parseFloat(
-          document
-            .querySelector(DOMstrings.inputDownPayment)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
-        interestRate: parseFloat(
-          document
-            .querySelector(DOMstrings.inputRate)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
+        downPayment:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputDownPayment)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        interestRate:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputRate)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
         amortPeriod: parseFloat(
           document.querySelector(DOMstrings.inputAmort).value
         ),
@@ -280,7 +342,7 @@ const controller = (function (UICtrl) {
     const maintenance = Owning.maintenanceCost(input);
     const insurance = Owning.insuranceCost(input);
     const propertyTx = Owning.propertyTaxCost(input);
-    console.log(propertyTx);
+    const mortagePmt = Owning.mortgageCost(input);
   };
 
   return {
