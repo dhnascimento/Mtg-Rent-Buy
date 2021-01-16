@@ -82,6 +82,43 @@ const Owning = (function () {
       return pmt;
     },
 
+    effectiveMonthlyRate: function (rate) {
+      return Math.pow(Math.pow(rate / 2 + 1, 2), 1 / 12) - 1;
+    },
+
+    // Mortgage balance for a specifc month
+    // https://money.stackexchange.com/questions/117399/compute-loan-balance-for-a-specific-month-period-on-an-amortized-loan
+    //
+    balanceOnPeriod: function (pv, rate, pmt, period) {
+      return (
+        (1 + rate) ** period * pv - ((1 + rate) ** period - 1) * (pmt / rate)
+      );
+    },
+
+    // Calcultate all PMTs for a payment schedule with variable interest rate
+    getPMTs: function (pv, period, rate, rateFive, rateTen) {
+      console.log({ pv, period, rate, rateFive, rateTen });
+      const PMTInit = -Owning.PMT(rate, period, pv, 0, 0);
+      const balanceFive = Owning.balanceOnPeriod(pv, rate, PMTInit, 60);
+      console.log(balanceFive);
+      const PMTFive = -Owning.PMT(rateFive, period - 60, balanceFive, 0, 0);
+      const balanceTen = Owning.balanceOnPeriod(
+        balanceFive,
+        rateFive,
+        PMTFive,
+        60
+      );
+      console.log(balanceTen);
+      const PMTTen = -Owning.PMT(rateTen, period - 120, balanceTen, 0, 0);
+      if (period > 120) {
+        return { PMTInit, PMTFive, PMTTen };
+      } else if (period > 60) {
+        return { PMTInit, PMTFive };
+      } else {
+        return { PMTInit };
+      }
+    },
+
     maintenanceCost: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
@@ -153,25 +190,39 @@ const Owning = (function () {
       });
     },
 
-    // Needs improvement and checking;
     mortgageCost: function (input) {
-      const CMHCInsurance = 0.024; // Need a function to calculate that;
+      const CMHCInsurance = 0.022; // Need a function to calculate that;
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
+
+      const amortizationMonths = input.amortPeriod * 12;
+      const APR = input.interestRate;
+      const interestInitial = Owning.effectiveMonthlyRate(APR);
+      const interestFive = Owning.effectiveMonthlyRate(APR + 0.01);
+      const interestTen = Owning.effectiveMonthlyRate(APR + 0.02);
+
       const mortgageValue =
         input.houseValue * (1 - input.downPayment) * (1 + CMHCInsurance);
-      const effectiveMonthlyRate = input.interestRate / 12;
-      console.log("value", mortgageValue);
+
+      const payments = Owning.getPMTs(
+        mortgageValue,
+        amortizationMonths,
+        interestInitial,
+        interestFive,
+        interestTen
+      );
+      console.log(payments);
+      console.log(years);
       const table = years.map(function (factor) {
+        console.log(factor);
         return {
           year: factor + currentYear,
-          mortgageCost: -Owning.PMT(
-            effectiveMonthlyRate,
-            input.amortPeriod * 12,
-            mortgageValue,
-            0,
-            0
-          ),
+          mortgageCost:
+            factor > 10
+              ? payments.PMTTen
+              : factor > 5
+              ? payments.PMTFive
+              : payments.PMTInit,
         };
       });
       console.log(table);
