@@ -34,6 +34,7 @@ const Rent = (function () {
           ),
         };
       });
+      return table;
     },
 
     computeCostRent: function (rentValue, cpiRate, factor) {
@@ -97,10 +98,8 @@ const Owning = (function () {
 
     // Calcultate all PMTs for a payment schedule with variable interest rate
     getPMTs: function (pv, period, rate, rateFive, rateTen) {
-      console.log({ pv, period, rate, rateFive, rateTen });
       const PMTInit = -Owning.PMT(rate, period, pv, 0, 0);
       const balanceFive = Owning.balanceOnPeriod(pv, rate, PMTInit, 60);
-      console.log(balanceFive);
       const PMTFive = -Owning.PMT(rateFive, period - 60, balanceFive, 0, 0);
       const balanceTen = Owning.balanceOnPeriod(
         balanceFive,
@@ -119,7 +118,6 @@ const Owning = (function () {
     },
 
     getCMHCInsurance: function (downpayment, amortzationYears) {
-      console.log({ downpayment, amortzationYears });
       if (amortzationYears > 25) {
         if (downpayment >= 0.2) return 0;
         if (downpayment >= 0.15) return 0.0195;
@@ -163,7 +161,7 @@ const Owning = (function () {
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          costMaitenance:
+          costMaintenance:
             Math.round(
               input.maintenanceRate *
                 Owning.houseValue(
@@ -175,12 +173,14 @@ const Owning = (function () {
             ) / 100,
         };
       });
+      return table;
     },
 
     insuranceCost: function (input) {
-      console.log(input);
       const years = [...Array(input.amortPeriod + 1).keys()];
+      console.log("years", years);
       const currentYear = new Date().getFullYear();
+      console.log("currentYear", currentYear);
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
@@ -196,6 +196,7 @@ const Owning = (function () {
             ) / 100,
         };
       });
+      return table;
     },
 
     propertyTaxCost: function (input) {
@@ -216,26 +217,32 @@ const Owning = (function () {
             ) / 100,
         };
       });
+      return table;
     },
 
     annualCashOutlay: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
-      const torontoLandTax = input.isToronto
-        ? Owning.getTorontoLandTax(input.houseValue)
-        : 0;
-      const ontarioLandTax = Owning.getOntarioLandTax(input.houseValue);
+      const insurance = Owning.insuranceCost(input);
+      const maintenance = Owning.maintenanceCost(input);
+      const propertyTax = Owning.propertyTaxCost(input);
+      const mortgage = Owning.mortgageCost(input);
 
-      console.log({ torontoLandTax, ontarioLandTax });
+      console.log({ maintenance, propertyTax, insurance, mortgage });
 
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          annualCashOutlay: "",
+          annualCashOutlay:
+            insurance[factor]["costInsurance"] +
+            propertyTax[factor]["costPropertyTax"] +
+            maintenance[factor]["costMaintenance"] +
+            12 * mortgage[factor]["mortgageCost"],
         };
       });
       console.log("cash", table);
+      return table;
     },
 
     mortgageCost: function (input) {
@@ -243,7 +250,6 @@ const Owning = (function () {
         input.downPayment,
         input.amortPeriod
       );
-      console.log(CMHCInsurance);
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
@@ -269,14 +275,14 @@ const Owning = (function () {
           year: factor + currentYear,
           mortgageBalance: Owning.balanceOnPeriod(),
           mortgageCost:
-            factor > 10
+            factor > 9
               ? payments.PMTTen
-              : factor > 5
+              : factor > 4
               ? payments.PMTFive
               : payments.PMTInit,
         };
       });
-      console.log(table);
+      return table;
     },
   };
 })();
