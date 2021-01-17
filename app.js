@@ -147,7 +147,15 @@ const Owning = (function () {
       }
     },
 
-    getTorontoLandTax: function () {},
+    getTorontoLandTax: function (houseValue) {
+      if (houseValue > 400000) {
+        return 3725 + (houseValue - 400000) * 0.02;
+      } else if (houseValue > 55000) {
+        return 275 + (houseValue - 55000) * 0.01;
+      } else {
+        return houseValue * 0.005;
+      }
+    },
 
     maintenanceCost: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
@@ -213,6 +221,14 @@ const Owning = (function () {
     annualCashOutlay: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
+
+      const torontoLandTax = input.isToronto
+        ? Owning.getTorontoLandTax(input.houseValue)
+        : 0;
+      const ontarioLandTax = Owning.getOntarioLandTax(input.houseValue);
+
+      console.log({ torontoLandTax, ontarioLandTax });
+
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
