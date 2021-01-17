@@ -108,7 +108,6 @@ const Owning = (function () {
         PMTFive,
         60
       );
-      console.log(balanceTen);
       const PMTTen = -Owning.PMT(rateTen, period - 120, balanceTen, 0, 0);
       if (period > 120) {
         return { PMTInit, PMTFive, PMTTen };
@@ -118,6 +117,37 @@ const Owning = (function () {
         return { PMTInit };
       }
     },
+
+    getCMHCInsurance: function (downpayment, amortzationYears) {
+      console.log({ downpayment, amortzationYears });
+      if (amortzationYears > 25) {
+        if (downpayment >= 0.2) return 0;
+        if (downpayment >= 0.15) return 0.0195;
+        if (downpayment >= 0.1) return 0.022;
+        if (downpayment >= 0.05) return 0.0295;
+        if (downpayment < 0.05) return 1;
+      } else {
+        if (downpayment >= 0.2) return 0;
+        if (downpayment >= 0.15) return 0.018;
+        if (downpayment >= 0.1) return 0.024;
+        if (downpayment >= 0.05) return 0.0315;
+        if (downpayment < 0.05) return 1;
+      }
+    },
+
+    getOntarioLandTax: function (houseValue) {
+      if (houseValue > 400000) {
+        return 4475 + (houseValue - 400000) * 0.02;
+      } else if (houseValue > 250000) {
+        return 2225 + (houseValue - 250000) * 0.015;
+      } else if (houseValue > 55000) {
+        return 275 + (houseValue - 55000) * 0.01;
+      } else {
+        return houseValue * 0.005;
+      }
+    },
+
+    getTorontoLandTax: function () {},
 
     maintenanceCost: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
@@ -190,23 +220,6 @@ const Owning = (function () {
         };
       });
       console.log("cash", table);
-    },
-
-    getCMHCInsurance: function (downpayment, amortzationYears) {
-      console.log({ downpayment, amortzationYears });
-      if (amortzationYears > 25) {
-        if (downpayment >= 0.2) return 0;
-        if (downpayment >= 0.15) return 0.0195;
-        if (downpayment >= 0.1) return 0.022;
-        if (downpayment >= 0.05) return 0.0295;
-        if (downpayment < 0.05) return 1;
-      } else {
-        if (downpayment >= 0.2) return 0;
-        if (downpayment >= 0.15) return 0.018;
-        if (downpayment >= 0.1) return 0.024;
-        if (downpayment >= 0.05) return 0.0315;
-        if (downpayment < 0.05) return 1;
-      }
     },
 
     mortgageCost: function (input) {
