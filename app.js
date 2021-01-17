@@ -188,6 +188,7 @@ const Owning = (function () {
           annualCashOutlay: "",
         };
       });
+      console.log("cash", table);
     },
 
     mortgageCost: function (input) {
@@ -211,12 +212,11 @@ const Owning = (function () {
         interestFive,
         interestTen
       );
-      console.log(payments);
-      console.log(years);
+
       const table = years.map(function (factor) {
-        console.log(factor);
         return {
           year: factor + currentYear,
+          mortgageBalance: Owning.balanceOnPeriod(),
           mortgageCost:
             factor > 10
               ? payments.PMTTen
@@ -394,6 +394,7 @@ const controller = (function (UICtrl) {
     const insurance = Owning.insuranceCost(input);
     const propertyTx = Owning.propertyTaxCost(input);
     const mortagePmt = Owning.mortgageCost(input);
+    const cashOutlay = Owning.annualCashOutlay(input);
   };
 
   return {
