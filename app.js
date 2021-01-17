@@ -140,6 +140,7 @@ const Owning = (function () {
     },
 
     insuranceCost: function (input) {
+      console.log(input);
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       const table = years.map(function (factor) {
@@ -191,8 +192,29 @@ const Owning = (function () {
       console.log("cash", table);
     },
 
+    getCMHCInsurance: function (downpayment, amortzationYears) {
+      console.log({ downpayment, amortzationYears });
+      if (amortzationYears > 25) {
+        if (downpayment >= 0.2) return 0;
+        if (downpayment >= 0.15) return 0.0195;
+        if (downpayment >= 0.1) return 0.022;
+        if (downpayment >= 0.05) return 0.0295;
+        if (downpayment < 0.05) return 1;
+      } else {
+        if (downpayment >= 0.2) return 0;
+        if (downpayment >= 0.15) return 0.018;
+        if (downpayment >= 0.1) return 0.024;
+        if (downpayment >= 0.05) return 0.0315;
+        if (downpayment < 0.05) return 1;
+      }
+    },
+
     mortgageCost: function (input) {
-      const CMHCInsurance = 0.022; // Need a function to calculate that;
+      const CMHCInsurance = Owning.getCMHCInsurance(
+        input.downPayment,
+        input.amortPeriod
+      );
+      console.log(CMHCInsurance);
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
