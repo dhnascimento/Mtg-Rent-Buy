@@ -251,6 +251,7 @@ const Owning = (function () {
         input.amortPeriod
       );
       const years = [...Array(input.amortPeriod + 1).keys()];
+      console.log("YEARS", years.length);
       const currentYear = new Date().getFullYear();
 
       const amortizationMonths = input.amortPeriod * 12;
@@ -270,18 +271,70 @@ const Owning = (function () {
         interestTen
       );
 
+      console.log(payments);
+
+      const balanceInitFive = Owning.balanceOnPeriod(
+        Owning.balanceOnPeriod(
+          mortgageValue,
+          interestInitial,
+          payments.PMTInit,
+          60
+        ),
+        interestFive,
+        payments.PMTFive,
+        1
+      );
+
+      const balanceInitTen = Owning.balanceOnPeriod(
+        Owning.balanceOnPeriod(
+          balanceInitFive,
+          interestFive,
+          payments.PMTFive,
+          60
+        ),
+        interestTen,
+        payments.PMTTen,
+        1
+      );
+
+      console.log({ balanceInitFive, balanceInitTen });
+
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          mortgageBalance: Owning.balanceOnPeriod(),
+          mortgageBalance:
+            factor > 10
+              ? Owning.balanceOnPeriod(
+                  balanceInitTen,
+                  interestTen,
+                  payments.PMTTen,
+                  12 * (factor - 10)
+                )
+              : factor > 5
+              ? Owning.balanceOnPeriod(
+                  balanceInitFive,
+                  interestFive,
+                  payments.PMTFive,
+                  12 * (factor - 5)
+                )
+              : Owning.balanceOnPeriod(
+                  mortgageValue,
+                  interestInitial,
+                  payments.PMTInit,
+                  12 * factor
+                ),
+
           mortgageCost:
-            factor > 9
+            factor == input.amortPeriod
+              ? 0
+              : factor > 9
               ? payments.PMTTen
               : factor > 4
               ? payments.PMTFive
               : payments.PMTInit,
         };
       });
+      console.log(table);
       return table;
     },
   };
