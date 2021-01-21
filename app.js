@@ -21,7 +21,7 @@ const Rent = (function () {
   return {
     simulate: function (input) {
       // Cost of renting
-      const years = [...Array(input.amortPeriod + 1).keys()];
+      const years = [...Array(input.amortPeriod).keys()];
       const currentYear = new Date().getFullYear();
       let yearlyRentValue = input.rentValue * 12 * (1 + input.rentersInsurance);
       const table = years.map(function (factor) {
@@ -156,7 +156,7 @@ const Owning = (function () {
     },
 
     maintenanceCost: function (input) {
-      const years = [...Array(input.amortPeriod + 1).keys()];
+      const years = [...Array(input.amortPeriod).keys()];
       const currentYear = new Date().getFullYear();
       const table = years.map(function (factor) {
         return {
@@ -177,10 +177,8 @@ const Owning = (function () {
     },
 
     insuranceCost: function (input) {
-      const years = [...Array(input.amortPeriod + 1).keys()];
-      console.log("years", years);
+      const years = [...Array(input.amortPeriod).keys()];
       const currentYear = new Date().getFullYear();
-      console.log("currentYear", currentYear);
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
@@ -200,7 +198,7 @@ const Owning = (function () {
     },
 
     propertyTaxCost: function (input) {
-      const years = [...Array(input.amortPeriod + 1).keys()];
+      const years = [...Array(input.amortPeriod).keys()];
       const currentYear = new Date().getFullYear();
       const table = years.map(function (factor) {
         return {
@@ -221,7 +219,7 @@ const Owning = (function () {
     },
 
     annualCashOutlay: function (input) {
-      const years = [...Array(input.amortPeriod + 1).keys()];
+      const years = [...Array(input.amortPeriod).keys()];
       const currentYear = new Date().getFullYear();
 
       const insurance = Owning.insuranceCost(input);
@@ -238,7 +236,7 @@ const Owning = (function () {
             insurance[factor]["costInsurance"] +
             propertyTax[factor]["costPropertyTax"] +
             maintenance[factor]["costMaintenance"] +
-            12 * mortgage[factor]["mortgageCost"],
+            mortgage[factor]["mortgageCost"],
         };
       });
       console.log("cash", table);
@@ -250,15 +248,14 @@ const Owning = (function () {
         input.downPayment,
         input.amortPeriod
       );
-      const years = [...Array(input.amortPeriod + 1).keys()];
-      console.log("YEARS", years.length);
+      const years = [...Array(input.amortPeriod).keys()];
       const currentYear = new Date().getFullYear();
 
       const amortizationMonths = input.amortPeriod * 12;
       const APR = input.interestRate;
       const interestInitial = Owning.effectiveMonthlyRate(APR);
-      const interestFive = Owning.effectiveMonthlyRate(APR + 0.01);
-      const interestTen = Owning.effectiveMonthlyRate(APR + 0.02);
+      const interestFive = Owning.effectiveMonthlyRate(APR + 0.0101);
+      const interestTen = Owning.effectiveMonthlyRate(APR + 0.0201);
 
       const mortgageValue =
         input.houseValue * (1 - input.downPayment) * (1 + CMHCInsurance);
@@ -271,14 +268,12 @@ const Owning = (function () {
         interestTen
       );
 
-      console.log(payments);
-
       const balanceInitFive = Owning.balanceOnPeriod(
         Owning.balanceOnPeriod(
           mortgageValue,
           interestInitial,
           payments.PMTInit,
-          60
+          59
         ),
         interestFive,
         payments.PMTFive,
@@ -290,14 +285,12 @@ const Owning = (function () {
           balanceInitFive,
           interestFive,
           payments.PMTFive,
-          60
+          59
         ),
         interestTen,
         payments.PMTTen,
         1
       );
-
-      console.log({ balanceInitFive, balanceInitTen });
 
       const table = years.map(function (factor) {
         return {
@@ -325,13 +318,14 @@ const Owning = (function () {
                 ),
 
           mortgageCost:
-            factor == input.amortPeriod
+            12 *
+            (factor == input.amortPeriod
               ? 0
               : factor > 9
               ? payments.PMTTen
               : factor > 4
               ? payments.PMTFive
-              : payments.PMTInit,
+              : payments.PMTInit),
         };
       });
       console.log(table);
