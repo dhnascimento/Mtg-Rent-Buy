@@ -227,7 +227,7 @@ const Owning = (function () {
       const propertyTax = Owning.propertyTaxCost(input);
       const mortgage = Owning.mortgageCost(input);
 
-      console.log({ maintenance, propertyTax, insurance, mortgage });
+      // console.log({ maintenance, propertyTax, insurance, mortgage });
 
       const table = years.map(function (factor) {
         return {
@@ -330,6 +330,30 @@ const Owning = (function () {
       });
       console.log(table);
       return table;
+    },
+
+    ownerEquity: function (input) {
+      const years = [...Array(input.amortPeriod).keys()];
+      const currentYear = new Date().getFullYear();
+
+      const mortgage = Owning.mortgageCost(input);
+
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          value:
+            Math.round(
+              (Owning.houseValue(
+                input.houseValue,
+                input.appreciationRate,
+                factor
+              ) -
+                mortgage[factor]["mortgageBalance"]) *
+                100
+            ) / 100,
+        };
+      });
+      console.log("Equity", table);
     },
   };
 })();
@@ -499,6 +523,7 @@ const controller = (function (UICtrl) {
     const propertyTx = Owning.propertyTaxCost(input);
     const mortagePmt = Owning.mortgageCost(input);
     const cashOutlay = Owning.annualCashOutlay(input);
+    const ownerEquity = Owning.ownerEquity(input);
   };
 
   return {
