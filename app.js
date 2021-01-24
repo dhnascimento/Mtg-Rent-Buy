@@ -441,6 +441,14 @@ const Owning = (function () {
   };
 })();
 
+const Comparison = (function () {
+  return {
+    noSelling: function () {},
+
+    selling: function () {},
+  };
+})();
+
 // UI Controller
 const UIController = (function () {
   //Getting the variables from the input fields
@@ -578,6 +586,18 @@ const UIController = (function () {
       newElement.innerHTML = html;
       p.appendChild(newElement);
     },
+
+    drawHtml: function (input) {
+      let html = "";
+      input.forEach(function (entry) {
+        html += "<div>Entry";
+        Object.keys(entry).forEach(function (key) {
+          html += `<div>${key}: ${entry[key]}</div>`;
+        });
+        html += "</div>";
+      });
+      return html;
+    },
   };
 })();
 
@@ -610,6 +630,13 @@ const controller = (function (UICtrl) {
     const ownerEquity = Owning.ownerEquity(input);
     const investment = Rent.investmentPortfolio(input);
     const surplus = Rent.surplusOnRent(input);
+    UICtrl.addElement(
+      "buy_or_rent_wrapper",
+      "div",
+      "buy_or_rent_table",
+      UICtrl.drawHtml(investment)
+    );
+    document.getElementById("Mortgage-Payment-Graphics").style.display = "";
   };
 
   return {
