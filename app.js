@@ -19,7 +19,28 @@
 //Business Logic Controller
 const Rent = (function () {
   return {
-    simulate: function (input) {
+    totalCashPurchase: function (input) {
+      const houseValue = input.houseValue;
+      const downPayment = houseValue * input.downPayment;
+      const ontarioLandTax = Owning.getOntarioLandTax(houseValue);
+      const torontoLandTax = input.isToronto
+        ? Owning.getTorontoLandTax(houseValue)
+        : 0;
+      const titleInsurance = input.titleInsurance;
+      const legalFees = input.legalFees;
+      const homeInspectionFee = input.homeInspection;
+
+      return (
+        downPayment +
+        ontarioLandTax +
+        torontoLandTax +
+        titleInsurance +
+        legalFees +
+        homeInspectionFee
+      );
+    },
+
+    rentCost: function (input) {
       // Cost of renting
       const years = [...Array(input.amortPeriod).keys()];
       const currentYear = new Date().getFullYear();
@@ -27,23 +48,84 @@ const Rent = (function () {
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          costRent: Rent.computeCostRent(
-            yearlyRentValue,
-            input.cpiRate,
-            factor
-          ),
+          costRent: Rent.yearlyRentCost(yearlyRentValue, input.cpiRate, factor),
         };
       });
       return table;
     },
 
-    computeCostRent: function (rentValue, cpiRate, factor) {
+    yearlyRentCost: function (rentValue, cpiRate, factor) {
+      //elapsed years?
       return Math.round(rentValue * Math.pow(1 + cpiRate, factor) * 100) / 100;
     },
 
+    // returnOnSurplus: function (surplus, investmentReturn, factor) {
+    //   return (
+    //     Math.round(surplus * Math.pow(1 + investmentReturn / 2, factor) * 100) /
+    //     100
+    //   );
+    // },
+
+    returnOnInvestment: function (portfolio, surplus, investmentReturn) {
+      return (
+        Math.round(portfolio * (1 + investmentReturn) * 100) / 100 +
+        Math.round(surplus * (1 + investmentReturn / 2) * 100) / 100
+      );
+    },
+
     // Surplus vs owning (annual)
+    surplusOnRent: function (input) {
+      const years = [...Array(input.amortPeriod).keys()];
+      const currentYear = new Date().getFullYear();
+
+      const cashOutlay = Owning.annualCashOutlay(input);
+      const rent = Rent.rentCost(input);
+
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          surplus:
+            cashOutlay[factor]["annualCashOutlay"] - rent[factor]["costRent"],
+        };
+      });
+      console.log("Surplus", table);
+      return table;
+    },
 
     // Investment portfolio
+    investmentPortfolio: function (input) {
+      const years = [...Array(input.amortPeriod).keys()];
+      const currentYear = new Date().getFullYear();
+
+      const investmentRate = input.investmentReturns;
+      const surplus = Rent.surplusOnRent(input);
+      const initialPortfolio = Rent.totalCashPurchase(input);
+
+      let balance = initialPortfolio;
+      let lastBalance = null;
+      let _lastBalance = null;
+      const table = years.map(function (factor) {
+        if (lastBalance) {
+          balance = Rent.returnOnInvestment(
+            lastBalance,
+            surplus[factor - 1]["surplus"],
+            investmentRate
+          );
+        }
+
+        _lastBalance = lastBalance;
+        lastBalance = balance;
+
+        return {
+          year: factor + currentYear,
+          portfolio: balance,
+          surplus: factor == 0 ? null : surplus[factor - 1]["surplus"],
+          lastBalance: _lastBalance,
+        };
+      });
+      console.log("investment", table);
+      return table;
+    },
   };
 })();
 
@@ -354,6 +436,7 @@ const Owning = (function () {
         };
       });
       console.log("Equity", table);
+      return table;
     },
   };
 })();
@@ -466,11 +549,12 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputRentValue)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        investmentReturns: parseFloat(
-          document
-            .querySelector(DOMstrings.inputInvestmentReturns)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
+        investmentReturns:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputInvestmentReturns)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
         cpiRate:
           parseFloat(
             document
@@ -517,13 +601,15 @@ const controller = (function (UICtrl) {
   const ctrlAddItem = function () {
     const input = UICtrl.getInput();
     console.log(input);
-    const rent = Rent.simulate(input);
+    const rent = Rent.rentCost(input);
     const maintenance = Owning.maintenanceCost(input);
     const insurance = Owning.insuranceCost(input);
     const propertyTx = Owning.propertyTaxCost(input);
     const mortagePmt = Owning.mortgageCost(input);
     const cashOutlay = Owning.annualCashOutlay(input);
     const ownerEquity = Owning.ownerEquity(input);
+    const investment = Rent.investmentPortfolio(input);
+    const surplus = Rent.surplusOnRent(input);
   };
 
   return {
