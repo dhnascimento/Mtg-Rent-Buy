@@ -113,17 +113,33 @@ const Rent = (function () {
           );
         }
 
-        _lastBalance = lastBalance;
         lastBalance = balance;
 
         return {
           year: factor + currentYear,
           portfolio: balance,
-          surplus: factor == 0 ? null : surplus[factor - 1]["surplus"],
-          lastBalance: _lastBalance,
         };
       });
       console.log("investment", table);
+      return table;
+    },
+
+    RentingCase: function (input) {
+      const years = [...Array(input.amortPeriod).keys()];
+      const currentYear = new Date().getFullYear();
+
+      const costTable = Rent.rentCost(input);
+      const surplusTable = Rent.surplusOnRent(input);
+      const investmentTable = Rent.investmentPortfolio(input);
+
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          costOfRenting: costTable[factor]["costRent"],
+          surplusVsOwning: surplusTable[factor]["surplus"],
+          investmentPortfolio: investmentTable[factor]["portfolio"],
+        };
+      });
       return table;
     },
   };
@@ -578,24 +594,66 @@ const UIController = (function () {
       };
     },
 
-    addElement: function (parentId, elementTag, elementId, html) {
+    addElement: function (parentId, elementTag, elementClass, html) {
       // Adds an element to the document
       const p = document.getElementById(parentId);
       const newElement = document.createElement(elementTag);
-      newElement.setAttribute("id", elementId);
+      newElement.setAttribute("class", elementClass);
       newElement.innerHTML = html;
       p.appendChild(newElement);
     },
 
     drawHtml: function (input) {
-      let html = "";
+      let html = `
+        <div class="accordion accordion-light amortizationScheduleCard" id="accordion">
+          <div class="card card-default">
+            <div class="card-header">
+              <h4 class="card-title m-0">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" 
+                href="#collapse0One" aria-expanded="false">
+                  Renting Case									
+                </a>
+              </h4>
+            </div>
+            <div id="collapse0One" class="collapse" data-parent="#accordion" style="">
+                <div class="card-body"> 
+                  <table class="table table-striped"  style="margin:auto">
+                    <thead>
+                        <tr>
+                          <th class="ng-binding">Year #</th>
+                          <th>Cost of Renting</th>
+                          <th>Surplus vs Owning</th>
+                          <th>Investment Portfolio</th>
+                        </tr>
+                    </thead>
+                  <tbody>`;
+
       input.forEach(function (entry) {
-        html += "<div>Entry";
-        Object.keys(entry).forEach(function (key) {
-          html += `<div>${key}: ${entry[key]}</div>`;
-        });
-        html += "</div>";
+        html += `
+        <tr>
+            <td>${entry["year"]}</td>
+            <td>$${entry["costOfRenting"]
+              .toLocaleString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td> 
+            <td>$${entry["surplusVsOwning"]
+              .toLocaleString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>$${entry["investmentPortfolio"]
+              .toLocaleString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+        </tr>   
+           
+        `;
       });
+      html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `;
+
       return html;
     },
   };
@@ -629,12 +687,12 @@ const controller = (function (UICtrl) {
     const cashOutlay = Owning.annualCashOutlay(input);
     const ownerEquity = Owning.ownerEquity(input);
     const investment = Rent.investmentPortfolio(input);
-    const surplus = Rent.surplusOnRent(input);
+    const rentCase = Rent.RentingCase(input);
     UICtrl.addElement(
       "buy_or_rent_wrapper",
-      "div",
+      "p",
       "buy_or_rent_table",
-      UICtrl.drawHtml(investment)
+      UICtrl.drawHtml(rentCase)
     );
     document.getElementById("Mortgage-Payment-Graphics").style.display = "";
   };
