@@ -1,21 +1,3 @@
-// amortPeriod:
-// appreciationRate:
-// comissionRate:
-// cpiRate:
-// downPayment:
-// homeInspection:
-// houseInsurance:
-// houseValue:
-// interestRate:
-// investmentReturns:
-// isToronto: true
-// legalFees:
-// maintenanceRate:
-// propertyTax:
-// rentValue:
-// rentersInsurance:
-// titleInsurance:
-
 //Business Logic Controller
 const Rent = (function () {
   return {
@@ -454,6 +436,37 @@ const Owning = (function () {
       console.log("Equity", table);
       return table;
     },
+
+    OwningCase: function (input) {
+      const years = [...Array(input.amortPeriod).keys()];
+      const currentYear = new Date().getFullYear();
+
+      const mortgage = Owning.mortgageCost(input);
+      const maintenance = Owning.maintenanceCost(input);
+      const propertyTax = Owning.propertyTaxCost(input);
+      const insurance = Owning.insuranceCost(input);
+      const cashOutlay = Owning.annualCashOutlay(input);
+      const ownerEquity = Owning.ownerEquity(input);
+
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          mortgage: mortgage[factor]["mortgageCost"],
+          maintenance: maintenance[factor]["costMaintenance"],
+          propertyTax: propertyTax[factor]["costPropertyTax"],
+          insurance: insurance[factor]["costInsurance"],
+          annualCashOutlay: cashOutlay[factor]["annualCashOutlay"],
+          mortgageBalance: mortgage[factor]["mortgageBalance"],
+          houseValue: Owning.houseValue(
+            input.houseValue,
+            input.appreciationRate,
+            factor
+          ),
+          ownerEquity: ownerEquity[factor]["value"],
+        };
+      });
+      return table;
+    },
   };
 })();
 
@@ -603,7 +616,7 @@ const UIController = (function () {
       p.appendChild(newElement);
     },
 
-    drawHtml: function (input) {
+    drawHtmlRent: function (input) {
       let html = `
         <div class="accordion accordion-light amortizationScheduleCard" id="accordion">
           <div class="card card-default">
@@ -656,6 +669,80 @@ const UIController = (function () {
 
       return html;
     },
+
+    drawHtmlOwn: function (input) {
+      let html = `
+        <div class="accordion accordion-light amortizationScheduleCard" id="accordion">
+          <div class="card card-default">
+            <div class="card-header">
+              <h4 class="card-title m-0">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" 
+                href="#collapse0One" aria-expanded="false">
+                  Owning Case									
+                </a>
+              </h4>
+            </div>
+            <div id="collapse0One" class="collapse" data-parent="#accordion" style="">
+                <div class="card-body"> 
+                  <table class="table table-striped"  style="margin:auto">
+                    <thead>
+                        <tr>
+                          <th class="ng-binding">Year #</th>
+                          <th>Mortgage(P+I)</th>
+                          <th>Maintenance</th>
+                          <th>Property Tax</th>
+                          <th>Insurance</th>
+                          <th>Annual Cash Outlay</th>
+                          <th>Mortgage Balance (opening)</th>
+                          <th>Beginning of Year House Value</th>
+                          <th>Beginning of Year Owner's Equity</th>
+                        </tr>
+                    </thead>
+                  <tbody>`;
+
+      input.forEach(function (entry) {
+        html += `
+        <tr>
+            <td>${entry["year"]}</td>
+            <td>$${entry["mortgage"]
+              .toLocaleString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td> 
+            <td>$${entry["maintenance"]
+              .toLocaleString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+            <td>$${entry["propertyTax"]
+              .toLocaleString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+              <td>$${entry["insurance"]
+                .toLocaleString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+              <td>$${entry["annualCashOutlay"]
+                .toLocaleString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+              <td>$${entry["mortgageBalance"]
+                .toLocaleString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+              <td>$${entry["houseValue"]
+                .toLocaleString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+              <td>$${entry["ownerEquity"]
+                .toLocaleString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+        </tr>   
+           
+        `;
+      });
+      html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `;
+
+      return html;
+    },
   };
 })();
 
@@ -678,21 +765,19 @@ const controller = (function (UICtrl) {
 
   const ctrlAddItem = function () {
     const input = UICtrl.getInput();
-    console.log(input);
-    const rent = Rent.rentCost(input);
-    const maintenance = Owning.maintenanceCost(input);
-    const insurance = Owning.insuranceCost(input);
-    const propertyTx = Owning.propertyTaxCost(input);
-    const mortagePmt = Owning.mortgageCost(input);
-    const cashOutlay = Owning.annualCashOutlay(input);
-    const ownerEquity = Owning.ownerEquity(input);
-    const investment = Rent.investmentPortfolio(input);
     const rentCase = Rent.RentingCase(input);
+    const ownCase = Owning.OwningCase(input);
     UICtrl.addElement(
       "buy_or_rent_wrapper",
       "p",
       "buy_or_rent_table",
-      UICtrl.drawHtml(rentCase)
+      UICtrl.drawHtmlRent(rentCase)
+    );
+    UICtrl.addElement(
+      "buy_or_rent_wrapper",
+      "p",
+      "buy_or_rent_table",
+      UICtrl.drawHtmlOwn(ownCase)
     );
     document.getElementById("Mortgage-Payment-Graphics").style.display = "";
   };
