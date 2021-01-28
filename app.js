@@ -618,17 +618,17 @@ const UIController = (function () {
 
     drawHtmlRent: function (input) {
       let html = `
-        <div class="accordion accordion-light amortizationScheduleCard" id="accordion">
+        <div class="accordion accordion-light amortizationScheduleCard" id="accordion1">
           <div class="card card-default">
             <div class="card-header">
               <h4 class="card-title m-0">
-                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" 
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" 
                 href="#collapse0One" aria-expanded="false">
                   Renting Case									
                 </a>
               </h4>
             </div>
-            <div id="collapse0One" class="collapse" data-parent="#accordion" style="">
+            <div id="collapse0One" class="collapse" data-parent="#accordion1" style="">
                 <div class="card-body"> 
                   <table class="table table-striped"  style="margin:auto">
                     <thead>
@@ -672,17 +672,17 @@ const UIController = (function () {
 
     drawHtmlOwn: function (input) {
       let html = `
-        <div class="accordion accordion-light amortizationScheduleCard" id="accordion">
+        <div class="accordion accordion-light amortizationScheduleCard" id="accordion2">
           <div class="card card-default">
             <div class="card-header">
               <h4 class="card-title m-0">
-                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" 
-                href="#collapse0One" aria-expanded="false">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" 
+                href="#collapse0Two" aria-expanded="false">
                   Owning Case									
                 </a>
               </h4>
             </div>
-            <div id="collapse0One" class="collapse" data-parent="#accordion" style="">
+            <div id="collapse0Two" class="collapse" data-parent="#accordion2" style="">
                 <div class="card-body"> 
                   <table class="table table-striped"  style="margin:auto">
                     <thead>
@@ -768,15 +768,15 @@ const controller = (function (UICtrl) {
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     UICtrl.addElement(
-      "buy_or_rent_wrapper",
+      "rent_wrapper",
       "p",
-      "buy_or_rent_table",
+      "rent_table",
       UICtrl.drawHtmlRent(rentCase)
     );
     UICtrl.addElement(
-      "buy_or_rent_wrapper",
+      "buy_wrapper",
       "p",
-      "buy_or_rent_table",
+      "buy_table",
       UICtrl.drawHtmlOwn(ownCase)
     );
     document.getElementById("Mortgage-Payment-Graphics").style.display = "";
