@@ -117,9 +117,9 @@ const Rent = (function () {
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          costOfRenting: costTable[factor]["costRent"],
-          surplusVsOwning: surplusTable[factor]["surplus"],
-          investmentPortfolio: investmentTable[factor]["portfolio"],
+          costOfRenting: costTable[factor]["costRent"].toFixed(0),
+          surplusVsOwning: surplusTable[factor]["surplus"].toFixed(0),
+          investmentPortfolio: investmentTable[factor]["portfolio"].toFixed(0),
         };
       });
       return table;
@@ -451,18 +451,18 @@ const Owning = (function () {
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          mortgage: mortgage[factor]["mortgageCost"],
-          maintenance: maintenance[factor]["costMaintenance"],
-          propertyTax: propertyTax[factor]["costPropertyTax"],
-          insurance: insurance[factor]["costInsurance"],
-          annualCashOutlay: cashOutlay[factor]["annualCashOutlay"],
-          mortgageBalance: mortgage[factor]["mortgageBalance"],
+          mortgage: mortgage[factor]["mortgageCost"].toFixed(0),
+          maintenance: maintenance[factor]["costMaintenance"].toFixed(0),
+          propertyTax: propertyTax[factor]["costPropertyTax"].toFixed(0),
+          insurance: insurance[factor]["costInsurance"].toFixed(0),
+          annualCashOutlay: cashOutlay[factor]["annualCashOutlay"].toFixed(0),
+          mortgageBalance: mortgage[factor]["mortgageBalance"].toFixed(0),
           houseValue: Owning.houseValue(
             input.houseValue,
             input.appreciationRate,
             factor
-          ),
-          ownerEquity: ownerEquity[factor]["value"],
+          ).toFixed(0),
+          ownerEquity: ownerEquity[factor]["value"].toFixed(0),
         };
       });
       return table;
@@ -630,7 +630,7 @@ const UIController = (function () {
             </div>
             <div id="collapse0One" class="collapse" data-parent="#accordion1" style="">
                 <div class="card-body"> 
-                  <table class="table table-striped"  style="margin:auto">
+                  <table class="table table-striped"  style="margin:auto; font-size:90%">
                     <thead>
                         <tr>
                           <th class="ng-binding">Year #</th>
@@ -684,18 +684,18 @@ const UIController = (function () {
             </div>
             <div id="collapse0Two" class="collapse" data-parent="#accordion2" style="">
                 <div class="card-body"> 
-                  <table class="table table-striped"  style="margin:auto">
+                  <table class="table table-striped"  style="margin:auto; font-size:80%;">
                     <thead>
                         <tr>
                           <th class="ng-binding">Year #</th>
-                          <th>Mortgage(P+I)</th>
+                          <th>Mortgage</th>
                           <th>Maintenance</th>
                           <th>Property Tax</th>
                           <th>Insurance</th>
-                          <th>Annual Cash Outlay</th>
-                          <th>Mortgage Balance (opening)</th>
-                          <th>Beginning of Year House Value</th>
-                          <th>Beginning of Year Owner's Equity</th>
+                          <th>Cash Outlay</th>
+                          <th>Mortgage Balance</th>
+                          <th>House Value</th>
+                          <th>Owner's Equity</th>
                         </tr>
                     </thead>
                   <tbody>`;
