@@ -763,14 +763,19 @@ const controller = (function (UICtrl) {
     });
   };
 
+  const removeElements = function (list) {
+    list.forEach(function (parent) {
+      let parentElement = document.getElementById(parent);
+      parentElement.innerHTML = "";
+    });
+  };
+
   const ctrlAddItem = function () {
     const input = UICtrl.getInput();
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
-    let rentingWrapper = document.getElementById("rent_wrapper");
-    let owningWrapper = document.getElementById("buy_wrapper");
-    owningWrapper.innerHTML = "";
-    rentingWrapper.innerHTML = "";
+    const casesArray = ["rent_wrapper", "buy_wrapper"];
+    removeElements(casesArray);
 
     UICtrl.addElement(
       "rent_wrapper",
