@@ -767,6 +767,11 @@ const controller = (function (UICtrl) {
     const input = UICtrl.getInput();
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
+    let rentingWrapper = document.getElementById("rent_wrapper");
+    let owningWrapper = document.getElementById("buy_wrapper");
+    owningWrapper.innerHTML = "";
+    rentingWrapper.innerHTML = "";
+
     UICtrl.addElement(
       "rent_wrapper",
       "p",
