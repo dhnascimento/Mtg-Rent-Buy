@@ -494,7 +494,6 @@ const Comparison = (function () {
       const investmentTaxRate = 0.1;
 
       let surplus = 0;
-      let lastSurplus = null;
 
       const table = years.map(function (factor) {
         if (factor > 0) {
@@ -665,6 +664,98 @@ const UIController = (function () {
       p.appendChild(newElement);
     },
 
+    drawHtmlComparison: function (input) {
+      let html = `
+      <div class="accordion accordion-light amortizationScheduleCard" id="accordion1">
+        <div class="card card-default">
+          <div class="card-header">
+            <h4 class="card-title m-0">
+              <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" 
+              href="#collapse0One" aria-expanded="false">
+                Comparison									
+              </a>
+            </h4>
+          </div>
+          <div id="collapse0One" class="collapse" data-parent="#accordion1" style="">
+              <div class="card-body"> 
+                <table class="table table-striped"  style="margin:auto; font-size:90%">
+                  <thead>
+                      <tr>
+                        <th class="ng-binding">After "X" Years</th>
+                        <th>Winner</th>
+                      </tr>
+                  </thead>
+                <tbody>`;
+
+      const tableEntries = [];
+
+      if (input.length === 31) {
+        tableEntries.push(input[1], input[5], input[10], input[20], input[30]);
+      } else if (input.length >= 21) {
+        tableEntries.push(input[1], input[5], input[10], input[20]);
+      } else if (input.length >= 11) {
+        tableEntries.push(input[1], input[5], input[10]);
+      } else if (input.length >= 6) {
+        tableEntries.push(input[1], input[5]);
+      } else {
+        tableEntries.push(input[1]);
+      }
+
+      console.log(tableEntries);
+      tableEntries.forEach(function (item) {
+        console.log(tableEntries.indexOf(item));
+      });
+
+      html += `
+      <tr>
+          <td>One</td>
+          <td>$${tableEntries[0]["comparison"]
+            .toFixed(0)
+            .toLocaleString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+      </tr>
+      <tr>
+          <td>Five</td>
+          <td>$${tableEntries[1]["comparison"]
+            .toFixed(0)
+            .toLocaleString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+      </tr>
+      <tr>
+          <td>Ten</td>
+          <td>$${tableEntries[2]["comparison"]
+            .toFixed(0)
+            .toLocaleString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+      </tr>
+      <tr>
+          <td>Twenty</td>
+          <td>$${tableEntries[3]["comparison"]
+            .toFixed(0)
+            .toLocaleString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+      </tr>
+      <tr>
+          <td>Thirty</td>
+          <td>$${tableEntries[4]["comparison"]
+            .toFixed(0)
+            .toLocaleString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+      </tr>
+       `;
+
+      html += `
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+              `;
+
+      return html;
+    },
+
     drawHtmlRent: function (input) {
       let html = `
         <div class="accordion accordion-light amortizationScheduleCard" id="accordion1">
@@ -672,12 +763,12 @@ const UIController = (function () {
             <div class="card-header">
               <h4 class="card-title m-0">
                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" 
-                href="#collapse0One" aria-expanded="false">
+                href="#collapse0Two" aria-expanded="false">
                   Renting Case									
                 </a>
               </h4>
             </div>
-            <div id="collapse0One" class="collapse" data-parent="#accordion1" style="">
+            <div id="collapse0Two" class="collapse" data-parent="#accordion1" style="">
                 <div class="card-body"> 
                   <table class="table table-striped"  style="margin:auto; font-size:90%">
                     <thead>
@@ -726,12 +817,12 @@ const UIController = (function () {
             <div class="card-header">
               <h4 class="card-title m-0">
                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" 
-                href="#collapse0Two" aria-expanded="false">
+                href="#collapse0Three" aria-expanded="false">
                   Owning Case									
                 </a>
               </h4>
             </div>
-            <div id="collapse0Two" class="collapse" data-parent="#accordion2" style="">
+            <div id="collapse0Three" class="collapse" data-parent="#accordion2" style="">
                 <div class="card-body"> 
                   <table class="table table-striped"  style="margin:auto; font-size:80%;">
                     <thead>
@@ -821,6 +912,13 @@ const controller = (function (UICtrl) {
     const comparison = Comparison.selling(input);
     const casesArray = ["rent_wrapper", "buy_wrapper"];
     removeElements(casesArray);
+
+    UICtrl.addElement(
+      "comparison_wrapper",
+      "p",
+      "comparison_table",
+      UICtrl.drawHtmlComparison(comparison)
+    );
 
     UICtrl.addElement(
       "rent_wrapper",
