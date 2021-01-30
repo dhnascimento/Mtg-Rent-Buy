@@ -687,62 +687,83 @@ const UIController = (function () {
                   </thead>
                 <tbody>`;
 
-      const tableEntries = [];
+      // const tableEntries = [];
 
-      if (input.length === 31) {
-        tableEntries.push(input[1], input[5], input[10], input[20], input[30]);
-      } else if (input.length >= 21) {
-        tableEntries.push(input[1], input[5], input[10], input[20]);
-      } else if (input.length >= 11) {
-        tableEntries.push(input[1], input[5], input[10]);
-      } else if (input.length >= 6) {
-        tableEntries.push(input[1], input[5]);
-      } else {
-        tableEntries.push(input[1]);
+      // if (input.length === 31) {
+      //   tableEntries.push(input[1], input[5], input[10], input[20], input[30]);
+      // } else if (input.length >= 21) {
+      //   tableEntries.push(input[1], input[5], input[10], input[20]);
+      // } else if (input.length >= 11) {
+      //   tableEntries.push(input[1], input[5], input[10]);
+      // } else if (input.length >= 6) {
+      //   tableEntries.push(input[1], input[5]);
+      // } else {
+      //   tableEntries.push(input[1]);
+      // }
+
+      if (input.length > 1) {
+        const result = input[1]["comparison"] > 0 ? "Renting by" : "Buying by";
+        html += `
+        <tr>
+          <td>One</td>
+          <td>${result} $${Math.abs(input[1]["comparison"])
+          .toFixed(0)
+          .toLocaleString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+        </tr>
+    `;
+      }
+      if (input.length > 5) {
+        const result = input[5]["comparison"] > 0 ? "Renting by" : "Buying by";
+        html += `
+        <tr>
+          <td>Five</td>
+          <td>${result} $${Math.abs(input[5]["comparison"])
+          .toFixed(0)
+          .toLocaleString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+        </tr>
+         `;
       }
 
-      console.log(tableEntries);
-      tableEntries.forEach(function (item) {
-        console.log(tableEntries.indexOf(item));
-      });
-
-      html += `
-      <tr>
-          <td>One</td>
-          <td>$${tableEntries[0]["comparison"]
-            .toFixed(0)
-            .toLocaleString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      </tr>
-      <tr>
-          <td>Five</td>
-          <td>$${tableEntries[1]["comparison"]
-            .toFixed(0)
-            .toLocaleString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      </tr>
-      <tr>
+      if (input.length > 10) {
+        const result = input[10]["comparison"] > 0 ? "Renting by" : "Buying by";
+        html += `
+        <tr>
           <td>Ten</td>
-          <td>$${tableEntries[2]["comparison"]
-            .toFixed(0)
-            .toLocaleString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      </tr>
-      <tr>
+          <td>${result} $${Math.abs(input[10]["comparison"])
+          .toFixed(0)
+          .toLocaleString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+       </tr>
+        `;
+      }
+
+      if (input.length > 20) {
+        const result = input[20]["comparison"] > 0 ? "Renting by" : "Buying by";
+        html += `
+        <tr>
           <td>Twenty</td>
-          <td>$${tableEntries[3]["comparison"]
-            .toFixed(0)
-            .toLocaleString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      </tr>
-      <tr>
+          <td>${result} $${Math.abs(input[20]["comparison"])
+          .toFixed(0)
+          .toLocaleString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+       </tr>
+        `;
+      }
+
+      if (input.length === 31) {
+        const result = input[30]["comparison"] > 0 ? "Renting by" : "Buying by";
+        html += `
+        <tr>
           <td>Thirty</td>
-          <td>$${tableEntries[4]["comparison"]
-            .toFixed(0)
-            .toLocaleString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-      </tr>
-       `;
+          <td>${result} $${Math.abs(input[30]["comparison"])
+          .toFixed(0)
+          .toLocaleString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+       </tr>
+        `;
+      }
 
       html += `
                               </tbody>
@@ -910,7 +931,7 @@ const controller = (function (UICtrl) {
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     const comparison = Comparison.selling(input);
-    const casesArray = ["rent_wrapper", "buy_wrapper"];
+    const casesArray = ["rent_wrapper", "buy_wrapper", "comparison_wrapper"];
     removeElements(casesArray);
 
     UICtrl.addElement(
