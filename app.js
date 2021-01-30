@@ -24,7 +24,7 @@ const Rent = (function () {
 
     rentCost: function (input) {
       // Cost of renting
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       let yearlyRentValue = input.rentValue * 12 * (1 + input.rentersInsurance);
       const table = years.map(function (factor) {
@@ -41,13 +41,6 @@ const Rent = (function () {
       return Math.round(rentValue * Math.pow(1 + cpiRate, factor) * 100) / 100;
     },
 
-    // returnOnSurplus: function (surplus, investmentReturn, factor) {
-    //   return (
-    //     Math.round(surplus * Math.pow(1 + investmentReturn / 2, factor) * 100) /
-    //     100
-    //   );
-    // },
-
     returnOnInvestment: function (portfolio, surplus, investmentReturn) {
       return (
         Math.round(portfolio * (1 + investmentReturn) * 100) / 100 +
@@ -57,7 +50,7 @@ const Rent = (function () {
 
     // Surplus vs owning (annual)
     surplusOnRent: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
       const cashOutlay = Owning.annualCashOutlay(input);
@@ -76,7 +69,7 @@ const Rent = (function () {
 
     // Investment portfolio
     investmentPortfolio: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
       const investmentRate = input.investmentReturns;
@@ -107,7 +100,7 @@ const Rent = (function () {
     },
 
     RentingCase: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
       const costTable = Rent.rentCost(input);
@@ -236,7 +229,7 @@ const Owning = (function () {
     },
 
     maintenanceCost: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       const table = years.map(function (factor) {
         return {
@@ -257,7 +250,7 @@ const Owning = (function () {
     },
 
     insuranceCost: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       const table = years.map(function (factor) {
         return {
@@ -278,7 +271,7 @@ const Owning = (function () {
     },
 
     propertyTaxCost: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       const table = years.map(function (factor) {
         return {
@@ -299,7 +292,7 @@ const Owning = (function () {
     },
 
     annualCashOutlay: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
       const insurance = Owning.insuranceCost(input);
@@ -328,7 +321,7 @@ const Owning = (function () {
         input.downPayment,
         input.amortPeriod
       );
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
       const amortizationMonths = input.amortPeriod * 12;
@@ -413,7 +406,7 @@ const Owning = (function () {
     },
 
     ownerEquity: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
       const mortgage = Owning.mortgageCost(input);
@@ -438,7 +431,7 @@ const Owning = (function () {
     },
 
     OwningCase: function (input) {
-      const years = [...Array(input.amortPeriod).keys()];
+      const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
       const mortgage = Owning.mortgageCost(input);
@@ -472,9 +465,49 @@ const Owning = (function () {
 
 const Comparison = (function () {
   return {
-    noSelling: function () {},
+    noSelling: function (input) {
+      const years = [...Array(input.amortPeriod + 1).keys()];
+      const currentYear = new Date().getFullYear();
 
-    selling: function () {},
+      const ownerEquity = Owning.ownerEquity(input);
+      const investment = Rent.investmentPortfolio(input);
+
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          comparison:
+            investment[factor]["portfolio"].toFixed(0) -
+            ownerEquity[factor]["value"].toFixed(0),
+        };
+      });
+      console.log(table);
+      return table;
+    },
+
+    //
+
+    selling: function (input) {
+      const years = [...Array(input.amortPeriod + 1).keys()];
+      const currentYear = new Date().getFullYear();
+
+      const owner = Owning.OwningCase(input);
+      const rent = Rent.RentingCase(input);
+
+      const table = years.map(function (factor) {
+        return {
+          year: factor + currentYear,
+          comparison:
+            factor === 0
+              ? rent[0]["investmentPortfolio"] -
+                (owner[0]["houseValue"] -
+                  owner[0]["houseValue"] * input.comissionRate -
+                  owner[0]["mortgageBalance"])
+              : 0,
+        };
+      });
+      console.log(table);
+      return table;
+    },
   };
 })();
 
@@ -551,11 +584,12 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputHomeInspection)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        comissionRate: parseFloat(
-          document
-            .querySelector(DOMstrings.inputComissionRate)
-            .value.replace(/(?!\.)\D/g, "")
-        ),
+        comissionRate:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputComissionRate)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
         maintenanceRate:
           parseFloat(
             document
@@ -750,15 +784,10 @@ const UIController = (function () {
 const controller = (function (UICtrl) {
   const setupEventListeners = function () {
     const DOM = UICtrl.getDOMstrings();
-    console.log(DOM);
-    console.log("Before Click");
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
-    console.log("After Click");
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
-        console.log("Passed if statement");
         ctrlAddItem();
-        console.log("Called ctrlAddItem");
       }
     });
   };
@@ -774,6 +803,7 @@ const controller = (function (UICtrl) {
     const input = UICtrl.getInput();
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
+    const comparison = Comparison.selling(input);
     const casesArray = ["rent_wrapper", "buy_wrapper"];
     removeElements(casesArray);
 
