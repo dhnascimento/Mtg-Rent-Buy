@@ -687,20 +687,6 @@ const UIController = (function () {
                   </thead>
                 <tbody>`;
 
-      // const tableEntries = [];
-
-      // if (input.length === 31) {
-      //   tableEntries.push(input[1], input[5], input[10], input[20], input[30]);
-      // } else if (input.length >= 21) {
-      //   tableEntries.push(input[1], input[5], input[10], input[20]);
-      // } else if (input.length >= 11) {
-      //   tableEntries.push(input[1], input[5], input[10]);
-      // } else if (input.length >= 6) {
-      //   tableEntries.push(input[1], input[5]);
-      // } else {
-      //   tableEntries.push(input[1]);
-      // }
-
       if (input.length > 1) {
         const result = input[1]["comparison"] > 0 ? "Renting by" : "Buying by";
         html += `
@@ -904,6 +890,82 @@ const UIController = (function () {
 
       return html;
     },
+
+    addComparisonChart: function (input) {
+      const ctx = document.getElementById("mortgageBalanceChart");
+
+      const labels = input.map(function (item) {
+        return item.year;
+      });
+
+      const data = input.map(function (item) {
+        return item.comparison;
+      });
+
+      const lineChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: [...labels],
+          datasets: [
+            {
+              label: "Rent Case",
+              data: [...data],
+              fill: true,
+              borderColor: "#1e5398",
+              backgroundColor: "#a9c6ea",
+              pointBackgroundColor: "#a9c6ea",
+              pointBorderColor: "#1e5398",
+              pointHoverBackgroundColor: "#a9c6ea",
+              pointHoverBorderColor: "#1e5398",
+            },
+          ],
+        },
+
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: "Payment History",
+          },
+          scales: {
+            xAxes: [
+              {
+                display: true,
+                label: "Year Number",
+                scaleLabel: {
+                  display: true,
+                  labelString: "Year Number",
+                },
+              },
+            ],
+            yAxes: [
+              {
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: "Remaining Mortgage Principal",
+                },
+                ticks: {
+                  // Include a dollar sign in the ticks
+                  callback: function (value, index, values) {
+                    return "$" + value;
+                  },
+                },
+              },
+            ],
+          },
+          tooltips: {
+            enabled: true,
+            mode: "index",
+            callbacks: {
+              label: function (tooltipItems, data) {
+                return "$" + tooltipItems.yLabel;
+              },
+            },
+          },
+        },
+      });
+    },
   };
 })();
 
@@ -931,8 +993,20 @@ const controller = (function (UICtrl) {
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     const comparison = Comparison.selling(input);
-    const casesArray = ["rent_wrapper", "buy_wrapper", "comparison_wrapper"];
+    const casesArray = [
+      "rent_wrapper",
+      "buy_wrapper",
+      "comparison_wrapper",
+      "mortgageBalanceChart",
+    ];
     removeElements(casesArray);
+
+    UICtrl.addElement(
+      "mortgageBalanceChart",
+      "p",
+      "comparison_chart",
+      UICtrl.addComparisonChart(comparison)
+    );
 
     UICtrl.addElement(
       "comparison_wrapper",
@@ -940,7 +1014,6 @@ const controller = (function (UICtrl) {
       "comparison_table",
       UICtrl.drawHtmlComparison(comparison)
     );
-
     UICtrl.addElement(
       "rent_wrapper",
       "p",
