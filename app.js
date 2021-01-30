@@ -78,7 +78,6 @@ const Rent = (function () {
 
       let balance = initialPortfolio;
       let lastBalance = null;
-      let _lastBalance = null;
       const table = years.map(function (factor) {
         if (lastBalance) {
           balance = Rent.returnOnInvestment(
@@ -110,9 +109,9 @@ const Rent = (function () {
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          costOfRenting: costTable[factor]["costRent"].toFixed(0),
-          surplusVsOwning: surplusTable[factor]["surplus"].toFixed(0),
-          investmentPortfolio: investmentTable[factor]["portfolio"].toFixed(0),
+          costOfRenting: costTable[factor]["costRent"],
+          surplusVsOwning: surplusTable[factor]["surplus"],
+          investmentPortfolio: investmentTable[factor]["portfolio"],
         };
       });
       return table;
@@ -444,18 +443,18 @@ const Owning = (function () {
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
-          mortgage: mortgage[factor]["mortgageCost"].toFixed(0),
-          maintenance: maintenance[factor]["costMaintenance"].toFixed(0),
-          propertyTax: propertyTax[factor]["costPropertyTax"].toFixed(0),
-          insurance: insurance[factor]["costInsurance"].toFixed(0),
-          annualCashOutlay: cashOutlay[factor]["annualCashOutlay"].toFixed(0),
-          mortgageBalance: mortgage[factor]["mortgageBalance"].toFixed(0),
+          mortgage: mortgage[factor]["mortgageCost"],
+          maintenance: maintenance[factor]["costMaintenance"],
+          propertyTax: propertyTax[factor]["costPropertyTax"],
+          insurance: insurance[factor]["costInsurance"],
+          annualCashOutlay: cashOutlay[factor]["annualCashOutlay"],
+          mortgageBalance: mortgage[factor]["mortgageBalance"],
           houseValue: Owning.houseValue(
             input.houseValue,
             input.appreciationRate,
             factor
           ).toFixed(0),
-          ownerEquity: ownerEquity[factor]["value"].toFixed(0),
+          ownerEquity: ownerEquity[factor]["value"],
         };
       });
       return table;
@@ -492,8 +491,16 @@ const Comparison = (function () {
 
       const owner = Owning.OwningCase(input);
       const rent = Rent.RentingCase(input);
+      const investmentTaxRate = 0.1;
+
+      let surplus = 0;
+      let lastSurplus = null;
 
       const table = years.map(function (factor) {
+        if (factor > 0) {
+          surplus += rent[factor - 1]["surplusVsOwning"];
+        }
+
         return {
           year: factor + currentYear,
           comparison:
@@ -502,10 +509,18 @@ const Comparison = (function () {
                 (owner[0]["houseValue"] -
                   owner[0]["houseValue"] * input.comissionRate -
                   owner[0]["mortgageBalance"])
-              : 0,
+              : -(
+                  (rent[factor]["investmentPortfolio"] -
+                    rent[0]["investmentPortfolio"] -
+                    surplus) *
+                  investmentTaxRate
+                ) +
+                rent[factor]["investmentPortfolio"] -
+                (owner[factor]["houseValue"] -
+                  owner[factor]["houseValue"] * input.comissionRate -
+                  owner[factor]["mortgageBalance"]),
         };
       });
-      console.log(table);
       return table;
     },
   };
