@@ -63,7 +63,6 @@ const Rent = (function () {
             cashOutlay[factor]["annualCashOutlay"] - rent[factor]["costRent"],
         };
       });
-      console.log("Surplus", table);
       return table;
     },
 
@@ -94,7 +93,6 @@ const Rent = (function () {
           portfolio: balance,
         };
       });
-      console.log("investment", table);
       return table;
     },
 
@@ -299,8 +297,6 @@ const Owning = (function () {
       const propertyTax = Owning.propertyTaxCost(input);
       const mortgage = Owning.mortgageCost(input);
 
-      // console.log({ maintenance, propertyTax, insurance, mortgage });
-
       const table = years.map(function (factor) {
         return {
           year: factor + currentYear,
@@ -311,7 +307,6 @@ const Owning = (function () {
             mortgage[factor]["mortgageCost"],
         };
       });
-      console.log("cash", table);
       return table;
     },
 
@@ -400,7 +395,6 @@ const Owning = (function () {
               : payments.PMTInit),
         };
       });
-      console.log(table);
       return table;
     },
 
@@ -425,7 +419,6 @@ const Owning = (function () {
             ) / 100,
         };
       });
-      console.log("Equity", table);
       return table;
     },
 
@@ -479,7 +472,6 @@ const Comparison = (function () {
             ownerEquity[factor]["value"].toFixed(0),
         };
       });
-      console.log(table);
       return table;
     },
 
@@ -803,12 +795,15 @@ const UIController = (function () {
         <tr>
             <td>${entry["year"]}</td>
             <td>$${entry["costOfRenting"]
+              .toFixed(0)
               .toLocaleString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td> 
             <td>$${entry["surplusVsOwning"]
+              .toFixed(0)
               .toLocaleString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
             <td>$${entry["investmentPortfolio"]
+              .toFixed(0)
               .toLocaleString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
         </tr>   
@@ -862,27 +857,34 @@ const UIController = (function () {
         <tr>
             <td>${entry["year"]}</td>
             <td>$${entry["mortgage"]
+              .toFixed(0)
               .toLocaleString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td> 
             <td>$${entry["maintenance"]
+              .toFixed(0)
               .toLocaleString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
             <td>$${entry["propertyTax"]
+              .toFixed(0)
               .toLocaleString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
               <td>$${entry["insurance"]
+                .toFixed(0)
                 .toLocaleString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
               <td>$${entry["annualCashOutlay"]
+                .toFixed(0)
                 .toLocaleString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
               <td>$${entry["mortgageBalance"]
+                .toFixed(0)
                 .toLocaleString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
               <td>$${entry["houseValue"]
                 .toLocaleString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
               <td>$${entry["ownerEquity"]
+                .toFixed(0)
                 .toLocaleString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
         </tr>   
@@ -909,8 +911,16 @@ const UIController = (function () {
       });
 
       const data = input.map(function (item) {
-        return item.comparison;
+        return -Math.round(item.comparison);
       });
+
+      const colours = data.map((value) => (value < 0 ? "red" : "green"));
+
+      function customRadius(context) {
+        let index = context.dataIndex;
+        let value = context.dataset.data[index];
+        return value >= 0 ? 5 : 5;
+      }
 
       const lineChart = new Chart(ctx, {
         type: "line",
@@ -923,8 +933,8 @@ const UIController = (function () {
               fill: true,
               borderColor: "#1e5398",
               backgroundColor: "#a9c6ea",
-              pointBackgroundColor: "#a9c6ea",
-              pointBorderColor: "#1e5398",
+              pointBackgroundColor: colours,
+              pointBorderColor: colours,
               pointHoverBackgroundColor: "#a9c6ea",
               pointHoverBorderColor: "#1e5398",
             },
@@ -932,6 +942,12 @@ const UIController = (function () {
         },
 
         options: {
+          elements: {
+            point: {
+              radius: customRadius,
+              display: true,
+            },
+          },
           responsive: true,
           title: {
             display: true,
@@ -958,7 +974,14 @@ const UIController = (function () {
                 ticks: {
                   // Include a dollar sign in the ticks
                   callback: function (value, index, values) {
-                    return "$" + value;
+                    return value >= 0
+                      ? "$" +
+                          value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                      : "$ (" +
+                          (value * -1)
+                            .toFixed(0)
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                          ")";
                   },
                 },
               },
