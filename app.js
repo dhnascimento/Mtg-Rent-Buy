@@ -655,11 +655,21 @@ const UIController = (function () {
       };
     },
 
-    addElement: function (parentId, elementTag, elementClass, html) {
+    addElement: function (
+      parentId,
+      elementTag,
+      elementClass,
+      html,
+      id = false
+    ) {
       // Adds an element to the document
       const p = document.getElementById(parentId);
       const newElement = document.createElement(elementTag);
-      newElement.setAttribute("class", elementClass);
+      if (id) {
+        newElement.setAttribute("id", elementClass);
+      } else {
+        newElement.setAttribute("class", elementClass);
+      }
       newElement.innerHTML = html;
       p.appendChild(newElement);
     },
@@ -892,7 +902,7 @@ const UIController = (function () {
     },
 
     addComparisonChart: function (input) {
-      const ctx = document.getElementById("mortgageBalanceChart");
+      const ctx = document.getElementById("comparison_chart");
 
       const labels = input.map(function (item) {
         return item.year;
@@ -997,16 +1007,12 @@ const controller = (function (UICtrl) {
       "rent_wrapper",
       "buy_wrapper",
       "comparison_wrapper",
-      "mortgageBalanceChart",
+      "graph_wrapper",
     ];
     removeElements(casesArray);
 
-    UICtrl.addElement(
-      "mortgageBalanceChart",
-      "p",
-      "comparison_chart",
-      UICtrl.addComparisonChart(comparison)
-    );
+    UICtrl.addElement("graph_wrapper", "canvas", "comparison_chart", "", true);
+    UICtrl.addComparisonChart(comparison);
 
     UICtrl.addElement(
       "comparison_wrapper",
@@ -1014,6 +1020,7 @@ const controller = (function (UICtrl) {
       "comparison_table",
       UICtrl.drawHtmlComparison(comparison)
     );
+
     UICtrl.addElement(
       "rent_wrapper",
       "p",
