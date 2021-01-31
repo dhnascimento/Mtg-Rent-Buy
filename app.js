@@ -931,13 +931,12 @@ const UIController = (function () {
         }
       });
 
+      // Interpolating the two data sets;
       let lastItemOwning;
       let commonItemOwning = true;
 
       const dataBuy = input.map(function (item, index) {
         lastItemOwning = item.comparison;
-        console.log(index);
-        console.log(input[input.length - 1]);
         if (item.comparison < 0) {
           return -Math.round(item.comparison);
         } else {
@@ -957,15 +956,50 @@ const UIController = (function () {
         }
       });
 
-      console.log({ data, dataRent, dataBuy });
+      const colors = data.map((value) => (value < 0 ? "#4C89A5" : "#B3C646"));
 
-      const colours = data.map((value) => (value < 0 ? "#4C89A5" : "#B3C646"));
+      // Change size of point for the first positive value (i.e. owning is better)
+      let conditionRadius = true;
+      const customRadiusArray = data.map(function (item) {
+        if (item > 0 && conditionRadius) {
+          conditionRadius = false;
+          return 10;
+        } else {
+          return 6;
+        }
+      });
 
-      function customRadius(context) {
-        let index = context.dataIndex;
-        let value = context.dataset.data[index];
-        return value >= 0 ? 5 : 5;
-      }
+      // Change color of point for the first positive value (i.e. owning is better)
+      let conditionColor = true;
+      const customColorsArray = data.map(function (item) {
+        if (item > 0 && conditionColor) {
+          conditionColor = false;
+          return "#B3C646";
+        } else {
+          return "#333333";
+        }
+      });
+
+      // Change border width of point for the first positive value (i.e. owning is better)
+      let conditionBorderWidth = true;
+      const customBorderArray = data.map(function (item) {
+        if (item > 0 && conditionBorderWidth) {
+          conditionBorderWidth = false;
+          return 5;
+        } else {
+          return 1;
+        }
+      });
+
+      let conditionBorderColor = true;
+      const customBorderColorArray = data.map(function (item) {
+        if (item > 0 && conditionBorderColor) {
+          conditionBorderColor = false;
+          return "#5DA10D";
+        } else {
+          return "#333333";
+        }
+      });
 
       const lineChart = new Chart(ctx, {
         type: "line",
@@ -977,22 +1011,27 @@ const UIController = (function () {
               data: [...dataBuy],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#B3C646",
-              pointBackgroundColor: "#333333",
+              backgroundColor: "#E16967",
+              pointBackgroundColor: customBorderColorArray,
+              pointBorderWidth: customBorderArray,
               pointBorderColor: "#333333",
-              pointHoverBackgroundColor: "#B3C646",
+              radius: customRadiusArray,
+              pointRadius: customRadiusArray,
+              pointHoverBackgroundColor: "#E16967",
               pointHoverBorderColor: "#1e5398",
             },
             {
-              label: "Rent Case",
+              label: "Renting Case",
               data: [...dataRent],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#4C89A5",
+              backgroundColor: "#A9C6EA",
               pointBackgroundColor: "#333333",
               pointBorderColor: "#333333",
-              pointHoverBackgroundColor: "#4C89A5",
+              pointHoverBackgroundColor: "#A9C6EA",
               pointHoverBorderColor: "#1e5398",
+              radius: customRadiusArray,
+              pointRadius: customRadiusArray,
             },
           ],
         },
@@ -1000,10 +1039,10 @@ const UIController = (function () {
         options: {
           spanGaps: true,
           elements: {
-            point: {
-              radius: customRadius,
-              display: true,
-            },
+            // point: {
+            //   radius: customRadiusArray,
+            //   display: true,
+            // },
           },
           responsive: true,
           title: {
