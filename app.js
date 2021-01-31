@@ -964,9 +964,9 @@ const UIController = (function () {
       const customRadiusArray = data.map(function (item) {
         if (item > 0 && conditionRadius) {
           conditionRadius = false;
-          return 10;
+          return 9;
         } else {
-          return 6;
+          return 4;
         }
       });
 
@@ -1026,10 +1026,10 @@ const UIController = (function () {
               data: [...dataRent],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#A9C6EA",
+              backgroundColor: "#3275CD",
               pointBackgroundColor: "#333333",
               pointBorderColor: "#333333",
-              pointHoverBackgroundColor: "#A9C6EA",
+              pointHoverBackgroundColor: "#3275CD",
               pointHoverBorderColor: "#1e5398",
               radius: customRadiusArray,
               pointRadius: customRadiusArray,
@@ -1039,12 +1039,6 @@ const UIController = (function () {
 
         options: {
           spanGaps: true,
-          elements: {
-            // point: {
-            //   radius: customRadiusArray,
-            //   display: true,
-            // },
-          },
           responsive: true,
           title: {
             display: true,
@@ -1113,11 +1107,10 @@ const UIController = (function () {
           console.log("Best Year", bestYear);
         }
       });
-
-      let textMessage = `Buying is cheaper if you stay for ${bestYear} years or longer. Otherwise, renting is cheaper`;
+      let textMessage = `<b style="color:#E16967";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
 
       if (!bestYear) {
-        textMessage = `Renting is cheaper in the next ${
+        textMessage = `<span style="color:#3275CD; font-weight:600";>Renting</span> is cheaper in the next ${
           input.length - 1
         } years`;
       }
