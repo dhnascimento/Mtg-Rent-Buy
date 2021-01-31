@@ -232,19 +232,51 @@
                         </div>
 
                         <label for="add__investment_returns">Investment Returns</label>
-                        <div class="input-group mb-3">
-                       
-                            <input type="text" class="add__investment_returns form-control" id="add__investment_returns" aria-label="Amount"
-                                placeholder="Estimated Investiment Returns for All Years" value="7.00">
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__investment_returns_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__investment_returns_five form-control" id="add__investment_returns_five" aria-label="Amount"
+                                        placeholder="Estimated Investiment Returns for All Years" value="5.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__investment_returns_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__investment_returns_ten form-control" id="add__investment_returns_ten" aria-label="Amount"
+                                        placeholder="Estimated Investiment Returns for All Years" value="7.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__investment_returns_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__investment_returns_twenty form-control" id="add__investment_returns_twenty" aria-label="Amount"
+                                        placeholder="Estimated Investiment Returns for All Years" value="10.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        
+                        
                         </div>
-                    </div>
+                    
+                    
+                    
+                    
                     <label for="add__cpi_rate">CPI Rate Increase</label>
 
                         <div class="row">
                             <div class="col-4">
-                                <label for="add__cpi_rate_five">First 5 Years</label>
+                                <label for="add__cpi_rate_five"><small>First 5 Years</small></label>
                                 <div class="input-group mb-3">
                             
                                     <input type="text" class="add__cpi_rate_five form-control" id="add__cpi_rate_five" aria-label="Amount"
@@ -255,7 +287,7 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <label for="add__cpi_rate_ten">Next 50 Years</label>
+                                <label for="add__cpi_rate_ten"><small>Next 5 Years</small></label>
                                 <div class="input-group mb-3">
                             
                                     <input type="text" class="add__cpi_rate_ten form-control" id="add__cpi_rate_ten" aria-label="Amount"
@@ -266,7 +298,7 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <label for="add__cpi_rate_twenty">Final 20 Years</label>
+                                <label for="add__cpi_rate_twenty"><small>Next 20 Years</small></label>
                                 <div class="input-group mb-3">
                             
                                     <input type="text" class="add__cpi_rate_twenty form-control" id="add__cpi_rate_twenty" aria-label="Amount"

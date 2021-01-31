@@ -46,7 +46,6 @@ const Rent = (function () {
             ? input.cpiRateTen
             : input.cpiRateFive;
 
-        console.log(factor, cpi, yearlyFiveRentValue);
         return {
           year: factor + currentYear,
           costRent:
@@ -95,13 +94,20 @@ const Rent = (function () {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
-      const investmentRate = input.investmentReturns;
+      // const investmentRate = input.investmentReturns;
       const surplus = Rent.surplusOnRent(input);
       const initialPortfolio = Rent.totalCashPurchase(input);
 
       let balance = initialPortfolio;
       let lastBalance = null;
       const table = years.map(function (factor) {
+        let investmentRate =
+          factor > 9
+            ? input.investmentReturnsTwenty
+            : factor > 4
+            ? input.investmentReturnsTen
+            : input.investmentReturnsFive;
+
         if (lastBalance) {
           balance = Rent.returnOnInvestment(
             lastBalance,
@@ -563,7 +569,9 @@ const UIController = (function () {
     inputAppreciationRate: ".add__appreciation_rate",
     // Renting Case
     inputRentValue: ".add__rent_value",
-    inputInvestmentReturns: ".add__investment_returns",
+    inputInvestmentReturnsFive: ".add__investment_returns_five",
+    inputInvestmentReturnsTen: ".add__investment_returns_ten",
+    inputInvestmentReturnsTwenty: ".add__investment_returns_twenty",
     inputCpiRateFive: ".add__cpi_rate_five",
     inputCpiRateTen: ".add__cpi_rate_ten",
     inputCpiRateTwenty: ".add__cpi_rate_twenty",
@@ -653,10 +661,22 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputRentValue)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        investmentReturns:
+        investmentReturnsFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputInvestmentReturns)
+              .querySelector(DOMstrings.inputInvestmentReturnsFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        investmentReturnsTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputInvestmentReturnsTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        investmentReturnsTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputInvestmentReturnsTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         cpiRateFive:
