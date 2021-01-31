@@ -321,8 +321,8 @@ const Owning = (function () {
       const amortizationMonths = input.amortPeriod * 12;
       const APR = input.interestRate;
       const interestInitial = Owning.effectiveMonthlyRate(APR);
-      const interestFive = Owning.effectiveMonthlyRate(APR + 0.0101);
-      const interestTen = Owning.effectiveMonthlyRate(APR + 0.0201);
+      const interestFive = Owning.effectiveMonthlyRate(APR + 0.01);
+      const interestTen = Owning.effectiveMonthlyRate(APR + 0.02);
 
       const mortgageValue =
         input.houseValue * (1 - input.downPayment) * (1 + CMHCInsurance);
@@ -340,11 +340,11 @@ const Owning = (function () {
           mortgageValue,
           interestInitial,
           payments.PMTInit,
-          59
+          60
         ),
         interestFive,
         payments.PMTFive,
-        1
+        0
       );
 
       const balanceInitTen = Owning.balanceOnPeriod(
@@ -352,11 +352,11 @@ const Owning = (function () {
           balanceInitFive,
           interestFive,
           payments.PMTFive,
-          59
+          60
         ),
         interestTen,
         payments.PMTTen,
-        1
+        0
       );
 
       const table = years.map(function (factor) {
@@ -395,6 +395,7 @@ const Owning = (function () {
               : payments.PMTInit),
         };
       });
+      console.log(table);
       return table;
     },
 
@@ -906,8 +907,8 @@ const UIController = (function () {
     addComparisonChart: function (input) {
       const ctx = document.getElementById("comparison_chart");
 
-      const labels = input.map(function (item) {
-        return item.year;
+      const labels = input.map(function (item, index) {
+        return index;
       });
 
       const data = input.map(function (item) {
@@ -1095,6 +1096,40 @@ const UIController = (function () {
         },
       });
     },
+
+    drawResultText: function (input) {
+      html = `
+          <div style="width: 100%;">
+            
+      `;
+
+      let bestYear;
+      let positive = false;
+      input.forEach(function (data, index) {
+        if (data.comparison < 0 && !positive) {
+          console.log(data.comparison);
+          positive = true;
+          bestYear = index;
+          console.log("Best Year", bestYear);
+        }
+      });
+
+      let textMessage = `Buying is cheaper if you stay for ${bestYear} years or longer. Otherwise, renting is cheaper`;
+
+      if (!bestYear) {
+        textMessage = `Renting is cheaper in the next ${
+          input.length - 1
+        } years`;
+      }
+
+      html += `
+        <p class="card-text">${textMessage}.</p>
+      
+    </div>
+      `;
+
+      return html;
+    },
   };
 })();
 
@@ -1127,11 +1162,19 @@ const controller = (function (UICtrl) {
       "buy_wrapper",
       "comparison_wrapper",
       "graph_wrapper",
+      "text_result",
     ];
     removeElements(casesArray);
 
     UICtrl.addElement("graph_wrapper", "canvas", "comparison_chart", "", true);
     UICtrl.addComparisonChart(comparison);
+
+    UICtrl.addElement(
+      "text_result",
+      "div",
+      "card_result",
+      UICtrl.drawResultText(comparison)
+    );
 
     UICtrl.addElement(
       "comparison_wrapper",

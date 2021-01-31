@@ -105,7 +105,7 @@
                         <div class="input-group mb-3">
                                                 
                             <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
-                                placeholder="Mortgage Interest Rate" value="3.49">
+                                placeholder="Mortgage Interest Rate" value="3.50">
 
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
@@ -278,18 +278,13 @@
                             </style>
                             <div id="Mortgage-Payment-Graphics"  style="display: none;">
                                 <div class="row">
-                                    <div id="Mortgage-Balance-Chart-Parent" class="col-sm-7" >
-                                        <canvas id="mortgageBalanceChart"></canvas>
+                                    <div id="graph_wrapper" class="col-sm-7">
+                                        <canvas id="comparison_chart"></canvas>
                                     </div>
-                                    <div id="Interest-Principal-Chart-Parent" class="col-sm-5">
-                                        <canvas id="interestPrincipalChart"></canvas>
+                                    <div id="text_result" class="col-sm-5" style="display: flex; align-items: center; justify-content: center;">
+                                        
                                     </div>
                                 </div>
-                                <div class="container">
-                                    <div id="graph_wrapper" class="col-sm-12">
-                                        <canvas id="comparison_chart"></canvas>
-
-                                    </div>
                                     <p id="comparison_wrapper" class="Mortgage-Amort-Table" class="col-sm-12">
                                         <!-- JS script in insert code for results here -->
                                     </p>
