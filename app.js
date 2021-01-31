@@ -27,10 +27,34 @@ const Rent = (function () {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
       let yearlyRentValue = input.rentValue * 12 * (1 + input.rentersInsurance);
+      let yearlyFiveRentValue = Rent.yearlyRentCost(
+        yearlyRentValue,
+        input.cpiRateFive,
+        5
+      );
+      let yearlyTenRentValue = Rent.yearlyRentCost(
+        yearlyFiveRentValue,
+        input.cpiRateTen,
+        5
+      );
+
       const table = years.map(function (factor) {
+        let cpi =
+          factor > 10
+            ? input.cpiRateTwenty
+            : factor > 5
+            ? input.cpiRateTen
+            : input.cpiRateFive;
+
+        console.log(factor, cpi, yearlyFiveRentValue);
         return {
           year: factor + currentYear,
-          costRent: Rent.yearlyRentCost(yearlyRentValue, input.cpiRate, factor),
+          costRent:
+            factor > 10
+              ? Rent.yearlyRentCost(yearlyTenRentValue, cpi, factor - 10)
+              : factor > 5
+              ? Rent.yearlyRentCost(yearlyFiveRentValue, cpi, factor - 5)
+              : Rent.yearlyRentCost(yearlyRentValue, cpi, factor),
         };
       });
       return table;
@@ -540,7 +564,9 @@ const UIController = (function () {
     // Renting Case
     inputRentValue: ".add__rent_value",
     inputInvestmentReturns: ".add__investment_returns",
-    inputCpiRate: ".add__cpi_rate",
+    inputCpiRateFive: ".add__cpi_rate_five",
+    inputCpiRateTen: ".add__cpi_rate_ten",
+    inputCpiRateTwenty: ".add__cpi_rate_twenty",
     inputRentersInsurance: ".add__renters_insurance",
   };
 
@@ -633,10 +659,22 @@ const UIController = (function () {
               .querySelector(DOMstrings.inputInvestmentReturns)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
-        cpiRate:
+        cpiRateFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputCpiRate)
+              .querySelector(DOMstrings.inputCpiRateFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        cpiRateTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputCpiRateTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        cpiRateTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputCpiRateTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         rentersInsurance:
@@ -1130,6 +1168,7 @@ const UIController = (function () {
 const controller = (function (UICtrl) {
   const setupEventListeners = function () {
     const DOM = UICtrl.getDOMstrings();
+    console.log({ DOM });
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
@@ -1147,6 +1186,7 @@ const controller = (function (UICtrl) {
 
   const ctrlAddItem = function () {
     const input = UICtrl.getInput();
+    console.log(input);
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     const comparison = Comparison.selling(input);
