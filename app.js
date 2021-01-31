@@ -914,7 +914,7 @@ const UIController = (function () {
         return -Math.round(item.comparison);
       });
 
-      const colours = data.map((value) => (value < 0 ? "red" : "green"));
+      const colours = data.map((value) => (value < 0 ? "#4C89A5" : "#B3C646"));
 
       function customRadius(context) {
         let index = context.dataIndex;
@@ -931,12 +931,18 @@ const UIController = (function () {
               label: "Rent Case",
               data: [...data],
               fill: true,
-              borderColor: "#1e5398",
-              backgroundColor: "#a9c6ea",
+              borderColor: "#333333",
+              backgroundColor: "#E9E9F0",
               pointBackgroundColor: colours,
               pointBorderColor: colours,
-              pointHoverBackgroundColor: "#a9c6ea",
+              pointHoverBackgroundColor: "#4C89A5",
               pointHoverBorderColor: "#1e5398",
+            },
+            {
+              label: "Owning Case",
+              data: [],
+              borderColor: "#333333",
+              backgroundColor: "#B3C646",
             },
           ],
         },
@@ -951,7 +957,7 @@ const UIController = (function () {
           responsive: true,
           title: {
             display: true,
-            text: "Payment History",
+            text: "Rent or Buy Comparison",
           },
           scales: {
             xAxes: [
@@ -960,7 +966,7 @@ const UIController = (function () {
                 label: "Year Number",
                 scaleLabel: {
                   display: true,
-                  labelString: "Year Number",
+                  labelString: "At end of year",
                 },
               },
             ],
@@ -969,7 +975,7 @@ const UIController = (function () {
                 display: true,
                 scaleLabel: {
                   display: true,
-                  labelString: "Remaining Mortgage Principal",
+                  // labelString: "Remaining Mortgage Principal",
                 },
                 ticks: {
                   // Include a dollar sign in the ticks
