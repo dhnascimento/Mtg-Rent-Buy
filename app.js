@@ -914,6 +914,51 @@ const UIController = (function () {
         return -Math.round(item.comparison);
       });
 
+      // Interpolating the two data sets;
+      let lastItemRent;
+      let commonItemRent = true;
+
+      const dataRent = input.map(function (item) {
+        lastItemRent = -item.comparison;
+        if (item.comparison >= 0) {
+          return -Math.round(item.comparison);
+        } else {
+          if (commonItemRent) {
+            commonItemRent = false;
+            return Math.round(lastItemRent);
+          }
+          return null;
+        }
+      });
+
+      let lastItemOwning;
+      let commonItemOwning = true;
+
+      const dataBuy = input.map(function (item, index) {
+        lastItemOwning = item.comparison;
+        console.log(index);
+        console.log(input[input.length - 1]);
+        if (item.comparison < 0) {
+          return -Math.round(item.comparison);
+        } else {
+          if (index < input.length - 1) {
+            if (
+              index > 0 &&
+              input[index + 1].comparison < 0 &&
+              input[index - 1].comparison > 0 &&
+              commonItemOwning
+            ) {
+              commonItemOwning = false;
+              return -Math.round(lastItemOwning);
+            }
+          }
+
+          return null;
+        }
+      });
+
+      console.log({ data, dataRent, dataBuy });
+
       const colours = data.map((value) => (value < 0 ? "#4C89A5" : "#B3C646"));
 
       function customRadius(context) {
@@ -928,26 +973,32 @@ const UIController = (function () {
           labels: [...labels],
           datasets: [
             {
-              label: "Rent Case",
-              data: [...data],
+              label: "Owning Case",
+              data: [...dataBuy],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#E9E9F0",
-              pointBackgroundColor: colours,
-              pointBorderColor: colours,
-              pointHoverBackgroundColor: "#4C89A5",
+              backgroundColor: "#B3C646",
+              pointBackgroundColor: "#333333",
+              pointBorderColor: "#333333",
+              pointHoverBackgroundColor: "#B3C646",
               pointHoverBorderColor: "#1e5398",
             },
             {
-              label: "Owning Case",
-              data: [],
+              label: "Rent Case",
+              data: [...dataRent],
+              fill: true,
               borderColor: "#333333",
-              backgroundColor: "#B3C646",
+              backgroundColor: "#4C89A5",
+              pointBackgroundColor: "#333333",
+              pointBorderColor: "#333333",
+              pointHoverBackgroundColor: "#4C89A5",
+              pointHoverBorderColor: "#1e5398",
             },
           ],
         },
 
         options: {
+          spanGaps: true,
           elements: {
             point: {
               radius: customRadius,
