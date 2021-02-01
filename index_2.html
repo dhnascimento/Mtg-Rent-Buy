@@ -207,16 +207,39 @@
                         </div>
 
                         <label for="add__appreciation_rate">House Appreciation Rate</label>
-                        <div class="input-group mb-3">
-                           
-                            <input type="text" class="add__appreciation_rate form-control" id="add__appreciation_rate" aria-label="Amount"
-                                placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
-
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__appreciation_rate_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__appreciation_rate_five form-control" id="add__appreciation_rate_five" aria-label="Amount"
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
-
+                            <div class="col-4">
+                                <label for="add__appreciation_rate_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__appreciation_rate_ten form-control" id="add__appreciation_rate_ten" aria-label="Amount"
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__appreciation_rate_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__appreciation_rate_twenty form-control" id="add__appreciation_rate_twenty" aria-label="Amount"
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
 
                         <p>Renting Case</p>
                     
@@ -264,9 +287,6 @@
                                     </div>
                                 </div>
                             </div>
-                        
-                        
-                        
                         </div>
                     
                     <label for="add__cpi_rate">CPI Rate Increase</label>

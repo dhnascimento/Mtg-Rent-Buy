@@ -268,21 +268,64 @@ const Owning = (function () {
     maintenanceCost: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
+
+      let initalHouseValue = input.houseValue;
+      let fiveYearsHouseValue = Owning.houseValue(
+        initalHouseValue,
+        input.appreciationRateFive,
+        5
+      );
+      let tenYearsHouseValue = Owning.houseValue(
+        fiveYearsHouseValue,
+        input.appreciationRateTen,
+        5
+      );
+
+      console.log({ fiveYearsHouseValue, tenYearsHouseValue });
+
       const table = years.map(function (factor) {
+        const appreciationRate =
+          factor > 10
+            ? input.appreciationRateTwenty
+            : factor > 5
+            ? input.appreciationRateTen
+            : input.appreciationRateFive;
+        console.log({ appreciationRate, initalHouseValue });
         return {
           year: factor + currentYear,
           costMaintenance:
-            Math.round(
-              input.maintenanceRate *
-                Owning.houseValue(
-                  input.houseValue,
-                  input.appreciationRate,
-                  factor
-                ) *
-                100
-            ) / 100,
+            factor > 10
+              ? Math.round(
+                  input.maintenanceRate *
+                    Owning.houseValue(
+                      tenYearsHouseValue,
+                      appreciationRate,
+                      factor - 10
+                    ) *
+                    100
+                ) / 100
+              : factor > 5
+              ? Math.round(
+                  input.maintenanceRate *
+                    Owning.houseValue(
+                      fiveYearsHouseValue,
+                      appreciationRate,
+                      factor - 5
+                    ) *
+                    100
+                ) / 100
+              : Math.round(
+                  input.maintenanceRate *
+                    Owning.houseValue(
+                      initalHouseValue,
+                      appreciationRate,
+                      factor
+                    ) *
+                    100
+                ) / 100,
         };
       });
+      console.log(table);
       return table;
     },
 
@@ -435,7 +478,6 @@ const Owning = (function () {
               : payments.PMTInit),
         };
       });
-      console.log(table);
       return table;
     },
 
@@ -576,7 +618,9 @@ const UIController = (function () {
     inputMaintenanceRate: ".add__maintenance_rate",
     inputPropertyTax: ".add__property_tax",
     inputHouseInsurance: ".add__house_insurance",
-    inputAppreciationRate: ".add__appreciation_rate",
+    inputAppreciationRateFive: ".add__appreciation_rate_five",
+    inputAppreciationRateTen: ".add__appreciation_rate_ten",
+    inputAppreciationRateTwenty: ".add__appreciation_rate_twenty",
     // Renting Case
     inputRentValue: ".add__rent_value",
     inputInvestmentReturnsFive: ".add__investment_returns_five",
@@ -661,10 +705,22 @@ const UIController = (function () {
               .querySelector(DOMstrings.inputHouseInsurance)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
-        appreciationRate:
+        appreciationRateFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputAppreciationRate)
+              .querySelector(DOMstrings.inputAppreciationRateFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        appreciationRateTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputAppreciationRateTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        appreciationRateTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputAppreciationRateTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         // Renting Case
@@ -1183,10 +1239,8 @@ const UIController = (function () {
       let positive = false;
       input.forEach(function (data, index) {
         if (data.comparison < 0 && !positive) {
-          console.log(data.comparison);
           positive = true;
           bestYear = index;
-          console.log("Best Year", bestYear);
         }
       });
       let textMessage = `<b style="color:#E16967";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
