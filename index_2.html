@@ -171,15 +171,37 @@
                         </div>
 
                         <label for="add__maintenance_rate">Maintenance</label>
-                        <div class="input-group mb-3">
-                           
-                            <input type="text" class="add__maintenance_rate form-control" id="add__maintenance_rate" aria-label="Amount"
-                                placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10">
-
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__maintenance_rate_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__maintenance_rate_five form-control" id="add__maintenance_rate_five" aria-label="Amount"
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
-
+                            <div class="col-4">
+                                <label for="add__maintenance_rate_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__maintenance_rate_ten form-control" id="add__maintenance_rate_ten" aria-label="Amount"
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.20">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__maintenance_rate_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__maintenance_rate_twenty form-control" id="add__maintenance_rate_twenty" aria-label="Amount"
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.30">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <label for="add__property_tax">Property Tax</label>
@@ -245,7 +267,7 @@
                                 <label for="add__appreciation_rate_ten"><small>Next 5 Years</small></label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__appreciation_rate_ten form-control" id="add__appreciation_rate_ten" aria-label="Amount"
-                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.50">
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
@@ -255,7 +277,7 @@
                                 <label for="add__appreciation_rate_twenty"><small>Next 20 Years</small></label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__appreciation_rate_twenty form-control" id="add__appreciation_rate_twenty" aria-label="Amount"
-                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="3.00">
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>

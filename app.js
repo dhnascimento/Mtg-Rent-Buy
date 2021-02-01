@@ -281,22 +281,27 @@ const Owning = (function () {
         5
       );
 
-      console.log({ fiveYearsHouseValue, tenYearsHouseValue });
-
       const table = years.map(function (factor) {
-        const appreciationRate =
+        let appreciationRate =
           factor > 10
             ? input.appreciationRateTwenty
             : factor > 5
             ? input.appreciationRateTen
             : input.appreciationRateFive;
 
+        let maintenanceRate =
+          factor > 9
+            ? input.maintenanceRateTwenty
+            : factor > 4
+            ? input.maintenanceRateTen
+            : input.maintenanceRateFive;
+
         return {
           year: factor + currentYear,
           costMaintenance:
             factor > 10
               ? Math.round(
-                  input.maintenanceRate *
+                  maintenanceRate *
                     Owning.houseValue(
                       tenYearsHouseValue,
                       appreciationRate,
@@ -306,7 +311,7 @@ const Owning = (function () {
                 ) / 100
               : factor > 5
               ? Math.round(
-                  input.maintenanceRate *
+                  maintenanceRate *
                     Owning.houseValue(
                       fiveYearsHouseValue,
                       appreciationRate,
@@ -315,7 +320,7 @@ const Owning = (function () {
                     100
                 ) / 100
               : Math.round(
-                  input.maintenanceRate *
+                  maintenanceRate *
                     Owning.houseValue(
                       initalHouseValue,
                       appreciationRate,
@@ -661,7 +666,9 @@ const UIController = (function () {
     inputLegalFees: ".add__legal_fees",
     inputHomeInspection: ".add__home_inspection", //
     inputComissionRate: ".add__comission_rate",
-    inputMaintenanceRate: ".add__maintenance_rate",
+    inputMaintenanceRateFive: ".add__maintenance_rate_five",
+    inputMaintenanceRateTen: ".add__maintenance_rate_ten",
+    inputMaintenanceRateTwenty: ".add__maintenance_rate_twenty",
     inputPropertyTax: ".add__property_tax",
     inputHouseInsuranceFive: ".add__house_insurance_five",
     inputHouseInsuranceTen: ".add__house_insurance_ten",
@@ -735,10 +742,22 @@ const UIController = (function () {
               .querySelector(DOMstrings.inputComissionRate)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
-        maintenanceRate:
+        maintenanceRateFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputMaintenanceRate)
+              .querySelector(DOMstrings.inputMaintenanceRateFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        maintenanceRateTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputMaintenanceRateTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        maintenanceRateTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputMaintenanceRateTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         propertyTax:
