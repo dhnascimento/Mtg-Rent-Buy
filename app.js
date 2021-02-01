@@ -269,26 +269,9 @@ const Owning = (function () {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
-      let initalHouseValue = input.houseValue;
-      let fiveYearsHouseValue = Owning.houseValue(
-        initalHouseValue,
-        input.appreciationRateFive,
-        5
-      );
-      let tenYearsHouseValue = Owning.houseValue(
-        fiveYearsHouseValue,
-        input.appreciationRateTen,
-        5
-      );
+      const houseValue = Owning.ownerEquity(input);
 
       const table = years.map(function (factor) {
-        let appreciationRate =
-          factor > 10
-            ? input.appreciationRateTwenty
-            : factor > 5
-            ? input.appreciationRateTen
-            : input.appreciationRateFive;
-
         let maintenanceRate =
           factor > 9
             ? input.maintenanceRateTwenty
@@ -301,32 +284,14 @@ const Owning = (function () {
           costMaintenance:
             factor > 10
               ? Math.round(
-                  maintenanceRate *
-                    Owning.houseValue(
-                      tenYearsHouseValue,
-                      appreciationRate,
-                      factor - 10
-                    ) *
-                    100
+                  maintenanceRate * houseValue[factor]["houseValue"] * 100
                 ) / 100
               : factor > 5
               ? Math.round(
-                  maintenanceRate *
-                    Owning.houseValue(
-                      fiveYearsHouseValue,
-                      appreciationRate,
-                      factor - 5
-                    ) *
-                    100
+                  maintenanceRate * houseValue[factor]["houseValue"] * 100
                 ) / 100
               : Math.round(
-                  maintenanceRate *
-                    Owning.houseValue(
-                      initalHouseValue,
-                      appreciationRate,
-                      factor
-                    ) *
-                    100
+                  maintenanceRate * houseValue[factor]["houseValue"] * 100
                 ) / 100,
         };
       });
@@ -337,26 +302,9 @@ const Owning = (function () {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
-      let initalHouseValue = input.houseValue;
-      let fiveYearsHouseValue = Owning.houseValue(
-        initalHouseValue,
-        input.appreciationRateFive,
-        5
-      );
-      let tenYearsHouseValue = Owning.houseValue(
-        fiveYearsHouseValue,
-        input.appreciationRateTen,
-        5
-      );
+      const houseValue = Owning.ownerEquity(input);
 
       const table = years.map(function (factor) {
-        let appreciationRate =
-          factor > 10
-            ? input.appreciationRateTwenty
-            : factor > 5
-            ? input.appreciationRateTen
-            : input.appreciationRateFive;
-
         let insuranceRate =
           factor > 9
             ? input.houseInsuranceTwenty
@@ -369,32 +317,14 @@ const Owning = (function () {
           costInsurance:
             factor > 10
               ? Math.round(
-                  insuranceRate *
-                    Owning.houseValue(
-                      tenYearsHouseValue,
-                      appreciationRate,
-                      factor - 10
-                    ) *
-                    100
+                  insuranceRate * houseValue[factor]["houseValue"] * 100
                 ) / 100
               : factor > 5
               ? Math.round(
-                  insuranceRate *
-                    Owning.houseValue(
-                      fiveYearsHouseValue,
-                      appreciationRate,
-                      factor - 5
-                    ) *
-                    100
+                  insuranceRate * houseValue[factor]["houseValue"] * 100
                 ) / 100
               : Math.round(
-                  insuranceRate *
-                    Owning.houseValue(
-                      initalHouseValue,
-                      appreciationRate,
-                      factor
-                    ) *
-                    100
+                  insuranceRate * houseValue[factor]["houseValue"] * 100
                 ) / 100,
         };
       });
@@ -405,26 +335,9 @@ const Owning = (function () {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
 
-      let initalHouseValue = input.houseValue;
-      let fiveYearsHouseValue = Owning.houseValue(
-        initalHouseValue,
-        input.appreciationRateFive,
-        5
-      );
-      let tenYearsHouseValue = Owning.houseValue(
-        fiveYearsHouseValue,
-        input.appreciationRateTen,
-        5
-      );
+      const houseValue = Owning.ownerEquity(input);
 
       const table = years.map(function (factor) {
-        let appreciationRate =
-          factor > 10
-            ? input.appreciationRateTwenty
-            : factor > 5
-            ? input.appreciationRateTen
-            : input.appreciationRateFive;
-
         let propertyTax =
           factor > 9
             ? input.propertyTaxTwenty
@@ -437,32 +350,14 @@ const Owning = (function () {
           costPropertyTax:
             factor > 10
               ? Math.round(
-                  propertyTax *
-                    Owning.houseValue(
-                      tenYearsHouseValue,
-                      appreciationRate,
-                      factor - 10
-                    ) *
-                    100
+                  propertyTax * houseValue[factor]["houseValue"] * 100
                 ) / 100
               : factor > 5
               ? Math.round(
-                  propertyTax *
-                    Owning.houseValue(
-                      fiveYearsHouseValue,
-                      appreciationRate,
-                      factor - 5
-                    ) *
-                    100
+                  propertyTax * houseValue[factor]["houseValue"] * 100
                 ) / 100
               : Math.round(
-                  propertyTax *
-                    Owning.houseValue(
-                      initalHouseValue,
-                      appreciationRate,
-                      factor
-                    ) *
-                    100
+                  propertyTax * houseValue[factor]["houseValue"] * 100
                 ) / 100,
         };
       });
@@ -585,21 +480,71 @@ const Owning = (function () {
 
       const mortgage = Owning.mortgageCost(input);
 
+      let initalHouseValue = input.houseValue;
+      let fiveYearsHouseValue = Owning.houseValue(
+        initalHouseValue,
+        input.appreciationRateFive,
+        5
+      );
+      let tenYearsHouseValue = Owning.houseValue(
+        fiveYearsHouseValue,
+        input.appreciationRateTen,
+        5
+      );
+
       const table = years.map(function (factor) {
+        let mortgageBalance = mortgage[factor]["mortgageBalance"];
+
+        let appreciationRate =
+          factor > 10
+            ? input.appreciationRateTwenty
+            : factor > 5
+            ? input.appreciationRateTen
+            : input.appreciationRateFive;
+
         return {
           year: factor + currentYear,
           value:
-            Math.round(
-              (Owning.houseValue(
-                input.houseValue,
-                input.appreciationRate,
-                factor
-              ) -
-                mortgage[factor]["mortgageBalance"]) *
-                100
-            ) / 100,
+            factor > 10
+              ? Math.round(
+                  Owning.houseValue(
+                    tenYearsHouseValue,
+                    appreciationRate,
+                    factor - 10
+                  ) - mortgageBalance
+                )
+              : factor > 5
+              ? Math.round(
+                  Owning.houseValue(
+                    fiveYearsHouseValue,
+                    appreciationRate,
+                    factor - 10
+                  ) - mortgageBalance
+                )
+              : Math.round(
+                  Owning.houseValue(
+                    initalHouseValue,
+                    appreciationRate,
+                    factor
+                  ) - mortgageBalance
+                ),
+          houseValue:
+            factor > 10
+              ? Owning.houseValue(
+                  tenYearsHouseValue,
+                  appreciationRate,
+                  factor - 10
+                )
+              : factor > 5
+              ? Owning.houseValue(
+                  fiveYearsHouseValue,
+                  appreciationRate,
+                  factor - 5
+                )
+              : Owning.houseValue(initalHouseValue, appreciationRate, factor),
         };
       });
+      console.log(table);
       return table;
     },
 
@@ -623,11 +568,7 @@ const Owning = (function () {
           insurance: insurance[factor]["costInsurance"],
           annualCashOutlay: cashOutlay[factor]["annualCashOutlay"],
           mortgageBalance: mortgage[factor]["mortgageBalance"],
-          houseValue: Owning.houseValue(
-            input.houseValue,
-            input.appreciationRate,
-            factor
-          ).toFixed(0),
+          houseValue: ownerEquity[factor]["houseValue"],
           ownerEquity: ownerEquity[factor]["value"],
         };
       });
@@ -1160,6 +1101,7 @@ const UIController = (function () {
                 .toLocaleString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
               <td>$${entry["houseValue"]
+                .toFixed(0)
                 .toLocaleString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
               <td>$${entry["ownerEquity"]
