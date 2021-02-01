@@ -26,7 +26,7 @@ const Rent = (function () {
       // Cost of renting
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
-      let yearlyRentValue = input.rentValue * 12 * (1 + input.rentersInsurance);
+      let yearlyRentValue = input.rentValue * 12;
       let yearlyFiveRentValue = Rent.yearlyRentCost(
         yearlyRentValue,
         input.cpiRateFive,
@@ -46,14 +46,24 @@ const Rent = (function () {
             ? input.cpiRateTen
             : input.cpiRateFive;
 
+        let rentersInsurance =
+          factor > 10
+            ? 1 + input.rentersInsuranceTwenty
+            : factor > 5
+            ? 1 + input.rentersInsuranceTen
+            : 1 + input.rentersInsuranceFive;
+
         return {
           year: factor + currentYear,
           costRent:
             factor > 10
-              ? Rent.yearlyRentCost(yearlyTenRentValue, cpi, factor - 10)
+              ? Rent.yearlyRentCost(yearlyTenRentValue, cpi, factor - 10) *
+                rentersInsurance
               : factor > 5
-              ? Rent.yearlyRentCost(yearlyFiveRentValue, cpi, factor - 5)
-              : Rent.yearlyRentCost(yearlyRentValue, cpi, factor),
+              ? Rent.yearlyRentCost(yearlyFiveRentValue, cpi, factor - 5) *
+                rentersInsurance
+              : Rent.yearlyRentCost(yearlyRentValue, cpi, factor) *
+                rentersInsurance,
         };
       });
       return table;
@@ -575,7 +585,9 @@ const UIController = (function () {
     inputCpiRateFive: ".add__cpi_rate_five",
     inputCpiRateTen: ".add__cpi_rate_ten",
     inputCpiRateTwenty: ".add__cpi_rate_twenty",
-    inputRentersInsurance: ".add__renters_insurance",
+    inputRentersInsuranceFive: ".add__renters_insurance_five",
+    inputRentersInsuranceTen: ".add__renters_insurance_ten",
+    inputRentersInsuranceTwenty: ".add__renters_insurance_twenty",
   };
 
   // This version of the code is to ensure I'm getting the right inputs
@@ -697,10 +709,22 @@ const UIController = (function () {
               .querySelector(DOMstrings.inputCpiRateTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
-        rentersInsurance:
+        rentersInsuranceFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputRentersInsurance)
+              .querySelector(DOMstrings.inputRentersInsuranceFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        rentersInsuranceTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputRentersInsuranceTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        rentersInsuranceTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputRentersInsuranceTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
       };
