@@ -404,19 +404,66 @@ const Owning = (function () {
     propertyTaxCost: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
+
+      let initalHouseValue = input.houseValue;
+      let fiveYearsHouseValue = Owning.houseValue(
+        initalHouseValue,
+        input.appreciationRateFive,
+        5
+      );
+      let tenYearsHouseValue = Owning.houseValue(
+        fiveYearsHouseValue,
+        input.appreciationRateTen,
+        5
+      );
+
       const table = years.map(function (factor) {
+        let appreciationRate =
+          factor > 10
+            ? input.appreciationRateTwenty
+            : factor > 5
+            ? input.appreciationRateTen
+            : input.appreciationRateFive;
+
+        let propertyTax =
+          factor > 9
+            ? input.propertyTaxTwenty
+            : factor > 4
+            ? input.propertyTaxTen
+            : input.propertyTaxFive;
+
         return {
           year: factor + currentYear,
           costPropertyTax:
-            Math.round(
-              input.propertyTax *
-                Owning.houseValue(
-                  input.houseValue,
-                  input.appreciationRate,
-                  factor
-                ) *
-                100
-            ) / 100,
+            factor > 10
+              ? Math.round(
+                  propertyTax *
+                    Owning.houseValue(
+                      tenYearsHouseValue,
+                      appreciationRate,
+                      factor - 10
+                    ) *
+                    100
+                ) / 100
+              : factor > 5
+              ? Math.round(
+                  propertyTax *
+                    Owning.houseValue(
+                      fiveYearsHouseValue,
+                      appreciationRate,
+                      factor - 5
+                    ) *
+                    100
+                ) / 100
+              : Math.round(
+                  propertyTax *
+                    Owning.houseValue(
+                      initalHouseValue,
+                      appreciationRate,
+                      factor
+                    ) *
+                    100
+                ) / 100,
         };
       });
       return table;
@@ -669,7 +716,9 @@ const UIController = (function () {
     inputMaintenanceRateFive: ".add__maintenance_rate_five",
     inputMaintenanceRateTen: ".add__maintenance_rate_ten",
     inputMaintenanceRateTwenty: ".add__maintenance_rate_twenty",
-    inputPropertyTax: ".add__property_tax",
+    inputPropertyTaxFive: ".add__property_tax_five",
+    inputPropertyTaxTen: ".add__property_tax_ten",
+    inputPropertyTaxTwenty: ".add__property_tax_twenty",
     inputHouseInsuranceFive: ".add__house_insurance_five",
     inputHouseInsuranceTen: ".add__house_insurance_ten",
     inputHouseInsuranceTwenty: ".add__house_insurance_twenty",
@@ -760,10 +809,22 @@ const UIController = (function () {
               .querySelector(DOMstrings.inputMaintenanceRateTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
-        propertyTax:
+        propertyTaxFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputPropertyTax)
+              .querySelector(DOMstrings.inputPropertyTaxFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        propertyTaxTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputPropertyTaxTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        propertyTaxTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputPropertyTaxTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         houseInsuranceFive:
