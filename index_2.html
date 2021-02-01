@@ -66,7 +66,6 @@
 
                             <select name="add__amort_period" class="add__amort_period form-control" id="add__amort_period" aria-label="Amount"
                             placeholder="Please select">
-                            <option label="Interest Only" type="number" value="0">Interest Only</option>
                             <option label="1 year" type="number" value="1">1 year</option>
                             <option label="2 years" type="number" value="2">2 years</option>
                             <option label="3 years" type="number" value="3">3 years</option>
@@ -100,15 +99,44 @@
                         </select>
                         
                     </div>
-                    
+                        
                         <label for="add__interest_rate">Interest Rate</label>
-                        <div class="input-group mb-3">
-                                                
-                            <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
-                                placeholder="Mortgage Interest Rate" value="3.50">
-
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__interest_rate_five">First 5 Years</label>
+                                <div class="input-group mb-3">
+                                                        
+                                    <input type="text" class="add__interest_rate_five form-control" id="add__interest_rate_five" aria-label="Amount"
+                                        placeholder="Mortgage Interest Rate" value="3.50">
+        
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__interest_rate_ten">Next 5 Years</label>
+                                <div class="input-group mb-3">
+                                                        
+                                    <input type="text" class="add__interest_rate_ten form-control" id="add__interest_rate_ten" aria-label="Amount"
+                                        placeholder="Mortgage Interest Rate" value="4.50">
+        
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__interest_rate_twenty">Next 20 Years</label>
+                                <div class="input-group mb-3">
+                                                        
+                                    <input type="text" class="add__interest_rate_twenty form-control" id="add__interest_rate_twenty" aria-label="Amount"
+                                        placeholder="Mortgage Interest Rate" value="5.50">
+        
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

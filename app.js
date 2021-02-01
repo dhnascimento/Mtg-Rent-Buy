@@ -395,10 +395,12 @@ const Owning = (function () {
       const currentYear = new Date().getFullYear();
 
       const amortizationMonths = input.amortPeriod * 12;
-      const APR = input.interestRate;
-      const interestInitial = Owning.effectiveMonthlyRate(APR);
-      const interestFive = Owning.effectiveMonthlyRate(APR + 0.01);
-      const interestTen = Owning.effectiveMonthlyRate(APR + 0.02);
+      // const APR = input.interestRate;
+      const interestInitial = Owning.effectiveMonthlyRate(
+        input.interestRateFive
+      );
+      const interestFive = Owning.effectiveMonthlyRate(input.interestRateTen);
+      const interestTen = Owning.effectiveMonthlyRate(input.interestRateTwenty);
 
       const mortgageValue =
         input.houseValue * (1 - input.downPayment) * (1 + CMHCInsurance);
@@ -647,7 +649,9 @@ const UIController = (function () {
     inputBtn: ".add__btn",
     inputHouseValue: ".add__house_value",
     inputDownPayment: ".add__down_payment",
-    inputRate: ".add__interest_rate",
+    inputRateFive: ".add__interest_rate_five",
+    inputRateTen: ".add__interest_rate_ten",
+    inputRateTwenty: ".add__interest_rate_twenty",
     inputAmort: ".add__amort_period",
     inputIsToronto: "input[name=gridRadios]:checked",
     inputTitleInsurance: ".add__title_insurance", //
@@ -698,10 +702,22 @@ const UIController = (function () {
               .querySelector(DOMstrings.inputDownPayment)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
-        interestRate:
+        interestRateFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputRate)
+              .querySelector(DOMstrings.inputRateFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        interestRateTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputRateTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        interestRateTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputRateTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         amortPeriod: parseFloat(
@@ -894,7 +910,7 @@ const UIController = (function () {
             <h4 class="card-title m-0">
               <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" 
               href="#collapse0One" aria-expanded="false">
-                Comparison									
+                Comparison - Summary									
               </a>
             </h4>
           </div>
