@@ -290,7 +290,7 @@ const Owning = (function () {
             : factor > 5
             ? input.appreciationRateTen
             : input.appreciationRateFive;
-        console.log({ appreciationRate, initalHouseValue });
+
         return {
           year: factor + currentYear,
           costMaintenance:
@@ -325,26 +325,72 @@ const Owning = (function () {
                 ) / 100,
         };
       });
-      console.log(table);
       return table;
     },
 
     insuranceCost: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
+
+      let initalHouseValue = input.houseValue;
+      let fiveYearsHouseValue = Owning.houseValue(
+        initalHouseValue,
+        input.appreciationRateFive,
+        5
+      );
+      let tenYearsHouseValue = Owning.houseValue(
+        fiveYearsHouseValue,
+        input.appreciationRateTen,
+        5
+      );
+
       const table = years.map(function (factor) {
+        let appreciationRate =
+          factor > 10
+            ? input.appreciationRateTwenty
+            : factor > 5
+            ? input.appreciationRateTen
+            : input.appreciationRateFive;
+
+        let insuranceRate =
+          factor > 9
+            ? input.houseInsuranceTwenty
+            : factor > 4
+            ? input.houseInsuranceTen
+            : input.houseInsuranceFive;
+
         return {
           year: factor + currentYear,
           costInsurance:
-            Math.round(
-              input.houseInsurance *
-                Owning.houseValue(
-                  input.houseValue,
-                  input.appreciationRate,
-                  factor
-                ) *
-                100
-            ) / 100,
+            factor > 10
+              ? Math.round(
+                  insuranceRate *
+                    Owning.houseValue(
+                      tenYearsHouseValue,
+                      appreciationRate,
+                      factor - 10
+                    ) *
+                    100
+                ) / 100
+              : factor > 5
+              ? Math.round(
+                  insuranceRate *
+                    Owning.houseValue(
+                      fiveYearsHouseValue,
+                      appreciationRate,
+                      factor - 5
+                    ) *
+                    100
+                ) / 100
+              : Math.round(
+                  insuranceRate *
+                    Owning.houseValue(
+                      initalHouseValue,
+                      appreciationRate,
+                      factor
+                    ) *
+                    100
+                ) / 100,
         };
       });
       return table;
@@ -617,7 +663,9 @@ const UIController = (function () {
     inputComissionRate: ".add__comission_rate",
     inputMaintenanceRate: ".add__maintenance_rate",
     inputPropertyTax: ".add__property_tax",
-    inputHouseInsurance: ".add__house_insurance",
+    inputHouseInsuranceFive: ".add__house_insurance_five",
+    inputHouseInsuranceTen: ".add__house_insurance_ten",
+    inputHouseInsuranceTwenty: ".add__house_insurance_twenty",
     inputAppreciationRateFive: ".add__appreciation_rate_five",
     inputAppreciationRateTen: ".add__appreciation_rate_ten",
     inputAppreciationRateTwenty: ".add__appreciation_rate_twenty",
@@ -699,10 +747,22 @@ const UIController = (function () {
               .querySelector(DOMstrings.inputPropertyTax)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
-        houseInsurance:
+        houseInsuranceFive:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputHouseInsurance)
+              .querySelector(DOMstrings.inputHouseInsuranceFive)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        houseInsuranceTen:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputHouseInsuranceTen)
+              .value.replace(/(?!\.)\D/g, "")
+          ) / 100,
+        houseInsuranceTwenty:
+          parseFloat(
+            document
+              .querySelector(DOMstrings.inputHouseInsuranceTwenty)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         appreciationRateFive:
