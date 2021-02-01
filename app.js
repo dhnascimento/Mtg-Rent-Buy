@@ -1315,13 +1315,13 @@ const UIController = (function () {
             ],
           },
           tooltips: {
-            enabled: true,
-            mode: "index",
-            callbacks: {
-              label: function (tooltipItems, data) {
-                return "$" + tooltipItems.yLabel;
-              },
-            },
+            enabled: false,
+            // mode: "index",
+            // callbacks: {
+            //   label: function (tooltipItems, data) {
+            //     return "$" + tooltipItems.yLabel;
+            //   },
+            // },
           },
         },
       });
