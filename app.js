@@ -1080,12 +1080,12 @@ const UIController = (function () {
           },
           tooltips: {
             enabled: true,
-            mode: "index",
-            callbacks: {
-              label: function (tooltipItems, data) {
-                return "$" + tooltipItems.yLabel;
-              },
-            },
+            // mode: "index",
+            // callbacks: {
+            //   label: function (tooltipItems, data) {
+            //     return "$" + tooltipItems.yLabel;
+            //   },
+            // },
           },
         },
       });
