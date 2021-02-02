@@ -62,7 +62,10 @@
                                     </div>
                                     
                                     <input type="text" class="add__house_value form-control" id="add__house_value" aria-label="Amount"
-                                        placeholder="Total Purchase Price of the Property" value="510000">
+                                        placeholder="Total Purchase Price of the Property" value="510000" required>
+                                        <div class="invalid-feedback">
+                                            Please fill in this value.
+                                          </div>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -70,7 +73,7 @@
                                 <div class="input-group mb-3">
                                 
                                     <input type="text" class="add__down_payment form-control" id="add__down_payment" aria-label="Amount"
-                                        placeholder="Percentage of the property's value paid upfront" value="10">
+                                        placeholder="Percentage of the property's value paid upfront" value="10" required>
 
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -84,7 +87,7 @@
                                 <div class="input-group mb-3">
 
                                     <select name="add__amort_period" class="add__amort_period form-control" id="add__amort_period" aria-label="Amount"
-                                        placeholder="Please select">
+                                        placeholder="Please select" required>
                                         <option label="Interest Only" type="number" value="0">Interest Only</option>
                                         <option label="1 year" type="number" value="1">1 year</option>
                                         <option label="2 years" type="number" value="2">2 years</option>
@@ -122,10 +125,8 @@
                             <div class="col-6">
                                 <label for="add__interest_rate">Interest Rate</label>
                                 <div class="input-group mb-3">
-                                                        
                                     <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
-                                        placeholder="Mortgage Interest Rate" value="3.50">
-
+                                        placeholder="Mortgage Interest Rate" value="3.50" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
@@ -135,11 +136,11 @@
                         <label for="add__is_toronto">House is in Toronto</label>
                         <div class="form-group row ml-0">
                             <div class="form-check-inline">
-                                <input class="add__is_toronto" type="radio" name="gridRadios" id="gridRadios1" value="true" checked>
+                                <input class="add__is_toronto" type="radio" name="gridRadios" id="gridRadios1" value="true" checked required>
                                 <label class="form-check-label" for="gridRadios1">Yes</label>
                             </div>
                             <div class="form-check-inline">
-                                <input class="add__is_toronto" type="radio" name="gridRadios" id="gridRadios2" value="false">
+                                <input class="add__is_toronto" type="radio" name="gridRadios" id="gridRadios2" value="false" required>
                                 <label class="form-check-label" for="gridRadios2">No</label>
                             </div>
                         </div>
@@ -154,7 +155,7 @@
 
                                     <input type="text" class="add__title_insurance form-control" id="add__title_insurance" aria-label="Amount"
                                         placeholder="Insurance policy that protects residential or commercial property owners and their lenders against losses related to the property's title or ownership"
-                                        value="250">
+                                        value="250" required>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -166,7 +167,7 @@
                                     </div>
         
                                     <input type="text" class="add__legal_fees form-control" id="add__legal_fees" aria-label="Amount"
-                                        placeholder="Legal fees including disbursments" value="1500">
+                                        placeholder="Legal fees including disbursments" value="1500" required>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -178,7 +179,7 @@
                                     </div>
         
                                     <input type="text" class="add__home_inspection form-control" id="add__home_inspection" aria-label="Amount"
-                                        placeholder="Home Inspection Cost" value="400">
+                                        placeholder="Home Inspection Cost" value="400" required>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +189,7 @@
                                 <label for="add__comission_rate">Comission</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__comission_rate form-control" id="add__comission_rate" aria-label="Amount"
-                                        placeholder="Comission on Sale" value="6">
+                                        placeholder="Comission on Sale" value="6" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -200,7 +201,7 @@
                                 <div class="input-group mb-3">
                                    
                                     <input type="text" class="add__maintenance_rate form-control" id="add__maintenance_rate" aria-label="Amount"
-                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10">
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -211,7 +212,7 @@
                                 <label for="add__property_tax">Property Tax</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__property_tax form-control" id="add__property_tax" aria-label="Amount"
-                                        placeholder="Property Tax Rate" value="0.86">
+                                        placeholder="Property Tax Rate" value="0.86" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -223,7 +224,7 @@
                                 <div class="input-group mb-3">
                                    
                                     <input type="text" class="add__house_insurance form-control" id="add__house_insurance" aria-label="Amount"
-                                        placeholder="House Insurance Premium" value="0.23">
+                                        placeholder="House Insurance Premium" value="0.23" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -234,7 +235,7 @@
                                 <label for="add__appreciation_rate">House Appreciation Rate</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__appreciation_rate form-control" id="add__appreciation_rate" aria-label="Amount"
-                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00" required>
                                         
                                         <div class="input-group-append">
                                             <span class="input-group-text">%</span>
@@ -247,10 +248,10 @@
                 </div>
             </div>
         </div>
-        <div class="container" style="border:5px solid #0BA14E;; padding:0; border-radius:0.25rem; margin-top:10px; margin-bottom:10px;">
+        <div class="container" style="border:5px solid #0F4D32;; padding:0; border-radius:0.25rem; margin-top:10px; margin-bottom:10px;">
             <div class="card card-default">
                     <div class="card-header">
-                            <a class="accordion" style="color: #0BA14E;">
+                            <a class="accordion" style="color: #0F4D32;">
                                 <h4>Renting Case</h4>
                             </a>
                     </div>
@@ -264,14 +265,14 @@
                                             <span class="input-group-text">$</span>
                                         </div>
                                         <input type="text" class="add__rent_value form-control" id="add__rent_value" aria-label="Amount"
-                                            placeholder="Value Paid Monthly for the Rent" value="2550">
+                                            placeholder="Value Paid Monthly for the Rent" value="2550" required>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <label for="add__investment_returns">Investment Returns</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="add__investment_returns form-control" id="add__investment_returns" aria-label="Amount"
-                                            placeholder="Estimated Investiment Returns for All Years" value="7.00">
+                                            placeholder="Estimated Investiment Returns for All Years" value="7.00" required> 
                                         <div class="input-group-append">
                                             <span class="input-group-text">%</span>
                                         </div>
@@ -283,7 +284,7 @@
                                     <label for="add__cpi_rate">CPI Rate Increase</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
-                                            placeholder="Customer Price Index Increase for All Years" value="2.00">
+                                            placeholder="Customer Price Index Increase for All Years" value="2.00" required>
                                         <div class="input-group-append">
                                             <span class="input-group-text">%</span>
                                         </div>
@@ -293,7 +294,7 @@
                                     <label for="add__renters_insurance">Renters Insurance</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="add__renters_insurance form-control" id="add__renters_insurance" aria-label="Amount"
-                                            placeholder="Percentage of the property's value" value="1.00">
+                                            placeholder="Percentage of the property's value" value="1.00" required>
                                         <div class="input-group-append">
                                             <span class="input-group-text">%</span>
                                         </div>
