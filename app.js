@@ -1147,6 +1147,7 @@ const controller = (function (UICtrl) {
 
   const ctrlAddItem = function () {
     const input = UICtrl.getInput();
+    console.log(input);
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     const comparison = Comparison.selling(input);
