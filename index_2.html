@@ -25,14 +25,34 @@
 </head>
 
 <body>
+    <section class="section page-header section-text-light section-center bg-color-primary header-section align-items-center p-relative" style="background-image: url(https://2wwapx1to1z6yab3zs9xwksg-wpengine.netdna-ssl.com/wp-content/themes/mortgagebrokerstore/images/About-Hero.png);background-size:cover">
+        <div id="breadcrumbs" class="overflow-hidden">
+            <div class="breadcrumb breadcrumb-light d-block appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="100" style="animation-delay: 100ms;"></div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="mb-0 title">Rent Vs Buy Calculator</h1>
+                </div>
+            </div>
+            <style>#breadcrumbs a { color: #FFF !important; font-size:14px; }</style>
+            <div style="color: #fefefe!important;">
+                <p id="breadcrumbs"><span><span><a href="https://mortgagebrokerstore.com/">Home</a> › <span><a href="https://mortgagebrokerstore.com/mortgage-tools">Mortgage Tools</a> › <span class="breadcrumb_last" aria-current="page">Rent Vs Buy Calculator</span></span></span></span></p>
+            </div>
+        </div>
+    </section>
 
     <div class="container">
-        <h1>Is it Better to Rent or Buy?</h1>
         <a href="https://github.com/dhnascimento/Mtg-Rent-Buy">GitHub Repository</a>
         <br />
         <div class="accordion">
             <div class="card card-default">
                 <div class="card-header">
+                    <h4 class="card-title m-0">
+                        <a class="accordion" style="color: #1E5398;">
+                            Is it Better to Rent or Buy?
+                        </a>
+                    </h4>
                 </div>
                 <div id="mortgagePaymentCalculator" class="collapse show">
                     <div class="card-body">
@@ -66,7 +86,6 @@
 
                             <select name="add__amort_period" class="add__amort_period form-control" id="add__amort_period" aria-label="Amount"
                             placeholder="Please select">
-                            <option label="Interest Only" type="number" value="0">Interest Only</option>
                             <option label="1 year" type="number" value="1">1 year</option>
                             <option label="2 years" type="number" value="2">2 years</option>
                             <option label="3 years" type="number" value="3">3 years</option>
@@ -100,15 +119,44 @@
                         </select>
                         
                     </div>
-                    
+                        
                         <label for="add__interest_rate">Interest Rate</label>
-                        <div class="input-group mb-3">
-                                                
-                            <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
-                                placeholder="Mortgage Interest Rate" value="3.50">
-
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__interest_rate_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                                        
+                                    <input type="text" class="add__interest_rate_five form-control" id="add__interest_rate_five" aria-label="Amount"
+                                        placeholder="Mortgage Interest Rate" value="3.50">
+        
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__interest_rate_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                                        
+                                    <input type="text" class="add__interest_rate_ten form-control" id="add__interest_rate_ten" aria-label="Amount"
+                                        placeholder="Mortgage Interest Rate" value="4.50">
+        
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__interest_rate_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                                        
+                                    <input type="text" class="add__interest_rate_twenty form-control" id="add__interest_rate_twenty" aria-label="Amount"
+                                        placeholder="Mortgage Interest Rate" value="5.50">
+        
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -171,52 +219,144 @@
                         </div>
 
                         <label for="add__maintenance_rate">Maintenance</label>
-                        <div class="input-group mb-3">
-                           
-                            <input type="text" class="add__maintenance_rate form-control" id="add__maintenance_rate" aria-label="Amount"
-                                placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10">
-
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__maintenance_rate_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__maintenance_rate_five form-control" id="add__maintenance_rate_five" aria-label="Amount"
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
-
+                            <div class="col-4">
+                                <label for="add__maintenance_rate_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__maintenance_rate_ten form-control" id="add__maintenance_rate_ten" aria-label="Amount"
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.20">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__maintenance_rate_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__maintenance_rate_twenty form-control" id="add__maintenance_rate_twenty" aria-label="Amount"
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.30">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <label for="add__property_tax">Property Tax</label>
-                        <div class="input-group mb-3">
-                           
-                            <input type="text" class="add__property_tax form-control" id="add__property_tax" aria-label="Amount"
-                                placeholder="Property Tax Rate" value="0.86">
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__property_tax_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__property_tax_five form-control" id="add__property_tax_five" aria-label="Amount"
+                                        placeholder="Property Tax Rate" value="0.86">
 
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="col-4">
+                                <label for="add__property_tax_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__property_tax_ten form-control" id="add__property_tax_ten" aria-label="Amount"
+                                        placeholder="Property Tax Rate" value="0.90">
 
-                        </div>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__property_tax_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__property_tax_twenty form-control" id="add__property_tax_twenty" aria-label="Amount"
+                                        placeholder="Property Tax Rate" value="0.95">
 
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
                         <label for="add__house_insurance">Insurance</label>
-                        <div class="input-group mb-3">
-                           
-                            <input type="text" class="add__house_insurance form-control" id="add__house_insurance" aria-label="Amount"
-                                placeholder="House Insurance Premium" value="0.23">
-
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__house_insurance_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__house_insurance_five form-control" id="add__house_insurance_five" aria-label="Amount"
+                                        placeholder="House Insurance Premium" value="0.23">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
-
+                            <div class="col-4">
+                                <label for="add__house_insurance_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__house_insurance_ten form-control" id="add__house_insurance_ten" aria-label="Amount"
+                                        placeholder="House Insurance Premium" value="0.30">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__house_insurance_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__house_insurance_twenty form-control" id="add__house_insurance_twenty" aria-label="Amount"
+                                        placeholder="House Insurance Premium" value="0.40">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
 
                         <label for="add__appreciation_rate">House Appreciation Rate</label>
-                        <div class="input-group mb-3">
-                           
-                            <input type="text" class="add__appreciation_rate form-control" id="add__appreciation_rate" aria-label="Amount"
-                                placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
-
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__appreciation_rate_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__appreciation_rate_five form-control" id="add__appreciation_rate_five" aria-label="Amount"
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
-
+                            <div class="col-4">
+                                <label for="add__appreciation_rate_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__appreciation_rate_ten form-control" id="add__appreciation_rate_ten" aria-label="Amount"
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.50">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__appreciation_rate_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__appreciation_rate_twenty form-control" id="add__appreciation_rate_twenty" aria-label="Amount"
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="3.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
 
                         <p>Renting Case</p>
                     
@@ -232,22 +372,48 @@
                         </div>
 
                         <label for="add__investment_returns">Investment Returns</label>
-                        <div class="input-group mb-3">
-                       
-                            <input type="text" class="add__investment_returns form-control" id="add__investment_returns" aria-label="Amount"
-                                placeholder="Estimated Investiment Returns for All Years" value="7.00">
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__investment_returns_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__investment_returns_five form-control" id="add__investment_returns_five" aria-label="Amount"
+                                        placeholder="Estimated Investiment Returns for All Years" value="5.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__investment_returns_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__investment_returns_ten form-control" id="add__investment_returns_ten" aria-label="Amount"
+                                        placeholder="Estimated Investiment Returns for All Years" value="7.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__investment_returns_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="add__investment_returns_twenty form-control" id="add__investment_returns_twenty" aria-label="Amount"
+                                        placeholder="Estimated Investiment Returns for All Years" value="10.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    
                     <label for="add__cpi_rate">CPI Rate Increase</label>
 
                         <div class="row">
                             <div class="col-4">
-                                <label for="add__cpi_rate">CPI Rate Increase</label>
+                                <label for="add__cpi_rate_five"><small>First 5 Years</small></label>
                                 <div class="input-group mb-3">
                             
-                                    <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
+                                    <input type="text" class="add__cpi_rate_five form-control" id="add__cpi_rate_five" aria-label="Amount"
                                         placeholder="Customer Price Index Increase for All Years" value="2.00">
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -255,22 +421,22 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <label for="add__cpi_rate">CPI Rate Increase</label>
+                                <label for="add__cpi_rate_ten"><small>Next 5 Years</small></label>
                                 <div class="input-group mb-3">
                             
-                                    <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
-                                        placeholder="Customer Price Index Increase for All Years" value="2.00">
+                                    <input type="text" class="add__cpi_rate_ten form-control" id="add__cpi_rate_ten" aria-label="Amount"
+                                        placeholder="Customer Price Index Increase for All Years" value="5.00">
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <label for="add__cpi_rate">CPI Rate Increase</label>
+                                <label for="add__cpi_rate_twenty"><small>Next 20 Years</small></label>
                                 <div class="input-group mb-3">
                             
-                                    <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
-                                        placeholder="Customer Price Index Increase for All Years" value="2.00">
+                                    <input type="text" class="add__cpi_rate_twenty form-control" id="add__cpi_rate_twenty" aria-label="Amount"
+                                        placeholder="Customer Price Index Increase for All Years" value="10.00">
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
@@ -279,13 +445,46 @@
                         </div>
 
                         <label for="add__renters_insurance">Renters Insurance</label>
-                        <div class="input-group mb-3">
-                       
-                            <input type="text" class="add__renters_insurance form-control" id="add__renters_insurance" aria-label="Amount"
-                                placeholder="Percentage of the property's value" value="1.00">
-                            <div class="input-group-append">
-                                <span class="input-group-text">%</span>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="add__renters_insurance_five"><small>First 5 Years</small></label>
+                                <div class="input-group mb-3">
+                               
+                                    <input type="text" class="add__renters_insurance_five form-control" id="add__renters_insurance_five" aria-label="Amount"
+                                        placeholder="Percentage of the property's value" value="1.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="col-4">
+                                <label for="add__renters_insurance_ten"><small>Next 5 Years</small></label>
+                                <div class="input-group mb-3">
+                               
+                                    <input type="text" class="add__renters_insurance_ten form-control" id="add__renters_insurance_ten" aria-label="Amount"
+                                        placeholder="Percentage of the property's value" value="1.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="add__renters_insurance_twenty"><small>Next 20 Years</small></label>
+                                <div class="input-group mb-3">
+                               
+                                    <input type="text" class="add__renters_insurance_twenty form-control" id="add__renters_insurance_twenty" aria-label="Amount"
+                                        placeholder="Percentage of the property's value" value="1.00">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
                         </div>
 
 
