@@ -189,6 +189,20 @@ body {
   outline: none;
 }
 
+.col-3 {
+  text-align: center;
+  font-weight: 600;
+}
+
+.col-6 {
+  text-align: center;
+  font-weight: 600;
+}
+
+.form-check-label {
+  padding: 5px;
+}
+
 /***** LISTS *****/
 .container {
   width: 1000px;
