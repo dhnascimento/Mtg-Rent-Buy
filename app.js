@@ -1155,6 +1155,42 @@ const controller = (function (UICtrl) {
   };
 
   const ctrlAddItem = function () {
+    const DOMstrings = UICtrl.getDOMstrings();
+
+    //Get array with the name of all classes
+    let DOMValidation = Object.values(DOMstrings).slice(1);
+
+    // Remove radio buttons from array
+    radiosIndex = DOMValidation.indexOf("input[name=gridRadios]:checked");
+    DOMValidation.splice(radiosIndex, 1);
+
+    // Remove 'is-invalid' for second run of results
+    DOMValidation.forEach(function (item) {
+      item = item.replace(".", "");
+      console.log(item);
+      if (document.getElementById(item).classList.length > 2) {
+        document.getElementById(item).classList.remove("is-invalid");
+      }
+    });
+
+    // Add 'is-invalid' class if input is empty
+    let counterEmpty = 0;
+    let lastEmpty = [];
+    for (const name of DOMValidation) {
+      if (document.querySelector(name).value === "") {
+        lastEmpty.push(name);
+        document.querySelector(name).className += "  is-invalid";
+        counterEmpty++;
+      }
+    }
+
+    // Focus on first empty input field
+    if (counterEmpty) {
+      const focusVar = lastEmpty[0];
+      document.querySelector(focusVar).focus();
+      alert(`Please fill all the required inputs.`);
+      return false;
+    }
     const input = UICtrl.getInput();
     console.log(input);
     const rentCase = Rent.RentingCase(input);
