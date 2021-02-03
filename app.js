@@ -622,7 +622,7 @@ const Comparison = (function () {
             factor === 0
               ? rent[0]["investmentPortfolio"] -
                 (owner[0]["houseValue"] -
-                  owner[0]["houseValue"] * input.comissionRate -
+                  owner[0]["houseValue"] * input.commissionRate -
                   owner[0]["mortgageBalance"])
               : -(
                   (rent[factor]["investmentPortfolio"] -
@@ -632,7 +632,7 @@ const Comparison = (function () {
                 ) +
                 rent[factor]["investmentPortfolio"] -
                 (owner[factor]["houseValue"] -
-                  owner[factor]["houseValue"] * input.comissionRate -
+                  owner[factor]["houseValue"] * input.commissionRate -
                   owner[factor]["mortgageBalance"]),
         };
       });
@@ -657,7 +657,7 @@ const UIController = (function () {
     inputTitleInsurance: ".add__title_insurance", //
     inputLegalFees: ".add__legal_fees",
     inputHomeInspection: ".add__home_inspection", //
-    inputComissionRate: ".add__comission_rate",
+    inputCommissionRate: ".add__commission_rate",
     inputMaintenanceRateFive: ".add__maintenance_rate_five",
     inputMaintenanceRateTen: ".add__maintenance_rate_ten",
     inputMaintenanceRateTwenty: ".add__maintenance_rate_twenty",
@@ -742,10 +742,10 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputHomeInspection)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        comissionRate:
+        commissionRate:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputComissionRate)
+              .querySelector(DOMstrings.inputCommissionRate)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         maintenanceRateFive:
@@ -1248,13 +1248,13 @@ const UIController = (function () {
               data: [...dataBuy],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#E16967",
+              backgroundColor: "#88A3C8",
               pointBackgroundColor: customBorderColorArray,
               pointBorderWidth: customBorderArray,
               pointBorderColor: "#333333",
               radius: customRadiusArray,
               pointRadius: customRadiusArray,
-              pointHoverBackgroundColor: "#E16967",
+              pointHoverBackgroundColor: "#88A3C8",
               pointHoverBorderColor: "#1e5398",
             },
             {
@@ -1262,7 +1262,7 @@ const UIController = (function () {
               data: [...dataRent],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#3275CD",
+              backgroundColor: "#7FA092",
               pointBackgroundColor: "#333333",
               pointBorderColor: "#333333",
               pointHoverBackgroundColor: "#3275CD",
@@ -1341,10 +1341,10 @@ const UIController = (function () {
           bestYear = index;
         }
       });
-      let textMessage = `<b style="color:#E16967";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
+      let textMessage = `<b style="color:#88A3C8";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
 
       if (!bestYear) {
-        textMessage = `<span style="color:#3275CD; font-weight:600";>Renting</span> is cheaper in the next ${
+        textMessage = `<span style="color:#7FA092; font-weight:600";>Renting</span> is cheaper in the next ${
           input.length - 1
         } years`;
       }

@@ -42,11 +42,19 @@
         </div>
     </section>
 
-    <div class="container" style="border:5px solid #1E5398;; padding:0; border-radius:0.25rem; margin-bottom: 10px;">
+    <div class="container" style=" padding:0; border-radius:0.25rem; margin-bottom: 0px;">
+        <div class="card card-default" ">
+        <div class="card-header">
+            <h4 class="card-title m-0">
+                <a class="accordion" style="color: #1E5398;">
+                    Calculate Your Mortgage Payments
+                </a>
+            </h4>
+        </div>
         <div class="accordion">
-            <div class="card card-default">
-                <div class="card-header">
-                        <a class="accordion" style="color: #1E5398;">
+            <div class="card card-default" style="background-color: rgb(30, 83, 152, 0.05);">
+                <div class="card-header" style="background-color: rgb(30, 83, 152, 0.50); border-radius: 0;">
+                        <a class="accordion" style="color: #FFFFFF;">
                             <h4>Owning Case</h4>
                         </a>
                 </div>
@@ -62,7 +70,7 @@
                                     </div>
                                     
                                     <input type="text" class="add__house_value form-control" id="add__house_value" aria-label="Amount"
-                                        placeholder="Total Purchase Price of the Property" value="510000" required>
+                                        placeholder="Total Purchase Price of the Property" value="650000" required>
                                         <div class="invalid-feedback">
                                             Please fill in this value.
                                           </div>
@@ -82,53 +90,90 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6" style="padding-top: 7px;">
                                 <label for="add__amort_period">Amortization Period</label>
-                                <div class="input-group mb-3">
-
-                                    <select name="add__amort_period" class="add__amort_period form-control" id="add__amort_period" aria-label="Amount"
-                                        placeholder="Please select" required>
-                                        <option label="Interest Only" type="number" value="0">Interest Only</option>
-                                        <option label="1 year" type="number" value="1">1 year</option>
-                                        <option label="2 years" type="number" value="2">2 years</option>
-                                        <option label="3 years" type="number" value="3">3 years</option>
-                                        <option label="4 years" type="number" value="4">4 years</option>
-                                        <option label="5 years" type="number" value="5">5 years</option>
-                                        <option label="6 years" type="number" value="6">6 years</option>
-                                        <option label="7 years" type="number" value="7">7 years</option>
-                                        <option label="8 years" type="number" value="8">8 years</option>
-                                        <option label="9 years" type="number" value="9">9 years</option>
-                                        <option label="10 years" type="number" value="10">10 years</option>
-                                        <option label="11 years" type="number" value="11">11 years</option>
-                                        <option label="12 years" type="number" value="12">12 years</option>
-                                        <option label="13 years" type="number" value="13">13 years</option>
-                                        <option label="14 years" type="number" value="14">14 years</option>
-                                        <option label="15 years" type="number" value="15">15 years</option>
-                                        <option label="16 years" type="number" value="16">16 years</option>
-                                        <option label="17 years" type="number" value="17">17 years</option>
-                                        <option label="18 years" type="number" value="18">18 years</option>
-                                        <option label="19 years" type="number" value="19">19 years</option>
-                                        <option label="20 years" type="number" value="20">20 years</option>
-                                        <option label="21 years" type="number" value="21">21 years</option>
-                                        <option label="22 years" type="number" value="22">22 years</option>
-                                        <option label="23 years" type="number" value="23">23 years</option>
-                                        <option label="24 years" type="number" value="24">24 years</option>
-                                        <option label="25 years" type="number" value="25">25 years</option>
-                                        <option label="26 years" type="number" value="26">26 years</option>
-                                        <option label="27 years" type="number" value="27">27 years</option>
-                                        <option label="28 years" type="number" value="28">28 years</option>
-                                        <option label="29 years" type="number" value="29">29 years</option>
-                                        <option label="30 years" type="number" value="30" selected>30 years</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="spacing"><small></small></label>
+                                        <div class="input-group mb-3">
+        
+                                            <select name="add__amort_period" class="add__amort_period form-control" id="add__amort_period" aria-label="Amount"
+                                                placeholder="Please select" required>
+                                                <option label="Interest Only" type="number" value="0">Interest Only</option>
+                                                <option label="1 year" type="number" value="1">1 year</option>
+                                                <option label="2 years" type="number" value="2">2 years</option>
+                                                <option label="3 years" type="number" value="3">3 years</option>
+                                                <option label="4 years" type="number" value="4">4 years</option>
+                                                <option label="5 years" type="number" value="5">5 years</option>
+                                                <option label="6 years" type="number" value="6">6 years</option>
+                                                <option label="7 years" type="number" value="7">7 years</option>
+                                                <option label="8 years" type="number" value="8">8 years</option>
+                                                <option label="9 years" type="number" value="9">9 years</option>
+                                                <option label="10 years" type="number" value="10">10 years</option>
+                                                <option label="11 years" type="number" value="11">11 years</option>
+                                                <option label="12 years" type="number" value="12">12 years</option>
+                                                <option label="13 years" type="number" value="13">13 years</option>
+                                                <option label="14 years" type="number" value="14">14 years</option>
+                                                <option label="15 years" type="number" value="15">15 years</option>
+                                                <option label="16 years" type="number" value="16">16 years</option>
+                                                <option label="17 years" type="number" value="17">17 years</option>
+                                                <option label="18 years" type="number" value="18">18 years</option>
+                                                <option label="19 years" type="number" value="19">19 years</option>
+                                                <option label="20 years" type="number" value="20">20 years</option>
+                                                <option label="21 years" type="number" value="21">21 years</option>
+                                                <option label="22 years" type="number" value="22">22 years</option>
+                                                <option label="23 years" type="number" value="23">23 years</option>
+                                                <option label="24 years" type="number" value="24">24 years</option>
+                                                <option label="25 years" type="number" value="25">25 years</option>
+                                                <option label="26 years" type="number" value="26">26 years</option>
+                                                <option label="27 years" type="number" value="27">27 years</option>
+                                                <option label="28 years" type="number" value="28">28 years</option>
+                                                <option label="29 years" type="number" value="29">29 years</option>
+                                                <option label="30 years" type="number" value="30" selected>30 years</option>
+                                            </select>
+                                        </div>
+                                    
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <label for="add__interest_rate">Interest Rate</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
-                                        placeholder="Mortgage Interest Rate" value="3.50" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="add__interest_rate_five"><small>First 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                                                
+                                            <input type="text" class="add__interest_rate_five form-control" id="add__interest_rate_five" aria-label="Amount"
+                                                placeholder="Mortgage Interest Rate" value="3.50">
+                
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="add__interest_rate_ten"><small>Next 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                                                
+                                            <input type="text" class="add__interest_rate_ten form-control" id="add__interest_rate_ten" aria-label="Amount"
+                                                placeholder="Mortgage Interest Rate" value="4.50">
+                
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="add__interest_rate_twenty"><small>Next 20 Years</small></label>
+                                        <div class="input-group mb-3">
+                                                                
+                                            <input type="text" class="add__interest_rate_twenty form-control" id="add__interest_rate_twenty" aria-label="Amount"
+                                                placeholder="Mortgage Interest Rate" value="5.50">
+                
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +190,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <label for="add__title_insurance">Title Insurance</label>
                                 <div class="input-group mb-3">
                                     
@@ -183,10 +228,10 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                <label for="add__comission_rate">Comission</label>
+                                <label for="add__commission_rate">Commission</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="add__comission_rate form-control" id="add__comission_rate" aria-label="Amount"
-                                        placeholder="Comission on Sale" value="6" required>
+                                    <input type="text" class="add__commission_rate form-control" id="add__commission_rate" aria-label="Amount"
+                                        placeholder="commission on Sale" value="6" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -194,40 +239,114 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-6"> 
                                 <label for="add__maintenance_rate">Maintenance</label>
-                                <div class="input-group mb-3">
-                                   
-                                    <input type="text" class="add__maintenance_rate form-control" id="add__maintenance_rate" aria-label="Amount"
-                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10" required>
-        
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="add__maintenance_rate_five"><small>First 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__maintenance_rate_five form-control" id="add__maintenance_rate_five" aria-label="Amount"
+                                                placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="add__maintenance_rate_ten"><small>Next 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__maintenance_rate_ten form-control" id="add__maintenance_rate_ten" aria-label="Amount"
+                                                placeholder="Maintenance Costs as a Percentage of the House Value" value="1.20">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="add__maintenance_rate_twenty"><small>Next 20 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__maintenance_rate_twenty form-control" id="add__maintenance_rate_twenty" aria-label="Amount"
+                                                placeholder="Maintenance Costs as a Percentage of the House Value" value="1.30">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-6">
                                 <label for="add__property_tax">Property Tax</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="add__property_tax form-control" id="add__property_tax" aria-label="Amount"
-                                        placeholder="Property Tax Rate" value="0.86" required>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="add__property_tax_five"><small>First 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__property_tax_five form-control" id="add__property_tax_five" aria-label="Amount"
+                                                placeholder="Property Tax Rate" value="0.86">
         
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <label for="add__house_insurance">Insurance</label>
-                                <div class="input-group mb-3">
-                                   
-                                    <input type="text" class="add__house_insurance form-control" id="add__house_insurance" aria-label="Amount"
-                                        placeholder="House Insurance Premium" value="0.23" required>
+                                    <div class="col-4">
+                                        <label for="add__property_tax_ten"><small>Next 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__property_tax_ten form-control" id="add__property_tax_ten" aria-label="Amount"
+                                                placeholder="Property Tax Rate" value="0.90">
         
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="add__property_tax_twenty"><small>Next 20 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__property_tax_twenty form-control" id="add__property_tax_twenty" aria-label="Amount"
+                                                placeholder="Property Tax Rate" value="0.95">
+        
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="add__house_insurance">Insurance</label>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="add__house_insurance_five"><small>First 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__house_insurance_five form-control" id="add__house_insurance_five" aria-label="Amount"
+                                                placeholder="House Insurance Premium" value="0.23">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="add__house_insurance_ten"><small>Next 5 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__house_insurance_ten form-control" id="add__house_insurance_ten" aria-label="Amount"
+                                                placeholder="House Insurance Premium" value="0.30">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="add__house_insurance_twenty"><small>Next 20 Years</small></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__house_insurance_twenty form-control" id="add__house_insurance_twenty" aria-label="Amount"
+                                                placeholder="House Insurance Premium" value="0.40">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -272,10 +391,10 @@
                 </div>
             </div>
         </div>
-        <div class="container" style="border:5px solid #0F4D32;; padding:0; border-radius:0.25rem; margin-top:10px; margin-bottom:10px;">
-            <div class="card card-default">
-                    <div class="card-header">
-                            <a class="accordion" style="color: #0F4D32;">
+        <div class="container" style=" padding:0; margin:0; ">
+            <div class="card card-default" style="background-color:rgb(15, 77, 50, 0.05); border-radius: 0.25rem .25rem 0 0;">
+                    <div class="card-header" style="background-color:rgb(15, 77, 50, 0.5); border:none; border-radius:0;">
+                            <a class="accordion" style="color:#FFF">
                                 <h4>Renting Case</h4>
                             </a>
                     </div>
@@ -286,7 +405,7 @@
                                     <label for="add__rent_value">Initial Monthly Rent</label>
                                     <div class="row">
                                         <div class="col-12" style="padding-top: 7px;">
-                                            <label for="add__investment_returns_five"><small></small></label>
+                                            <label for="spacing"><small></small></label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">$</span>
