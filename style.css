@@ -203,6 +203,10 @@ body {
   padding: 5px;
 }
 
+input[data-state="invalid"] {
+  border-color: hsl(0, 76%, 50%);
+}
+
 /***** LISTS *****/
 .container {
   width: 1000px;

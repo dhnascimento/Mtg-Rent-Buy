@@ -546,7 +546,6 @@ const Owning = (function () {
               : Owning.houseValue(initalHouseValue, appreciationRate, factor),
         };
       });
-      console.log(table);
       return table;
     },
 
@@ -1364,7 +1363,6 @@ const UIController = (function () {
 const controller = (function (UICtrl) {
   const setupEventListeners = function () {
     const DOM = UICtrl.getDOMstrings();
-    console.log({ DOM });
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
@@ -1381,8 +1379,30 @@ const controller = (function (UICtrl) {
   };
 
   const ctrlAddItem = function () {
+    const DOMstrings = UICtrl.getDOMstrings();
+    let DOMValidation = Object.values(DOMstrings).slice(1);
+    console.log(DOMValidation);
+
+    let counterEmpty = 0;
+    let lastEmpty = [];
+    for (const name of DOMValidation) {
+      if (document.querySelector(name).value === "") {
+        lastEmpty.push(name);
+        document.querySelector(name).className += "  is-invalid";
+        counterEmpty++;
+      }
+    }
+
+    if (counterEmpty) {
+      const focusVar = lastEmpty[0];
+      console.log(focusVar);
+      document.querySelector(focusVar).focus();
+      alert(`Please fill all the required inputs.`);
+      return false;
+    }
+
     const input = UICtrl.getInput();
-    console.log(input);
+    // console.log(input);
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     const comparison = Comparison.selling(input);
