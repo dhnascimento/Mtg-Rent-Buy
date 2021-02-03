@@ -1012,13 +1012,13 @@ const UIController = (function () {
               data: [...dataBuy],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#E16967",
+              backgroundColor: "#88A3C8",
               pointBackgroundColor: customBorderColorArray,
               pointBorderWidth: customBorderArray,
               pointBorderColor: "#333333",
               radius: customRadiusArray,
               pointRadius: customRadiusArray,
-              pointHoverBackgroundColor: "#E16967",
+              pointHoverBackgroundColor: "#E88A3C8",
               pointHoverBorderColor: "#1e5398",
             },
             {
@@ -1026,10 +1026,10 @@ const UIController = (function () {
               data: [...dataRent],
               fill: true,
               borderColor: "#333333",
-              backgroundColor: "#3275CD",
+              backgroundColor: "#7FA092",
               pointBackgroundColor: "#333333",
               pointBorderColor: "#333333",
-              pointHoverBackgroundColor: "#3275CD",
+              pointHoverBackgroundColor: "#7FA092",
               pointHoverBorderColor: "#1e5398",
               radius: customRadiusArray,
               pointRadius: customRadiusArray,
@@ -1079,7 +1079,7 @@ const UIController = (function () {
             ],
           },
           tooltips: {
-            enabled: true,
+            enabled: false,
             // mode: "index",
             // callbacks: {
             //   label: function (tooltipItems, data) {
@@ -1107,10 +1107,10 @@ const UIController = (function () {
           console.log("Best Year", bestYear);
         }
       });
-      let textMessage = `<b style="color:#E16967";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
+      let textMessage = `<b style="color:#88A3C8";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
 
       if (!bestYear) {
-        textMessage = `<span style="color:#3275CD; font-weight:600";>Renting</span> is cheaper in the next ${
+        textMessage = `<span style="color:#7FA092; font-weight:600";>Renting</span> is cheaper in the next ${
           input.length - 1
         } years`;
       }

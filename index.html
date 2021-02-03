@@ -42,7 +42,8 @@
         </div>
     </section>
 
-    <div class="container" style="border:5px solid #1E5398;; padding:0; border-radius:0.25rem; margin-bottom: 0px;">
+    <div class="container" style=" padding:0; border-radius:0.25rem; margin-bottom: 0px;">
+        <div class="card card-default" ">
         <div class="card-header">
             <h4 class="card-title m-0">
                 <a class="accordion" style="color: #1E5398;">
@@ -51,9 +52,9 @@
             </h4>
         </div>
         <div class="accordion">
-            <div class="card card-default">
-                <div class="card-header">
-                        <a class="accordion" style="color: #1E5398; background-color:#FFF">
+            <div class="card card-default" style="background-color: rgb(30, 83, 152, 0.05);">
+                <div class="card-header" style="background-color: rgb(30, 83, 152, 0.50); border-radius: 0;">
+                        <a class="accordion" style="color: #FFFFFF;">
                             <h4>Owning Case</h4>
                         </a>
                 </div>
@@ -254,65 +255,65 @@
                     </div>  
                 </div>
             </div>
-        </div>
-        <div class="container" style="border:5px solid #0F4D32;; padding:0; border-radius:0.25rem; margin-top:1px; margin-bottom:10px;">
-            <div class="card card-default">
-                    <div class="card-header" style="background-color:#FFFFFF; border:none;">
-                            <a class="accordion" style="color: #0F4D32;">
-                                <h4>Renting Case</h4>
-                            </a>
-                    </div>
-                    <div id="buyOrRentCalculatorRent" class="collapse show">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="add__rent_value">Initial Monthly Rent</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">$</span>
-                                        </div>
-                                        <input type="text" class="add__rent_value form-control" id="add__rent_value" aria-label="Amount"
-                                            placeholder="Value Paid Monthly for the Rent" value="2550" required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="add__investment_returns">Investment Returns</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="add__investment_returns form-control" id="add__investment_returns" aria-label="Amount"
-                                            placeholder="Estimated Investiment Returns for All Years" value="7.00" required> 
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">%</span>
+            <div class="container" style=" padding:0; margin:0; ">
+                <div class="card card-default" style="background-color:rgb(15, 77, 50, 0.05); border-radius: 0.25rem .25rem 0 0;">
+                        <div class="card-header" style="background-color:rgb(15, 77, 50, 0.5); border:none; border-radius:0;">
+                                <a class="accordion" style="color:#FFF">
+                                    <h4>Renting Case</h4>
+                                </a>
+                        </div>
+                        <div id="buyOrRentCalculatorRent" class="collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="add__rent_value">Initial Monthly Rent</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="text" class="add__rent_value form-control" id="add__rent_value" aria-label="Amount"
+                                                placeholder="Value Paid Monthly for the Rent" value="2550" required>
                                         </div>
                                     </div>
+                                    <div class="col-6">
+                                        <label for="add__investment_returns">Investment Returns</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__investment_returns form-control" id="add__investment_returns" aria-label="Amount"
+                                                placeholder="Estimated Investiment Returns for All Years" value="7.00" required> 
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="add__cpi_rate">CPI Rate Increase</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
+                                                placeholder="Customer Price Index Increase for All Years" value="2.00" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="add__renters_insurance">Renters Insurance</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="add__renters_insurance form-control" id="add__renters_insurance" aria-label="Amount"
+                                                placeholder="Percentage of the property's value" value="1.00" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                       
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="add__cpi_rate">CPI Rate Increase</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
-                                            placeholder="Customer Price Index Increase for All Years" value="2.00" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="add__renters_insurance">Renters Insurance</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="add__renters_insurance form-control" id="add__renters_insurance" aria-label="Amount"
-                                            placeholder="Percentage of the property's value" value="1.00" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                       
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container" style="margin-top:10px;">
+            <div class="container" style="margin-top:20px;">
                 <div style="text-align: center; margin-bottom:10px">
                     <button class="btn btn-primary mr-2 add__btn">Should I Rent or Buy?</button>
                     <p class="LTV-Calc-Results">
@@ -350,7 +351,7 @@
         </div>
     
     </div>
-
+</div>
 
 
 
