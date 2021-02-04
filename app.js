@@ -1403,13 +1403,34 @@ const UIController = (function () {
       // const listLabelsText = [];
       let object = {};
 
-      for (let item of listLabels) {
-        if (!item.htmlFor.includes("appreciation_rate")) {
-        }
+      const references = {
+        add__amort_period: "Amortization Period",
+        add__appreciation_rate: "House Appreciation Rate",
+        add__cpi_rate: "CPI Rate Increase",
+        add__house_insurance: "Insurance",
+        add__house_value: "House Purchase Price",
+        add__interest_rate: "Interest Rate",
+        add__investment_returns: "Investment Returns",
+        add__maintenance_rate: "Maintenance",
+        add__property_tax: "Property Tax",
+        add__renters_insurance: "Renters Insurance",
+      };
 
-        object[item.htmlFor] = item.textContent;
-        // listIDs.push(item.htmlFor);
-        // listLabelsText.push(item.textContent);
+      for (let item of listLabels) {
+        let key = item.htmlFor;
+        if (key.includes("_five")) {
+          key = key.replace("_five", "");
+          console.log("KEY2", key);
+          object[item.htmlFor] = references[key];
+        } else if (key.includes("_ten")) {
+          key = key.replace("_ten", "");
+          object[item.htmlFor] = references[key];
+        } else if (key.includes("_twenty")) {
+          key = key.replace("_twenty", "");
+          object[item.htmlFor] = references[key];
+        } else {
+          object[item.htmlFor] = item.textContent;
+        }
       }
 
       return object;
