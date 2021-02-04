@@ -1395,6 +1395,25 @@ const UIController = (function () {
         return true;
       }
     },
+
+    listOfEmptyInputs: function () {
+      let listLabels = document.getElementsByTagName("label");
+
+      // const listIDs = [];
+      // const listLabelsText = [];
+      let object = {};
+
+      for (let item of listLabels) {
+        if (!item.htmlFor.includes("appreciation_rate")) {
+        }
+
+        object[item.htmlFor] = item.textContent;
+        // listIDs.push(item.htmlFor);
+        // listLabelsText.push(item.textContent);
+      }
+
+      return object;
+    },
   };
 })();
 
@@ -1402,7 +1421,20 @@ const UIController = (function () {
 const controller = (function (UICtrl) {
   const setupEventListeners = function () {
     const DOM = UICtrl.getDOMstrings();
+
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
+
+    document.querySelectorAll("input").forEach((item) => {
+      item.addEventListener("focusout", (event) => {
+        item.value = parseFloat(
+          item.value.replace(/(?!\.)\D/g, "")
+        ).toLocaleString();
+        if (isNaN(parseFloat(item.value))) {
+          item.value = "";
+        }
+      });
+    });
+
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
         ctrlAddItem();
@@ -1420,42 +1452,13 @@ const controller = (function (UICtrl) {
   const ctrlAddItem = function () {
     const DOMstrings = UICtrl.getDOMstrings();
 
-    // //Get array with the name of all classes
-    // let DOMValidation = Object.values(DOMstrings).slice(1);
+    const validateInputs = UICtrl.inputValidation(DOMstrings);
 
-    // // Remove radio buttons from array
-    // radiosIndex = DOMValidation.indexOf("input[name=gridRadios]:checked");
-    // DOMValidation.splice(radiosIndex, 1);
+    console.log(UICtrl.listOfEmptyInputs());
 
-    // // Remove 'is-invalid' for second run of results
-    // DOMValidation.forEach(function (item) {
-    //   item = item.replace(".", "");
-    //   console.log(item);
-    //   if (document.getElementById(item).classList.length > 2) {
-    //     document.getElementById(item).classList.remove("is-invalid");
-    //   }
-    // });
-
-    // // Add 'is-invalid' class if input is empty
-    // let counterEmpty = 0;
-    // let lastEmpty = [];
-    // for (const name of DOMValidation) {
-    //   if (document.querySelector(name).value === "") {
-    //     lastEmpty.push(name);
-    //     document.querySelector(name).className += "  is-invalid";
-    //     counterEmpty++;
-    //   }
-    // }
-
-    // // Focus on first empty input field
-    // if (counterEmpty) {
-    //   const focusVar = lastEmpty[0];
-    //   document.querySelector(focusVar).focus();
-    //   alert(`Please fill all the required inputs.`);
-    //   return false;
-    // }
-
-    UICtrl.inputValidation(DOMstrings);
+    if (!validateInputs) {
+      return false;
+    }
 
     const input = UICtrl.getInput();
     // console.log(input);
