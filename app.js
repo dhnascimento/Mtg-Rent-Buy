@@ -1385,11 +1385,12 @@ const UIController = (function () {
         }
       }
 
+      console.log(lastEmpty);
+
       // Focus on first empty input field
       if (counterEmpty) {
         const focusVar = lastEmpty[0];
         document.querySelector(focusVar).focus();
-        alert(`Please fill all the required inputs.`);
         return false;
       } else {
         return true;
@@ -1399,8 +1400,6 @@ const UIController = (function () {
     listOfEmptyInputs: function () {
       let listLabels = document.getElementsByTagName("label");
 
-      // const listIDs = [];
-      // const listLabelsText = [];
       let object = {};
 
       const references = {
