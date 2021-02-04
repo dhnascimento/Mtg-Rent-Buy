@@ -1123,6 +1123,63 @@ const UIController = (function () {
 
       return html;
     },
+
+    inputValidation: function (object) {
+      //Get array with the name of all classes
+      let DOMValidation = Object.values(object).slice(1);
+
+      // Remove radio buttons from array
+      radiosIndex = DOMValidation.indexOf("input[name=gridRadios]:checked");
+      DOMValidation.splice(radiosIndex, 1);
+
+      // Remove 'is-invalid' for second run of results
+      DOMValidation.forEach(function (item) {
+        item = item.replace(".", "");
+        console.log(item);
+        if (document.getElementById(item).classList.length > 2) {
+          document.getElementById(item).classList.remove("is-invalid");
+        }
+      });
+
+      // Add 'is-invalid' class if input is empty
+      let counterEmpty = 0;
+      let lastEmpty = [];
+      for (const name of DOMValidation) {
+        if (document.querySelector(name).value === "") {
+          lastEmpty.push(name);
+          document.querySelector(name).className += "  is-invalid";
+          counterEmpty++;
+        }
+      }
+
+      console.log(lastEmpty);
+
+      // Focus on first empty input field
+      if (counterEmpty) {
+        const focusVar = lastEmpty[0];
+        document.querySelector(focusVar).focus();
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    listOfLabels: function () {
+      const references = {
+        add__amort_period: "Amortization Period",
+        add__appreciation_rate: "House Appreciation Rate",
+        add__cpi_rate: "CPI Rate Increase",
+        add__house_insurance: "Insurance",
+        add__house_value: "House Purchase Price",
+        add__interest_rate: "Interest Rate",
+        add__investment_returns: "Investment Returns",
+        add__maintenance_rate: "Maintenance",
+        add__property_tax: "Property Tax",
+        add__renters_insurance: "Renters Insurance",
+      };
+
+      return references;
+    },
   };
 })();
 
@@ -1130,15 +1187,19 @@ const UIController = (function () {
 const controller = (function (UICtrl) {
   const setupEventListeners = function () {
     const DOM = UICtrl.getDOMstrings();
+
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
 
-    // Form control trigger
-    // var form = document.querySelector("form");
-    // var triggerButton = document.querySelector("button");
-
-    // triggerButton.onclick = function () {
-    //   form.reportValidity();
-    // };
+    document.querySelectorAll("input").forEach((item) => {
+      item.addEventListener("focusout", (event) => {
+        item.value = parseFloat(
+          item.value.replace(/(?!\.)\D/g, "")
+        ).toLocaleString();
+        if (isNaN(parseFloat(item.value))) {
+          item.value = "";
+        }
+      });
+    });
 
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
@@ -1160,37 +1221,12 @@ const controller = (function (UICtrl) {
     //Get array with the name of all classes
     let DOMValidation = Object.values(DOMstrings).slice(1);
 
-    // Remove radio buttons from array
-    radiosIndex = DOMValidation.indexOf("input[name=gridRadios]:checked");
-    DOMValidation.splice(radiosIndex, 1);
+    const validateInputs = UICtrl.inputValidation(DOMstrings);
 
-    // Remove 'is-invalid' for second run of results
-    DOMValidation.forEach(function (item) {
-      item = item.replace(".", "");
-      console.log(item);
-      if (document.getElementById(item).classList.length > 2) {
-        document.getElementById(item).classList.remove("is-invalid");
-      }
-    });
-
-    // Add 'is-invalid' class if input is empty
-    let counterEmpty = 0;
-    let lastEmpty = [];
-    for (const name of DOMValidation) {
-      if (document.querySelector(name).value === "") {
-        lastEmpty.push(name);
-        document.querySelector(name).className += "  is-invalid";
-        counterEmpty++;
-      }
-    }
-
-    // Focus on first empty input field
-    if (counterEmpty) {
-      const focusVar = lastEmpty[0];
-      document.querySelector(focusVar).focus();
-      alert(`Please fill all the required inputs.`);
+    if (!validateInputs) {
       return false;
     }
+
     const input = UICtrl.getInput();
     console.log(input);
     const rentCase = Rent.RentingCase(input);
