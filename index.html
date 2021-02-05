@@ -1,418 +1,642 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link type="text/css" rel="stylesheet" href="style.css" />
 
-<head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
-    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
-    <link type="text/css" rel="stylesheet" href="style.css">
-
-    <link type="text/css" rel="stylesheet"
-        href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/custom-style.css">
-    <link type="text/css" rel="stylesheet"
-        href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/theme-elements.css">
-    <link type="text/css" rel="stylesheet"
-        href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/theme.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/custom-style.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/theme-elements.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/css/theme.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
 
     <!--Chart JS CSS CDN Import-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
-
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css"
+    />
 
     <title>Rent vs Buy Calculator</title>
-</head>
+  </head>
 
-<body>
-    <section class="section page-header section-text-light section-center bg-color-primary header-section align-items-center p-relative" style="background-image: url(https://2wwapx1to1z6yab3zs9xwksg-wpengine.netdna-ssl.com/wp-content/themes/mortgagebrokerstore/images/About-Hero.png);background-size:cover">
-        <div id="breadcrumbs" class="overflow-hidden">
-            <div class="breadcrumb breadcrumb-light d-block appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="100" style="animation-delay: 100ms;"></div>
+  <body>
+    <section
+      class="section page-header section-text-light section-center bg-color-primary header-section align-items-center p-relative"
+      style="
+        background-image: url(https://2wwapx1to1z6yab3zs9xwksg-wpengine.netdna-ssl.com/wp-content/themes/mortgagebrokerstore/images/About-Hero.png);
+        background-size: cover;
+      "
+    >
+      <div id="breadcrumbs" class="overflow-hidden">
+        <div
+          class="breadcrumb breadcrumb-light d-block appear-animation animated fadeInUpShorter appear-animation-visible"
+          data-appear-animation="fadeInUpShorter"
+          data-appear-animation-delay="100"
+          style="animation-delay: 100ms"
+        ></div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1 class="mb-0 title">Rent Vs Buy Calculator</h1>
+          </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h1 class="mb-0 title">Rent Vs Buy Calculator</h1>
-                </div>
-            </div>
-            <style>#breadcrumbs a { color: #FFF !important; font-size:14px; }</style>
-            <div style="color: #fefefe!important;">
-                <p id="breadcrumbs"><span><span><a href="https://mortgagebrokerstore.com/">Home</a> › <span><a href="https://mortgagebrokerstore.com/mortgage-tools">Mortgage Tools</a> › <span class="breadcrumb_last" aria-current="page">Rent Vs Buy Calculator</span></span></span></span></p>
-            </div>
+        <style>
+          #breadcrumbs a {
+            color: #fff !important;
+            font-size: 14px;
+          }
+        </style>
+        <div style="color: #fefefe !important">
+          <p id="breadcrumbs">
+            <span
+              ><span
+                ><a href="https://mortgagebrokerstore.com/">Home</a> ›
+                <span
+                  ><a href="https://mortgagebrokerstore.com/mortgage-tools"
+                    >Mortgage Tools</a
+                  >
+                  ›
+                  <span class="breadcrumb_last" aria-current="page"
+                    >Rent Vs Buy Calculator</span
+                  ></span
+                ></span
+              ></span
+            >
+          </p>
         </div>
+      </div>
     </section>
 
-    <div class="container" style=" padding:0; border-radius:0.25rem; margin-bottom: 0px;">
-        <div class="card card-default" ">
-        <div class="card-header">
-            <h4 class="card-title m-0">
-                <a class="accordion" style="color: #1E5398;">
-                    Calculate Your Mortgage Payments
-                </a>
-            </h4>
-        </div>
-        <div class="accordion">
-            <div class="card card-default" style="background-color: rgb(30, 83, 152, 0.05);">
-                <div class="card-header" style="background-color: rgb(30, 83, 152, 0.50); border-radius: 0;">
-                        <a class="accordion" style="color: #FFFFFF;">
-                            <h4>Owning Case</h4>
-                        </a>
-                </div>
-                <div id="buyOrRentCalculatorOwn" class="collapse show">
-                    <div class="card-body" id="owningCase">
-                        <div class="row" novalidate>
-                            <div class="col-6">
-                                <label for="add__house_value">House Purchase Price</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                    </div>
-                                    <input type="text" class="add__house_value form-control" id="add__house_value" aria-label="Amount"
-                                        placeholder="Total Purchase Price of the Property" value="" required>
-                                    <div class="invalid-feedback">
-                                       Please enter a value.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label for="add__down_payment">Down Payment</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="add__down_payment form-control" id="add__down_payment" aria-label="Amount"
-                                        placeholder="Percentage of the property's value paid upfront" value="10" required>
-
-
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a value.
-                                      </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="add__amort_period">Amortization Period</label>
-                                <div class="input-group mb-3">
-
-                                    <select name="add__amort_period" class="add__amort_period form-control" id="add__amort_period" aria-label="Amount"
-                                        placeholder="Please select" required>
-                                        <option label="Interest Only" type="number" value="0">Interest Only</option>
-                                        <option label="1 year" type="number" value="1">1 year</option>
-                                        <option label="2 years" type="number" value="2">2 years</option>
-                                        <option label="3 years" type="number" value="3">3 years</option>
-                                        <option label="4 years" type="number" value="4">4 years</option>
-                                        <option label="5 years" type="number" value="5">5 years</option>
-                                        <option label="6 years" type="number" value="6">6 years</option>
-                                        <option label="7 years" type="number" value="7">7 years</option>
-                                        <option label="8 years" type="number" value="8">8 years</option>
-                                        <option label="9 years" type="number" value="9">9 years</option>
-                                        <option label="10 years" type="number" value="10">10 years</option>
-                                        <option label="11 years" type="number" value="11">11 years</option>
-                                        <option label="12 years" type="number" value="12">12 years</option>
-                                        <option label="13 years" type="number" value="13">13 years</option>
-                                        <option label="14 years" type="number" value="14">14 years</option>
-                                        <option label="15 years" type="number" value="15">15 years</option>
-                                        <option label="16 years" type="number" value="16">16 years</option>
-                                        <option label="17 years" type="number" value="17">17 years</option>
-                                        <option label="18 years" type="number" value="18">18 years</option>
-                                        <option label="19 years" type="number" value="19">19 years</option>
-                                        <option label="20 years" type="number" value="20">20 years</option>
-                                        <option label="21 years" type="number" value="21">21 years</option>
-                                        <option label="22 years" type="number" value="22">22 years</option>
-                                        <option label="23 years" type="number" value="23">23 years</option>
-                                        <option label="24 years" type="number" value="24">24 years</option>
-                                        <option label="25 years" type="number" value="25">25 years</option>
-                                        <option label="26 years" type="number" value="26">26 years</option>
-                                        <option label="27 years" type="number" value="27">27 years</option>
-                                        <option label="28 years" type="number" value="28">28 years</option>
-                                        <option label="29 years" type="number" value="29">29 years</option>
-                                        <option label="30 years" type="number" value="30" selected>30 years</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label for="add__interest_rate">Interest Rate</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
-                                        placeholder="Mortgage Interest Rate" value="3.50" required>
-
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a value.
-                                      </div>
-                                </div>
-                            </div>
-                        </div>
-                        <label for="add__is_toronto">House is in Toronto</label>
-                        <div class="form-group row ml-0">
-                            <div class="form-check-inline">
-                                <input class="add__is_toronto" type="radio" name="gridRadios" id="gridRadios1" value="true" checked required>
-                                <label class="form-check-label" for="gridRadios1">Yes</label>
-                            </div>
-                            <div class="form-check-inline">
-                                <input class="add__is_toronto" type="radio" name="gridRadios" id="gridRadios2" value="false" required>
-                                <label class="form-check-label" for="gridRadios2">No</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="add__title_insurance">Title Insurance</label>
-                                <div class="input-group mb-3">
-                                    
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                    </div>
-
-                                    <input type="text" class="add__title_insurance form-control" id="add__title_insurance" aria-label="Amount"
-                                        placeholder="Insurance policy that protects residential or commercial property owners and their lenders against losses related to the property's title or ownership"
-                                        value="250" required>
-                                        <div class="invalid-feedback">
-                                            Please enter a value.
-                                          </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <label for="add__legal_fees">Legal Fees</label>
-                                <div class="input-group mb-3">
-                                   
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                    </div>
-        
-                                    <input type="text" class="add__legal_fees form-control" id="add__legal_fees" aria-label="Amount"
-                                        placeholder="Legal fees including disbursments" value="1500" required>
-                                        <div class="invalid-feedback">
-                                            Please enter a value.
-                                          </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <label for="add__home_inspection">Home Inspection</label>
-                                <div class="input-group mb-3">
-                                   
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                    </div>
-        
-                                    <input type="text" class="add__home_inspection form-control" id="add__home_inspection" aria-label="Amount"
-                                        placeholder="Home Inspection Cost" value="400" required>
-                                        <div class="invalid-feedback">
-                                            Please enter a value.
-                                          </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-2">
-                                <label for="add__comission_rate">Comission</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="add__comission_rate form-control" id="add__comission_rate" aria-label="Amount"
-                                        placeholder="Comission on Sale" value="6" required>
-
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a value.
-                                      </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <label for="add__maintenance_rate">Maintenance</label>
-                                <div class="input-group mb-3">
-                                   
-                                    <input type="text" class="add__maintenance_rate form-control" id="add__maintenance_rate" aria-label="Amount"
-                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10" required>
-        
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a value.
-                                      </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <label for="add__property_tax">Property Tax</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="add__property_tax form-control" id="add__property_tax" aria-label="Amount"
-                                        placeholder="Property Tax Rate" value="0.86" required>
-        
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a value.
-                                      </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <label for="add__house_insurance">Insurance</label>
-                                <div class="input-group mb-3">
-                                   
-                                    <input type="text" class="add__house_insurance form-control" id="add__house_insurance" aria-label="Amount"
-                                        placeholder="House Insurance Premium" value="0.23" required>
-        
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a value.
-                                      </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <label for="add__appreciation_rate">House Appreciation Rate</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="add__appreciation_rate form-control" id="add__appreciation_rate" aria-label="Amount"
-                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00" required>
-                                        
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">%</span>
-                                        </div>
-                                        <div class="invalid-feedback">
-                                            Please enter a value.
-                                          </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>  
-                </div>
-            </div>
-            <div class="container" style=" padding:0; margin:0; ">
-                <div class="card card-default" style="background-color:rgb(15, 77, 50, 0.05); border-radius: 0.25rem .25rem 0 0;">
-                        <div class="card-header" style="background-color:rgb(15, 77, 50, 0.5); border:none; border-radius:0;">
-                                <a class="accordion" style="color:#FFF">
-                                    <h4>Renting Case</h4>
-                                </a>
-                        </div>
-                        <div id="buyOrRentCalculatorRent" class="collapse show">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="add__rent_value">Initial Monthly Rent</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">$</span>
-                                            </div>
-                                            <input type="text" class="add__rent_value form-control" id="add__rent_value" aria-label="Amount"
-                                                placeholder="Value Paid Monthly for the Rent" value="2550" required>
-                                                <div class="invalid-feedback">
-                                                    Please enter a value.
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="add__investment_returns">Investment Returns</label>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="add__investment_returns form-control" id="add__investment_returns" aria-label="Amount"
-                                                placeholder="Estimated Investiment Returns for All Years" value="7.00" required> 
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">%</span>
-                                            </div>
-                                            <div class="invalid-feedback">
-                                                Please enter a value.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="add__cpi_rate">CPI Rate Increase</label>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
-                                                placeholder="Customer Price Index Increase for All Years" value="2.00" required>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">%</span>
-                                            </div>
-                                            <div class="invalid-feedback">
-                                                Please enter a value.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="add__renters_insurance">Renters Insurance</label>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="add__renters_insurance form-control" id="add__renters_insurance" aria-label="Amount"
-                                                placeholder="Percentage of the property's value" value="1.00" required>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">%</span>
-                                            </div>
-                                            <div class="invalid-feedback">
-                                                Please enter a value.
-                                              </div>
-                                        </div>
-                                    </div>
-                                </div>                       
-                            </div>
-                        </div>
+    <div
+      class="container"
+      style="padding: 0; border-radius: 0.25rem; margin-bottom: 0px"
+    >
+      <div class="card card-default" ">
+      <div class="card-header">
+        <h4 class="card-title m-0">
+          <a class="accordion" style="color: #1e5398">
+            Calculate Your Mortgage Payments
+          </a>
+        </h4>
+      </div>
+      <div class="accordion">
+        <div
+          class="card card-default"
+          style="background-color: rgb(30, 83, 152, 0.05)"
+        >
+          <div
+            class="card-header"
+            style="background-color: rgb(30, 83, 152, 0.5); border-radius: 0"
+          >
+            <a class="accordion" style="color: #ffffff">
+              <h4>Owning Case</h4>
+            </a>
+          </div>
+          <div id="buyOrRentCalculatorOwn" class="collapse show">
+            <div class="card-body" id="owningCase">
+              <div class="row" novalidate>
+                <div class="col-6">
+                  <label for="add__house_value">House Purchase Price</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
                     </div>
+                    <input
+                      type="text"
+                      class="add__house_value form-control"
+                      id="add__house_value"
+                      aria-label="Amount"
+                      placeholder="Total Purchase Price of the Property"
+                      value=""
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
                 </div>
-            </div>
-            <div class="container" style="margin-top:20px;">
-                <div style="text-align: center; margin-bottom:10px">
-                    <button class="btn btn-primary mr-2 add__btn">Should I Rent or Buy?</button>
-                    <p class="LTV-Calc-Results">
-                        <!-- JS script in insert code for results here -->
-                    </p>
-                    <style>
-                        canvas {
-                        margin-bottom: 25px; 
-                        }
-                        label{
-                            font-size: 16px;
-                        }
-                    </style>
-                    <div id="Mortgage-Payment-Graphics"  style="display: none;">
-                        <div class="row">
-                            <div id='emptyInputsMsg'></div>
-                            <div id="graph_wrapper" class="col-sm-7">
-                                <canvas id="comparison_chart"></canvas>
-                            </div>
-                            <div id="text_result" class="col-sm-5" style="display: flex; align-items: center; justify-content: center;">
-                                
-                            </div>
-                        </div>
-                            <p id="comparison_wrapper" class="Mortgage-Amort-Table" class="col-sm-12">
-                                <!-- JS script in insert code for results here -->
-                            </p>
+                <div class="col-6">
+                  <label for="add__down_payment">Down Payment</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__down_payment form-control"
+                      id="add__down_payment"
+                      aria-label="Amount"
+                      placeholder="Percentage of the property's value paid upfront"
+                      value="10"
+                      required
+                    />
 
-                            <p id="rent_wrapper" class="Mortgage-Amort-Table" class="col-sm-12">
-                                <!-- JS script in insert code for results here -->
-                            </p>
-                            <p id="buy_wrapper" class="Mortgage-Amort-Table" class="col-sm-12">
-                                <!-- JS script in insert code for results here -->
-                                </p>
-                            </div>
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label for="add__amort_period">Amortization Period</label>
+                  <div class="input-group mb-3">
+                    <select
+                      name="add__amort_period"
+                      class="add__amort_period form-control"
+                      id="add__amort_period"
+                      aria-label="Amount"
+                      placeholder="Please select"
+                      required
+                    >
+                      <option label="Interest Only" type="number" value="0">
+                        Interest Only
+                      </option>
+                      <option label="1 year" type="number" value="1">
+                        1 year
+                      </option>
+                      <option label="2 years" type="number" value="2">
+                        2 years
+                      </option>
+                      <option label="3 years" type="number" value="3">
+                        3 years
+                      </option>
+                      <option label="4 years" type="number" value="4">
+                        4 years
+                      </option>
+                      <option label="5 years" type="number" value="5">
+                        5 years
+                      </option>
+                      <option label="6 years" type="number" value="6">
+                        6 years
+                      </option>
+                      <option label="7 years" type="number" value="7">
+                        7 years
+                      </option>
+                      <option label="8 years" type="number" value="8">
+                        8 years
+                      </option>
+                      <option label="9 years" type="number" value="9">
+                        9 years
+                      </option>
+                      <option label="10 years" type="number" value="10">
+                        10 years
+                      </option>
+                      <option label="11 years" type="number" value="11">
+                        11 years
+                      </option>
+                      <option label="12 years" type="number" value="12">
+                        12 years
+                      </option>
+                      <option label="13 years" type="number" value="13">
+                        13 years
+                      </option>
+                      <option label="14 years" type="number" value="14">
+                        14 years
+                      </option>
+                      <option label="15 years" type="number" value="15">
+                        15 years
+                      </option>
+                      <option label="16 years" type="number" value="16">
+                        16 years
+                      </option>
+                      <option label="17 years" type="number" value="17">
+                        17 years
+                      </option>
+                      <option label="18 years" type="number" value="18">
+                        18 years
+                      </option>
+                      <option label="19 years" type="number" value="19">
+                        19 years
+                      </option>
+                      <option label="20 years" type="number" value="20">
+                        20 years
+                      </option>
+                      <option label="21 years" type="number" value="21">
+                        21 years
+                      </option>
+                      <option label="22 years" type="number" value="22">
+                        22 years
+                      </option>
+                      <option label="23 years" type="number" value="23">
+                        23 years
+                      </option>
+                      <option label="24 years" type="number" value="24">
+                        24 years
+                      </option>
+                      <option label="25 years" type="number" value="25">
+                        25 years
+                      </option>
+                      <option label="26 years" type="number" value="26">
+                        26 years
+                      </option>
+                      <option label="27 years" type="number" value="27">
+                        27 years
+                      </option>
+                      <option label="28 years" type="number" value="28">
+                        28 years
+                      </option>
+                      <option label="29 years" type="number" value="29">
+                        29 years
+                      </option>
+                      <option
+                        label="30 years"
+                        type="number"
+                        value="30"
+                        selected
+                      >
+                        30 years
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label for="add__interest_rate">Interest Rate</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__interest_rate form-control"
+                      id="add__interest_rate"
+                      aria-label="Amount"
+                      placeholder="Mortgage Interest Rate"
+                      value="3.50"
+                      required
+                    />
+
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+              </div>
+              <label for="add__is_toronto">House is in Toronto</label>
+              <div class="form-group row ml-0">
+                <div class="form-check-inline">
+                  <input
+                    class="add__is_toronto"
+                    type="radio"
+                    name="gridRadios"
+                    id="gridRadios1"
+                    value="true"
+                    checked
+                    required
+                  />
+                  <label class="form-check-label" for="gridRadios1">Yes</label>
+                </div>
+                <div class="form-check-inline">
+                  <input
+                    class="add__is_toronto"
+                    type="radio"
+                    name="gridRadios"
+                    id="gridRadios2"
+                    value="false"
+                    required
+                  />
+                  <label class="form-check-label" for="gridRadios2">No</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label for="add__title_insurance">Title Insurance</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+
+                    <input
+                      type="text"
+                      class="add__title_insurance form-control"
+                      id="add__title_insurance"
+                      aria-label="Amount"
+                      placeholder="Insurance policy that protects residential or commercial property owners and their lenders against losses related to the property's title or ownership"
+                      value="250"
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label for="add__legal_fees">Legal Fees</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+
+                    <input
+                      type="text"
+                      class="add__legal_fees form-control"
+                      id="add__legal_fees"
+                      aria-label="Amount"
+                      placeholder="Legal fees including disbursments"
+                      value="1500"
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label for="add__home_inspection">Home Inspection</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+
+                    <input
+                      type="text"
+                      class="add__home_inspection form-control"
+                      id="add__home_inspection"
+                      aria-label="Amount"
+                      placeholder="Home Inspection Cost"
+                      value="400"
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-2">
+                  <label for="add__comission_rate">Comission</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__comission_rate form-control"
+                      id="add__comission_rate"
+                      aria-label="Amount"
+                      placeholder="Comission on Sale"
+                      value="6"
+                      required
+                    />
+
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <label for="add__maintenance_rate">Maintenance</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__maintenance_rate form-control"
+                      id="add__maintenance_rate"
+                      aria-label="Amount"
+                      placeholder="Maintenance Costs as a Percentage of the House Value"
+                      value="1.10"
+                      required
+                    />
+
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <label for="add__property_tax">Property Tax</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__property_tax form-control"
+                      id="add__property_tax"
+                      aria-label="Amount"
+                      placeholder="Property Tax Rate"
+                      value="0.86"
+                      required
+                    />
+
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <label for="add__house_insurance">Insurance</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__house_insurance form-control"
+                      id="add__house_insurance"
+                      aria-label="Amount"
+                      placeholder="House Insurance Premium"
+                      value="0.23"
+                      required
+                    />
+
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label for="add__appreciation_rate"
+                    >House Appreciation Rate</label
+                  >
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__appreciation_rate form-control"
+                      id="add__appreciation_rate"
+                      aria-label="Amount"
+                      placeholder="Property's Value Yearly Appreciation Rate"
+                      value="2.00"
+                      required
+                    />
+
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    
+      </div>
+      <div class="container" style="padding: 0; margin: 0">
+        <div
+          class="card card-default"
+          style="
+            background-color: rgb(15, 77, 50, 0.05);
+            border-radius: 0.25rem 0.25rem 0 0;
+          "
+        >
+          <div
+            class="card-header"
+            style="
+              background-color: rgb(15, 77, 50, 0.5);
+              border: none;
+              border-radius: 0;
+            "
+          >
+            <a class="accordion" style="color: #fff">
+              <h4>Renting Case</h4>
+            </a>
+          </div>
+          <div id="buyOrRentCalculatorRent" class="collapse show">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <label for="add__rent_value">Initial Monthly Rent</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="add__rent_value form-control"
+                      id="add__rent_value"
+                      aria-label="Amount"
+                      placeholder="Value Paid Monthly for the Rent"
+                      value="2550"
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label for="add__investment_returns"
+                    >Investment Returns</label
+                  >
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__investment_returns form-control"
+                      id="add__investment_returns"
+                      aria-label="Amount"
+                      placeholder="Estimated Investiment Returns for All Years"
+                      value="7.00"
+                      required
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label for="add__cpi_rate">CPI Rate Increase</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__cpi_rate form-control"
+                      id="add__cpi_rate"
+                      aria-label="Amount"
+                      placeholder="Customer Price Index Increase for All Years"
+                      value="2.00"
+                      required
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label for="add__renters_insurance">Renters Insurance</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="add__renters_insurance form-control"
+                      id="add__renters_insurance"
+                      aria-label="Amount"
+                      placeholder="Percentage of the property's value"
+                      value="1.00"
+                      required
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                    <div class="invalid-feedback">Please enter a value.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+    <div class="container" style="margin-top: 20px">
+      <div style="text-align: center; margin-bottom: 10px">
+        <button class="btn btn-primary mr-2 add__btn">
+          Should I Rent or Buy?
+        </button>
+        <div id="Mortgage-Payment-Graphics" style="display: none">
+          <div class="row">
+            <div id="emptyInputsMsg"></div>
+            <div id="graph_wrapper" class="col-sm-7">
+              <canvas id="comparison_chart"></canvas>
+            </div>
+            <div
+              id="text_result"
+              class="col-sm-5"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            ></div>
+          </div>
+          <p
+            id="comparison_wrapper"
+            class="Mortgage-Amort-Table"
+            class="col-sm-12"
+          >
+            <!-- JS script in insert code for results here -->
+          </p>
 
+          <p id="rent_wrapper" class="Mortgage-Amort-Table" class="col-sm-12">
+            <!-- JS script in insert code for results here -->
+          </p>
+          <p id="buy_wrapper" class="Mortgage-Amort-Table" class="col-sm-12">
+            <!-- JS script in insert code for results here -->
+          </p>
+        </div>
+      </div>
+    </div>
 
-
-    <!-- tons of JS imports-->
-    <!-- end bulk js imports-->
-
-
-
-
-
-   
     <!--Accordian breaks without this-->
-    <script type='text/javascript'
-        src='https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/vendor/jquery/jquery.min.js'></script>
-    <script type='text/javascript'
-        src='https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/vendor/bootstrap/js/bootstrap.min.js'></script>
+    <script
+      type="text/javascript"
+      src="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/vendor/jquery/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://mortgagebrokerstore.com/wp-content/themes/mortgagebrokerstore/vendor/bootstrap/js/bootstrap.min.js"
+    ></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
     <script src="app.js"></script>
-</body>
-
+  </body>
 </html>
