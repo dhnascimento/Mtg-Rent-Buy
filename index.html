@@ -60,29 +60,33 @@
                 </div>
                 <div id="buyOrRentCalculatorOwn" class="collapse show">
                     <div class="card-body" id="owningCase">
-                        <div class="row">
+                        <div class="row" novalidate>
                             <div class="col-6">
                                 <label for="add__house_value">House Purchase Price</label>
                                 <div class="input-group mb-3">
-                                
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">$</span>
                                     </div>
-                                    
                                     <input type="text" class="add__house_value form-control" id="add__house_value" aria-label="Amount"
                                         placeholder="Total Purchase Price of the Property" value="510000" required>
+                                    <div class="invalid-feedback">
+                                       Please enter a value.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <label for="add__down_payment">Down Payment</label>
                                 <div class="input-group mb-3">
-                                
                                     <input type="text" class="add__down_payment form-control" id="add__down_payment" aria-label="Amount"
                                         placeholder="Percentage of the property's value paid upfront" value="10" required>
+
 
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a value.
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -132,9 +136,13 @@
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
                                         placeholder="Mortgage Interest Rate" value="3.50" required>
+
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a value.
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -161,6 +169,9 @@
                                     <input type="text" class="add__title_insurance form-control" id="add__title_insurance" aria-label="Amount"
                                         placeholder="Insurance policy that protects residential or commercial property owners and their lenders against losses related to the property's title or ownership"
                                         value="250" required>
+                                        <div class="invalid-feedback">
+                                            Please enter a value.
+                                          </div>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -173,6 +184,9 @@
         
                                     <input type="text" class="add__legal_fees form-control" id="add__legal_fees" aria-label="Amount"
                                         placeholder="Legal fees including disbursments" value="1500" required>
+                                        <div class="invalid-feedback">
+                                            Please enter a value.
+                                          </div>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -185,6 +199,9 @@
         
                                     <input type="text" class="add__home_inspection form-control" id="add__home_inspection" aria-label="Amount"
                                         placeholder="Home Inspection Cost" value="400" required>
+                                        <div class="invalid-feedback">
+                                            Please enter a value.
+                                          </div>
                                 </div>
                             </div>
                         </div>
@@ -195,10 +212,13 @@
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__comission_rate form-control" id="add__comission_rate" aria-label="Amount"
                                         placeholder="Comission on Sale" value="6" required>
-        
+
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a value.
+                                      </div>
                                 </div>
                             </div>
                             <div class="col-2">
@@ -211,6 +231,9 @@
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a value.
+                                      </div>
                                 </div>
                             </div>
                             <div class="col-2">
@@ -222,6 +245,9 @@
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a value.
+                                      </div>
                                 </div>
                             </div>
                             <div class="col-2">
@@ -234,6 +260,9 @@
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
                                     </div>
+                                    <div class="invalid-feedback">
+                                        Please enter a value.
+                                      </div>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -245,6 +274,9 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text">%</span>
                                         </div>
+                                        <div class="invalid-feedback">
+                                            Please enter a value.
+                                          </div>
                                     </div>
                                 </div>
                             </div>
@@ -270,6 +302,9 @@
                                             </div>
                                             <input type="text" class="add__rent_value form-control" id="add__rent_value" aria-label="Amount"
                                                 placeholder="Value Paid Monthly for the Rent" value="2550" required>
+                                                <div class="invalid-feedback">
+                                                    Please enter a value.
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -279,6 +314,9 @@
                                                 placeholder="Estimated Investiment Returns for All Years" value="7.00" required> 
                                             <div class="input-group-append">
                                                 <span class="input-group-text">%</span>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please enter a value.
                                             </div>
                                         </div>
                                     </div>
@@ -292,6 +330,9 @@
                                             <div class="input-group-append">
                                                 <span class="input-group-text">%</span>
                                             </div>
+                                            <div class="invalid-feedback">
+                                                Please enter a value.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -302,6 +343,9 @@
                                             <div class="input-group-append">
                                                 <span class="input-group-text">%</span>
                                             </div>
+                                            <div class="invalid-feedback">
+                                                Please enter a value.
+                                              </div>
                                         </div>
                                     </div>
                                 </div>                       
@@ -326,6 +370,7 @@
                     </style>
                     <div id="Mortgage-Payment-Graphics"  style="display: none;">
                         <div class="row">
+                            <div id='emptyInputsMsg'></div>
                             <div id="graph_wrapper" class="col-sm-7">
                                 <canvas id="comparison_chart"></canvas>
                             </div>

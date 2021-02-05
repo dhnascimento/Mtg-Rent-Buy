@@ -1154,10 +1154,26 @@ const UIController = (function () {
 
       console.log(lastEmpty);
 
+      let html = `
+            <span>Please enter the information in the following input fields:</span>
+      `;
+
       // Focus on first empty input field
       if (counterEmpty) {
-        const focusVar = lastEmpty[0];
-        document.querySelector(focusVar).focus();
+        lastEmpty.forEach(function (label) {
+          html += `<p>${label}</p>`;
+        });
+        // const focusVar = lastEmpty[0];
+        // document.querySelector(focusVar).focus();
+        // html +=' </div>';
+        UIController.addElement(
+          "emptyInputsMsg",
+          "div",
+          "listOfLabels",
+          html,
+          true
+        );
+
         return false;
       } else {
         return true;
@@ -1238,6 +1254,7 @@ const controller = (function (UICtrl) {
       "comparison_wrapper",
       "graph_wrapper",
       "text_result",
+      "emptyInputsMsg",
     ];
     removeElements(casesArray);
 
