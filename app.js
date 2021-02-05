@@ -1217,6 +1217,27 @@ const controller = (function (UICtrl) {
       });
     });
 
+    // document.querySelectorAll("input").forEach((input) => {
+    //   input.addEventListener("focusout", (event) => {
+    //     if (document.querySelector(".is-invalid")) {
+    //       document.querySelector(".is-invalid").forEach((item) => {
+    //         if (item) {
+    //           item.addEventListener("focusout", (event) => {
+    //             if (document.querySelector(item).value.length > 0) {
+    //               item = item.replace(".", "");
+    //               console.log(item);
+    //               document.getElementById(item).classList.remove("is-invalid");
+    //               console.log(document.getElementById(item));
+    //               document.getElementById(item).classList.add("is-valid");
+    //               document.getElementById(item);
+    //             }
+    //           });
+    //         }
+    //       });
+    //     }
+    //   });
+    // });
+
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
         ctrlAddItem();
