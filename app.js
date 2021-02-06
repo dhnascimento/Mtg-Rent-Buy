@@ -1126,14 +1126,15 @@ const UIController = (function () {
 
     inputValidation: function (object) {
       //Get array with the name of all classes
-      let DOMValidation = Object.values(object).slice(1);
+      let classNames = Object.values(object).slice(1);
+      console.log(classNames);
 
       // Remove radio buttons from array
-      radiosIndex = DOMValidation.indexOf("input[name=gridRadios]:checked");
-      DOMValidation.splice(radiosIndex, 1);
+      radiosIndex = classNames.indexOf("input[name=gridRadios]:checked");
+      classNames.splice(radiosIndex, 1);
 
       // Remove 'is-invalid' for second run of results
-      DOMValidation.forEach(function (item) {
+      classNames.forEach(function (item) {
         item = item.replace(".", "");
         console.log(item);
         if (document.getElementById(item).classList.length > 2) {
@@ -1142,36 +1143,25 @@ const UIController = (function () {
       });
 
       // Add 'is-invalid' class if input is empty
-      let counterEmpty = 0;
-      let lastEmpty = [];
-      for (const name of DOMValidation) {
+      let emptyInputs = [];
+      classNames.forEach(function (name) {
         if (document.querySelector(name).value === "") {
-          lastEmpty.push(name);
-          document.querySelector(name).className += "  is-invalid";
-          counterEmpty++;
+          emptyInputs.push(name);
+          document.querySelector(name).className += " is-invalid";
         }
-      }
-
-      console.log(lastEmpty);
-
-      let html = `
-            <span>Please enter the information in the following input fields:</span>
-      `;
+      });
 
       // Focus on first empty input field
-      if (counterEmpty) {
-        lastEmpty.forEach(function (label) {
-          html += `<p>${label}</p>`;
-        });
-        // const focusVar = lastEmpty[0];
-        // document.querySelector(focusVar).focus();
-        // html +=' </div>';
+      if (emptyInputs.length > 0) {
+        document.querySelector(emptyInputs[emptyInputs.length - 1]).focus();
+
+        const errorMessage =
+          "<p class='LTV-Calc-Results'>Your numbers are not valid. Please check your inputs and try again.</p>";
         UIController.addElement(
           "emptyInputsMsg",
           "div",
-          "listOfLabels",
-          html,
-          true
+          "missingInputs",
+          errorMessage
         );
 
         return false;
@@ -1245,7 +1235,7 @@ const controller = (function (UICtrl) {
     });
   };
 
-  const removeElements = function (list) {
+  const eraseContent = function (list) {
     list.forEach(function (parent) {
       let parentElement = document.getElementById(parent);
       parentElement.innerHTML = "";
@@ -1255,8 +1245,14 @@ const controller = (function (UICtrl) {
   const ctrlAddItem = function () {
     const DOMstrings = UICtrl.getDOMstrings();
 
-    //Get array with the name of all classes
-    let DOMValidation = Object.values(DOMstrings).slice(1);
+    eraseContent([
+      "rent_wrapper",
+      "buy_wrapper",
+      "comparison_wrapper",
+      "graph_wrapper",
+      "text_result",
+      "emptyInputsMsg",
+    ]);
 
     const validateInputs = UICtrl.inputValidation(DOMstrings);
 
@@ -1269,15 +1265,6 @@ const controller = (function (UICtrl) {
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     const comparison = Comparison.selling(input);
-    const casesArray = [
-      "rent_wrapper",
-      "buy_wrapper",
-      "comparison_wrapper",
-      "graph_wrapper",
-      "text_result",
-      "emptyInputsMsg",
-    ];
-    removeElements(casesArray);
 
     UICtrl.addElement("graph_wrapper", "canvas", "comparison_chart", "", true);
     UICtrl.addComparisonChart(comparison);
