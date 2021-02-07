@@ -904,6 +904,24 @@ const UIController = (function () {
       return html;
     },
 
+    chartPersonalization: function (
+      referenceArray,
+      threshold,
+      customOutput,
+      defaultOutput
+    ) {
+      let conditionFlag = true;
+      const customArray = referenceArray.map(function (item) {
+        if (item > threshold && conditionFlag) {
+          conditionFlag = false;
+          return customOutput;
+        } else {
+          return defaultOutput;
+        }
+      });
+      return customArray;
+    },
+
     addComparisonChart: function (input) {
       const ctx = document.getElementById("comparison_chart");
 
@@ -916,85 +934,112 @@ const UIController = (function () {
       });
 
       // Interpolating the two data sets;
-      let lastItemRent;
-      let commonItemRent = true;
-
-      const dataRent = input.map(function (item) {
-        lastItemRent = -item.comparison;
-        if (item.comparison >= 0) {
-          return -Math.round(item.comparison);
+      let commonZeroIndexes = [];
+      let dataBuy = [];
+      data.forEach(function (item, index) {
+        console.log(index);
+        if (item >= 0) {
+          dataBuy.push(Math.round(item));
         } else {
-          if (commonItemRent) {
-            commonItemRent = false;
-            return Math.round(lastItemRent);
+          console.log(data[index], data[index - 1]);
+          if (data[index - 1] && data[index - 1] >= 0) {
+            commonZeroIndexes.push(index);
+            // dataRent.push(0);
           }
-          return null;
-        }
-      });
-
-      // Interpolating the two data sets;
-      let lastItemOwning;
-      let commonItemOwning = true;
-
-      const dataBuy = input.map(function (item, index) {
-        lastItemOwning = item.comparison;
-        if (item.comparison < 0) {
-          return -Math.round(item.comparison);
-        } else {
-          if (index < input.length - 1) {
-            if (
-              index > 0 &&
-              input[index + 1].comparison < 0 &&
-              input[index - 1].comparison > 0 &&
-              commonItemOwning
-            ) {
-              commonItemOwning = false;
-              return -Math.round(lastItemOwning);
-            }
+          dataBuy.push(0);
+          if (data[index + 1] && data[index + 1] >= 0) {
+            commonZeroIndexes.push(index);
+            dataBuy.push(0);
           }
-
-          return null;
         }
       });
 
-      const colors = data.map((value) => (value < 0 ? "#4C89A5" : "#B3C646"));
-
-      // Change size of point for the first positive value (i.e. owning is better)
-      let conditionRadius = true;
-      const customRadiusArray = data.map(function (item) {
-        if (item > 0 && conditionRadius) {
-          conditionRadius = false;
-          return 9;
+      let dataRent = [];
+      data.forEach(function (item, index) {
+        console.log(index);
+        console.log(item);
+        if (item < 0) {
+          dataRent.push(Math.round(item));
         } else {
-          return 4;
+          dataRent.push(0);
+        }
+        if (commonZeroIndexes.indexOf(index) >= 0) {
+          //else if -> previous item dataRent
+          dataRent.push(0);
         }
       });
 
-      // Change color of point for the first positive value (i.e. owning is better)
-      let conditionColor = true;
-      const customColorsArray = data.map(function (item) {
-        if (item > 0 && conditionColor) {
-          conditionColor = false;
-          return "#B3C646";
+      let dataBuyLine = [];
+      let setZeroBuy = true;
+      dataBuy.forEach(function (item, index) {
+        if (item === 0) {
+          if (dataBuy[index - 1] > 0) {
+            dataBuyLine.push(0);
+            setZeroBuy = true;
+          } else {
+            dataBuyLine.push(0);
+          }
         } else {
-          return "#333333";
+          if (setZeroBuy) {
+            dataBuyLine[index - 1] = 0;
+            setZeroBuy = false;
+          }
+          dataBuyLine.push(item);
+        }
+      });
+
+      let dataRentLine = [];
+      let setZeroRent = true;
+      dataRent.forEach(function (item, index) {
+        if (item === 0) {
+          if (dataBuy[index - 1] !== null && dataBuy[index - 1] < 0) {
+            dataRentLine.push(0);
+            setZeroRent = true;
+          } else {
+            dataRentLine.push(0);
+          }
+        } else {
+          if (setZeroRent) {
+            dataBuyLine[index - 1] = 0;
+            setZeroRent = false;
+          }
+          dataRentLine.push(item);
+        }
+      });
+
+      // Change size of point for the first positive value (i.e. owning is better) and set radius size of all points
+      let setRadiusBuy = true;
+      const customRadiusArrayBuy = dataBuyLine.map(function (item, index) {
+        if (dataBuyLine[index + 1] > 0 && setRadiusBuy) {
+          setRadiusBuy = false;
+          return 8;
+        } else if (item > 0) {
+          return 3;
+        } else {
+          return 0;
+        }
+      });
+
+      // Radius of rent line
+      let setRadiusRent = true;
+      const customRadiusArrayRent = dataRentLine.map(function (item, index) {
+        if (dataBuyLine[index + 1] < 0 && setRadiusRent) {
+          setRadiusRent = false;
+          return 8;
+        } else if (item < 0) {
+          return 2;
+        } else {
+          return 0;
         }
       });
 
       // Change border width of point for the first positive value (i.e. owning is better)
-      let conditionBorderWidth = true;
-      const customBorderArray = data.map(function (item) {
-        if (item > 0 && conditionBorderWidth) {
-          conditionBorderWidth = false;
-          return 5;
-        } else {
-          return 1;
-        }
-      });
+      const customBorderArray = this.chartPersonalization(dataBuy, 0, 9, 5);
 
+      // Change color of point for the first positive value (i.e. owning is better)
       let conditionBorderColor = true;
-      const customBorderColorArray = data.map(function (item) {
-        if (item > 0 && conditionBorderColor) {
+      const customBorderColorArray = dataBuyLine.map(function (item, index) {
+        if (dataBuyLine[index + 1] > 0 && conditionBorderColor) {
           conditionBorderColor = false;
           return "#5DA10D";
         } else {
@@ -1002,6 +1047,11 @@ const UIController = (function () {
         }
       });
 
+      const conditionLineWidthColor = dataBuy.map(function (item) {
+        return 0;
+      });
+
+      console.log({ data, dataBuy, dataRent });
       const lineChart = new Chart(ctx, {
         type: "line",
         data: {
@@ -1012,27 +1062,42 @@ const UIController = (function () {
               data: [...dataBuy],
               fill: true,
               borderColor: "#333333",
+              borderWidth: conditionLineWidthColor,
               backgroundColor: "#88A3C8",
+              radius: 0,
+              pointRadius: 0,
+            },
+            {
+              label: "lineBuy",
+              data: [...dataBuyLine],
+              fill: true,
+              borderColor: "#333333",
+              borderWidth: 2,
               pointBackgroundColor: customBorderColorArray,
-              pointBorderWidth: customBorderArray,
               pointBorderColor: "#333333",
-              radius: customRadiusArray,
-              pointRadius: customRadiusArray,
-              pointHoverBackgroundColor: "#E88A3C8",
-              pointHoverBorderColor: "#1e5398",
+              pointRadius: customRadiusArrayBuy,
             },
             {
               label: "Renting Case",
               data: [...dataRent],
               fill: true,
               borderColor: "#333333",
+              borderWidth: conditionLineWidthColor,
               backgroundColor: "#7FA092",
-              pointBackgroundColor: "#333333",
-              pointBorderColor: "#333333",
-              pointHoverBackgroundColor: "#7FA092",
-              pointHoverBorderColor: "#1e5398",
-              radius: customRadiusArray,
-              pointRadius: customRadiusArray,
+              radius: 0,
+              pointRadius: 0,
+            },
+            {
+              label: "lineRent",
+              data: [...dataRentLine],
+              fill: true,
+              borderColor: "#333333",
+              borderWidth: 2,
+              backgroundColor: "#7FA092",
+              pointBackgroundColor: customBorderColorArray,
+              pointBorderWidth: customBorderArray,
+              radius: customRadiusArrayRent,
+              pointRadius: customRadiusArrayRent,
             },
           ],
         },
@@ -1043,6 +1108,13 @@ const UIController = (function () {
           title: {
             display: true,
             text: "Rent or Buy Comparison",
+          },
+          legend: {
+            labels: {
+              filter: function (item, chart) {
+                return !item.text.includes("line");
+              },
+            },
           },
           scales: {
             xAxes: [
@@ -1080,12 +1152,12 @@ const UIController = (function () {
           },
           tooltips: {
             enabled: false,
-            // mode: "index",
-            // callbacks: {
-            //   label: function (tooltipItems, data) {
-            //     return "$" + tooltipItems.yLabel;
-            //   },
-            // },
+            mode: "index",
+            callbacks: {
+              label: function (tooltipItems, data) {
+                return "$" + tooltipItems.yLabel;
+              },
+            },
           },
         },
       });
@@ -1206,27 +1278,6 @@ const controller = (function (UICtrl) {
         }
       });
     });
-
-    // document.querySelectorAll("input").forEach((input) => {
-    //   input.addEventListener("focusout", (event) => {
-    //     if (document.querySelector(".is-invalid")) {
-    //       document.querySelector(".is-invalid").forEach((item) => {
-    //         if (item) {
-    //           item.addEventListener("focusout", (event) => {
-    //             if (document.querySelector(item).value.length > 0) {
-    //               item = item.replace(".", "");
-    //               console.log(item);
-    //               document.getElementById(item).classList.remove("is-invalid");
-    //               console.log(document.getElementById(item));
-    //               document.getElementById(item).classList.add("is-valid");
-    //               document.getElementById(item);
-    //             }
-    //           });
-    //         }
-    //       });
-    //     }
-    //   });
-    // });
 
     document.addEventListener("keypress", function (event) {
       if (event.keyCode === 13 || event.which === 13) {
