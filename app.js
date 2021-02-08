@@ -1159,6 +1159,9 @@ const UIController = (function () {
             //   },
             // },
           },
+          hover: {
+            mode: null,
+          },
         },
       });
     },
