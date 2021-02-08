@@ -395,7 +395,6 @@ const Owning = (function () {
               : payments.PMTInit),
         };
       });
-      console.log(table);
       return table;
     },
 
@@ -937,11 +936,9 @@ const UIController = (function () {
       let commonZeroIndexes = [];
       let dataBuy = [];
       data.forEach(function (item, index) {
-        console.log(index);
         if (item >= 0) {
           dataBuy.push(Math.round(item));
         } else {
-          console.log(data[index], data[index - 1]);
           if (data[index - 1] && data[index - 1] >= 0) {
             commonZeroIndexes.push(index);
             // dataRent.push(0);
@@ -956,8 +953,6 @@ const UIController = (function () {
 
       let dataRent = [];
       data.forEach(function (item, index) {
-        console.log(index);
-        console.log(item);
         if (item < 0) {
           dataRent.push(Math.round(item));
         } else {
@@ -1051,7 +1046,6 @@ const UIController = (function () {
         return 0;
       });
 
-      console.log({ data, dataBuy, dataRent });
       const lineChart = new Chart(ctx, {
         type: "line",
         data: {
@@ -1176,10 +1170,8 @@ const UIController = (function () {
       let positive = false;
       input.forEach(function (data, index) {
         if (data.comparison < 0 && !positive) {
-          console.log(data.comparison);
           positive = true;
           bestYear = index;
-          console.log("Best Year", bestYear);
         }
       });
       let textMessage = `<b style="color:#88A3C8";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
@@ -1202,7 +1194,6 @@ const UIController = (function () {
     inputValidation: function (object) {
       //Get array with the name of all classes
       let classNames = Object.values(object).slice(1);
-      console.log(classNames);
 
       // Remove radio buttons from array
       radiosIndex = classNames.indexOf("input[name=gridRadios]:checked");
@@ -1211,7 +1202,6 @@ const UIController = (function () {
       // Remove 'is-invalid' for second run of results
       classNames.forEach(function (item) {
         item = item.replace(".", "");
-        console.log(item);
         if (document.getElementById(item).classList.length > 2) {
           document.getElementById(item).classList.remove("is-invalid");
         }
@@ -1315,7 +1305,6 @@ const controller = (function (UICtrl) {
     }
 
     const input = UICtrl.getInput();
-    console.log(input);
     const rentCase = Rent.RentingCase(input);
     const ownCase = Owning.OwningCase(input);
     const comparison = Comparison.selling(input);
