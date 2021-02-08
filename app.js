@@ -1172,11 +1172,9 @@ const UIController = (function () {
       let commonZeroIndexes = [];
       let dataBuy = [];
       data.forEach(function (item, index) {
-        console.log(index);
         if (item >= 0) {
           dataBuy.push(Math.round(item));
         } else {
-          console.log(data[index], data[index - 1]);
           if (data[index - 1] && data[index - 1] >= 0) {
             commonZeroIndexes.push(index);
             // dataRent.push(0);
@@ -1191,8 +1189,6 @@ const UIController = (function () {
 
       let dataRent = [];
       data.forEach(function (item, index) {
-        console.log(index);
-        console.log(item);
         if (item < 0) {
           dataRent.push(Math.round(item));
         } else {
@@ -1286,7 +1282,6 @@ const UIController = (function () {
         return 0;
       });
 
-      console.log({ data, dataBuy, dataRent });
       const lineChart = new Chart(ctx, {
         type: "line",
         data: {
@@ -1388,11 +1383,14 @@ const UIController = (function () {
           tooltips: {
             enabled: false,
             mode: "index",
-            callbacks: {
-              label: function (tooltipItems, data) {
-                return "$" + tooltipItems.yLabel;
-              },
-            },
+            // callbacks: {
+            //   label: function (tooltipItems, data) {
+            //     return "$" + tooltipItems.yLabel;
+            //   },
+            // },
+          },
+          hover: {
+            mode: null,
           },
         },
       });
@@ -1490,7 +1488,6 @@ const UIController = (function () {
         let key = item.htmlFor;
         if (key.includes("_five")) {
           key = key.replace("_five", "");
-          console.log("KEY2", key);
           object[item.htmlFor] = references[key];
         } else if (key.includes("_ten")) {
           key = key.replace("_ten", "");
@@ -1533,7 +1530,7 @@ const controller = (function (UICtrl) {
     });
   };
 
-  const removeElements = function (list) {
+  const eraseContent = function (list) {
     list.forEach(function (parent) {
       let parentElement = document.getElementById(parent);
       parentElement.innerHTML = "";
@@ -1543,15 +1540,16 @@ const controller = (function (UICtrl) {
   const ctrlAddItem = function () {
     const DOMstrings = UICtrl.getDOMstrings();
 
-    const validateInputs = UICtrl.inputValidation(DOMstrings);
-
-    removeElements([
+    eraseContent([
       "rent_wrapper",
       "buy_wrapper",
       "comparison_wrapper",
       "graph_wrapper",
       "text_result",
+      "emptyInputsMsg",
     ]);
+
+    const validateInputs = UICtrl.inputValidation(DOMstrings);
 
     if (!validateInputs) {
       return false;
