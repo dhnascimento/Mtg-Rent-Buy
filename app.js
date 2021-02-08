@@ -1153,11 +1153,11 @@ const UIController = (function () {
           tooltips: {
             enabled: false,
             mode: "index",
-            callbacks: {
-              label: function (tooltipItems, data) {
-                return "$" + tooltipItems.yLabel;
-              },
-            },
+            // callbacks: {
+            //   label: function (tooltipItems, data) {
+            //     return "$" + tooltipItems.yLabel;
+            //   },
+            // },
           },
         },
       });
