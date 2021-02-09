@@ -633,6 +633,28 @@ const Comparison = (function () {
                 (owner[factor]["houseValue"] -
                   owner[factor]["houseValue"] * input.commissionRate -
                   owner[factor]["mortgageBalance"]),
+          rentOnly:
+            factor === 0
+              ? rent[0]["investmentPortfolio"]
+              : -(
+                  rent[factor]["investmentPortfolio"] -
+                  rent[0]["investmentPortfolio"] -
+                  surplus
+                ) *
+                  investmentTaxRate +
+                rent[factor]["investmentPortfolio"],
+          buyOnly:
+            factor === 0
+              ? -(
+                  owner[0]["houseValue"] -
+                  owner[0]["houseValue"] * input.commissionRate -
+                  owner[0]["mortgageBalance"]
+                )
+              : -(
+                  owner[factor]["houseValue"] -
+                  owner[factor]["houseValue"] * input.commissionRate -
+                  owner[factor]["mortgageBalance"]
+                ),
         };
       });
       return table;
@@ -1402,14 +1424,13 @@ const UIController = (function () {
             
       `;
 
-      let bestYear;
-      let positive = false;
       input.forEach(function (data, index) {
         if (data.comparison < 0 && !positive) {
           positive = true;
           bestYear = index;
         }
       });
+
       let textMessage = `<b style="color:#88A3C8";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
 
       if (!bestYear) {
