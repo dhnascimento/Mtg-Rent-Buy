@@ -1375,7 +1375,6 @@ const controller = (function (UICtrl) {
       "buy_table",
       UICtrl.drawHtmlOwn(ownCase)
     );
-    document.getElementById("Mortgage-Payment-Graphics").style.display = "";
   };
 
   return {
