@@ -498,7 +498,7 @@ const Comparison = (function () {
             factor === 0
               ? rent[0]["investmentPortfolio"] -
                 (owner[0]["houseValue"] -
-                  owner[0]["houseValue"] * input.comissionRate -
+                  owner[0]["houseValue"] * input.commissionRate -
                   owner[0]["mortgageBalance"])
               : -(
                   (rent[factor]["investmentPortfolio"] -
@@ -508,8 +508,30 @@ const Comparison = (function () {
                 ) +
                 rent[factor]["investmentPortfolio"] -
                 (owner[factor]["houseValue"] -
-                  owner[factor]["houseValue"] * input.comissionRate -
+                  owner[factor]["houseValue"] * input.commissionRate -
                   owner[factor]["mortgageBalance"]),
+          rentOnly:
+            factor === 0
+              ? rent[0]["investmentPortfolio"]
+              : -(
+                  rent[factor]["investmentPortfolio"] -
+                  rent[0]["investmentPortfolio"] -
+                  surplus
+                ) *
+                  investmentTaxRate +
+                rent[factor]["investmentPortfolio"],
+          buyOnly:
+            factor === 0
+              ? -(
+                  owner[0]["houseValue"] -
+                  owner[0]["houseValue"] * input.commissionRate -
+                  owner[0]["mortgageBalance"]
+                )
+              : -(
+                  owner[factor]["houseValue"] -
+                  owner[factor]["houseValue"] * input.commissionRate -
+                  owner[factor]["mortgageBalance"]
+                ),
         };
       });
       return table;
@@ -531,7 +553,7 @@ const UIController = (function () {
     inputTitleInsurance: ".add__title_insurance", //
     inputLegalFees: ".add__legal_fees",
     inputHomeInspection: ".add__home_inspection", //
-    inputComissionRate: ".add__comission_rate",
+    inputCommissionRate: ".add__commission_rate",
     inputMaintenanceRate: ".add__maintenance_rate",
     inputPropertyTax: ".add__property_tax",
     inputHouseInsurance: ".add__house_insurance",
@@ -590,10 +612,10 @@ const UIController = (function () {
             .querySelector(DOMstrings.inputHomeInspection)
             .value.replace(/(?!\.)\D/g, "")
         ),
-        comissionRate:
+        commissionRate:
           parseFloat(
             document
-              .querySelector(DOMstrings.inputComissionRate)
+              .querySelector(DOMstrings.inputCommissionRate)
               .value.replace(/(?!\.)\D/g, "")
           ) / 100,
         maintenanceRate:
@@ -928,7 +950,13 @@ const UIController = (function () {
         return index;
       });
 
+      // Check which option is better in the whole timeframe
+      let rentOnly = 0;
+      let buyOnly = 0;
+
       const data = input.map(function (item) {
+        rentOnly += item.rentOnly;
+        buyOnly += item.buyOnly;
         return -Math.round(item.comparison);
       });
 
@@ -1002,8 +1030,10 @@ const UIController = (function () {
         }
       });
 
+      // If surplus is positive, rent better  in the long run
+      let setRadiusBuy = rentOnly + buyOnly > 0 ? false : true;
+
       // Change size of point for the first positive value (i.e. owning is better) and set radius size of all points
-      let setRadiusBuy = true;
       const customRadiusArrayBuy = dataBuyLine.map(function (item, index) {
         if (dataBuyLine[index + 1] > 0 && setRadiusBuy) {
           setRadiusBuy = false;
@@ -1168,15 +1198,22 @@ const UIController = (function () {
 
       let bestYear;
       let positive = false;
+
+      // Check which option is better in the whole timeframe
+      let rentOnly = 0;
+      let buyOnly = 0;
       input.forEach(function (data, index) {
         if (data.comparison < 0 && !positive) {
           positive = true;
           bestYear = index;
         }
+        rentOnly += data.rentOnly;
+        buyOnly += data.buyOnly;
       });
+
       let textMessage = `<b style="color:#88A3C8";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
 
-      if (!bestYear) {
+      if (!bestYear || rentOnly + buyOnly > 0) {
         textMessage = `<span style="color:#7FA092; font-weight:600";>Renting</span> is cheaper in the next ${
           input.length - 1
         } years`;
