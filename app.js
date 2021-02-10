@@ -1093,7 +1093,7 @@ const UIController = (function () {
             </div>
             <div id="collapse0Three" class="collapse" data-parent="#accordion2" style="">
                 <div class="card-body"> 
-                  <table class="table table-striped"  style="margin:auto; font-size:80%;">
+                <table class="table table-striped table-responsive"  style="font-size:90%;">
                     <thead>
                         <tr>
                           <th class="ng-binding">Year #</th>
@@ -1262,6 +1262,11 @@ const UIController = (function () {
 
       // Change size of point for the first positive value (i.e. owning is better) and set radius size of all points
       let setRadiusBuy = true;
+
+      // If buying is better only for a certain timeframe but not for the whole length of the schedule
+      if (data[data.length - 1] < 0) {
+        setRadiusBuy = false;
+      }
       const customRadiusArrayBuy = dataBuyLine.map(function (item, index) {
         if (dataBuyLine[index + 1] > 0 && setRadiusBuy) {
           setRadiusBuy = false;
@@ -1424,6 +1429,9 @@ const UIController = (function () {
             
       `;
 
+      let bestYear;
+      let positive = false;
+
       input.forEach(function (data, index) {
         if (data.comparison < 0 && !positive) {
           positive = true;
@@ -1433,7 +1441,7 @@ const UIController = (function () {
 
       let textMessage = `<b style="color:#88A3C8";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
 
-      if (!bestYear) {
+      if (!bestYear || input[input.length - 1]["comparison"] > 0) {
         textMessage = `<span style="color:#7FA092; font-weight:600";>Renting</span> is cheaper in the next ${
           input.length - 1
         } years`;
