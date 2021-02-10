@@ -856,7 +856,7 @@ const UIController = (function () {
             </div>
             <div id="collapse0Three" class="collapse" data-parent="#accordion2" style="">
                 <div class="card-body"> 
-                  <table class="table table-striped"  style="margin:auto; font-size:80%;">
+                  <table class="table table-striped table-responsive"  style="font-size:90%;">
                     <thead>
                         <tr>
                           <th class="ng-binding">Year #</th>
