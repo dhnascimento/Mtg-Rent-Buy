@@ -475,8 +475,6 @@ const Comparison = (function () {
       return table;
     },
 
-    //
-
     selling: function (input) {
       const years = [...Array(input.amortPeriod + 1).keys()];
       const currentYear = new Date().getFullYear();
@@ -950,13 +948,8 @@ const UIController = (function () {
         return index;
       });
 
-      // Check which option is better in the whole timeframe
-      let rentOnly = 0;
-      let buyOnly = 0;
-
+      // Change sign of the data series to plot the graph
       const data = input.map(function (item) {
-        rentOnly += item.rentOnly;
-        buyOnly += item.buyOnly;
         return -Math.round(item.comparison);
       });
 
@@ -1030,6 +1023,12 @@ const UIController = (function () {
 
       // Change size of point for the first positive value (i.e. owning is better) and set radius size of all points
       let setRadiusBuy = true;
+
+      // If buying is better only for a certain timeframe but not for the whole length of the schedule
+      if (data[data.length - 1] < 0) {
+        setRadiusBuy = false;
+      }
+
       const customRadiusArrayBuy = dataBuyLine.map(function (item, index) {
         if (dataBuyLine[index + 1] > 0 && setRadiusBuy) {
           setRadiusBuy = false;
@@ -1204,7 +1203,7 @@ const UIController = (function () {
 
       let textMessage = `<b style="color:#88A3C8";>Buying</b> is cheaper if you stay for <span style="color: #5DA10C; font-weight:600";>${bestYear} years</span> or longer. Otherwise, renting is cheaper`;
 
-      if (!bestYear) {
+      if (!bestYear || input[input.length - 1]["comparison"] > 0) {
         textMessage = `<span style="color:#7FA092; font-weight:600";>Renting</span> is cheaper in the next ${
           input.length - 1
         } years`;
