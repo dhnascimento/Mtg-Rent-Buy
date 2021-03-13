@@ -61,24 +61,24 @@
                 <div id="buyOrRentCalculatorOwn" class="collapse show">
                     <div class="card-body" id="owningCase">
                         <div class="row" novalidate>
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <label for="add__house_value">House Purchase Price</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">$</span>
                                     </div>
                                     <input type="text" class="add__house_value form-control" id="add__house_value" aria-label="Amount"
-                                        placeholder="Total Purchase Price of the Property" required>
+                                        placeholder="Total Purchase Price of the Property" value="510,000" required>
                                     <div class="invalid-feedback">
                                        Please enter a value.
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <label for="add__down_payment">Down Payment</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__down_payment form-control" id="add__down_payment" aria-label="Amount"
-                                        placeholder="Percentage of the property's value paid upfront" required>
+                                        placeholder="Percentage of the property's value paid upfront" value="10" required>
 
 
                                     <div class="input-group-append">
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <label for="add__amort_period">Amortization Period</label>
                                 <div class="input-group mb-3">
 
@@ -121,20 +121,20 @@
                                         <option label="22 years" type="number" value="22">22 years</option>
                                         <option label="23 years" type="number" value="23">23 years</option>
                                         <option label="24 years" type="number" value="24">24 years</option>
-                                        <option label="25 years" type="number" value="25">25 years</option>
+                                        <option label="25 years" type="number" value="25" selected>25 years</option>
                                         <option label="26 years" type="number" value="26">26 years</option>
                                         <option label="27 years" type="number" value="27">27 years</option>
                                         <option label="28 years" type="number" value="28">28 years</option>
                                         <option label="29 years" type="number" value="29">29 years</option>
-                                        <option label="30 years" type="number" value="30" selected>30 years</option>
+                                        <option label="30 years" type="number" value="30">30 years</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <label for="add__interest_rate">Interest Rate</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__interest_rate form-control" id="add__interest_rate" aria-label="Amount"
-                                        placeholder="Mortgage Interest Rate" required>
+                                        placeholder="Mortgage Interest Rate" value="3.49" required>
 
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <label for="add__title_insurance">Title Insurance</label>
                                 <div class="input-group mb-3">
                                     
@@ -167,13 +167,13 @@
 
                                     <input type="text" class="add__title_insurance form-control" id="add__title_insurance" aria-label="Amount"
                                         placeholder="Insurance policy that protects residential or commercial property owners and their lenders against losses related to the property's title or ownership"
-                                        required>
+                                        value="250" required>
                                         <div class="invalid-feedback">
                                             Please enter a value.
                                           </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <label for="add__legal_fees">Legal Fees</label>
                                 <div class="input-group mb-3">
                                    
@@ -182,13 +182,13 @@
                                     </div>
         
                                     <input type="text" class="add__legal_fees form-control" id="add__legal_fees" aria-label="Amount"
-                                        placeholder="Legal fees including disbursments" required>
+                                        placeholder="Legal fees including disbursments" value="1500" required>
                                         <div class="invalid-feedback">
                                             Please enter a value.
                                           </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <label for="add__home_inspection">Home Inspection</label>
                                 <div class="input-group mb-3">
                                    
@@ -197,7 +197,7 @@
                                     </div>
         
                                     <input type="text" class="add__home_inspection form-control" id="add__home_inspection" aria-label="Amount"
-                                        placeholder="Home Inspection Cost" required>
+                                        placeholder="Home Inspection Cost" value="400" required>
                                         <div class="invalid-feedback">
                                             Please enter a value.
                                           </div>
@@ -206,11 +206,11 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-12 col-lg-2">
                                 <label for="add__commission_rate">Commission</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__commission_rate form-control" id="add__commission_rate" aria-label="Amount"
-                                        placeholder="Commission on Sale" required>
+                                        placeholder="Commission on Sale" value="6.00" required>
 
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -220,12 +220,12 @@
                                       </div>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-12 col-lg-2">
                                 <label for="add__maintenance_rate">Maintenance</label>
                                 <div class="input-group mb-3">
                                    
                                     <input type="text" class="add__maintenance_rate form-control" id="add__maintenance_rate" aria-label="Amount"
-                                        placeholder="Maintenance Costs as a Percentage of the House Value" required>
+                                        placeholder="Maintenance Costs as a Percentage of the House Value" value="1.10" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -235,11 +235,11 @@
                                       </div>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-12 col-lg-2">
                                 <label for="add__property_tax">Property Tax</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__property_tax form-control" id="add__property_tax" aria-label="Amount"
-                                        placeholder="Property Tax Rate" required>
+                                        placeholder="Property Tax Rate" value="0.86" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -249,12 +249,12 @@
                                       </div>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-12 col-lg-2">
                                 <label for="add__house_insurance">Insurance</label>
                                 <div class="input-group mb-3">
                                    
                                     <input type="text" class="add__house_insurance form-control" id="add__house_insurance" aria-label="Amount"
-                                        placeholder="House Insurance Premium" required>
+                                        placeholder="House Insurance Premium" value="0.23" required>
         
                                     <div class="input-group-append">
                                         <span class="input-group-text">%</span>
@@ -264,11 +264,11 @@
                                       </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <label for="add__appreciation_rate">House Appreciation Rate</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="add__appreciation_rate form-control" id="add__appreciation_rate" aria-label="Amount"
-                                        placeholder="Property's Value Yearly Appreciation Rate" required>
+                                        placeholder="Property's Value Yearly Appreciation Rate" value="2.00" required>
                                         
                                         <div class="input-group-append">
                                             <span class="input-group-text">%</span>
@@ -293,24 +293,24 @@
                         <div id="buyOrRentCalculatorRent" class="collapse show">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-6">
                                         <label for="add__rent_value">Initial Monthly Rent</label>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">$</span>
                                             </div>
                                             <input type="text" class="add__rent_value form-control" id="add__rent_value" aria-label="Amount"
-                                                placeholder="Value Paid Monthly for the Rent" required>
+                                                placeholder="Value Paid Monthly for the Rent" value="2,100" required>
                                                 <div class="invalid-feedback">
                                                     Please enter a value.
                                                 </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-6">
                                         <label for="add__investment_returns">Investment Returns</label>
                                         <div class="input-group mb-3">
                                             <input type="text" class="add__investment_returns form-control" id="add__investment_returns" aria-label="Amount"
-                                                placeholder="Estimated Investiment Returns for All Years" required> 
+                                                placeholder="Estimated Investiment Returns for All Years" value="7.00" required> 
                                             <div class="input-group-append">
                                                 <span class="input-group-text">%</span>
                                             </div>
@@ -321,11 +321,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-6">
                                         <label for="add__cpi_rate">CPI Rate Increase</label>
                                         <div class="input-group mb-3">
                                             <input type="text" class="add__cpi_rate form-control" id="add__cpi_rate" aria-label="Amount"
-                                                placeholder="Customer Price Index Increase for All Years" required>
+                                                placeholder="Customer Price Index Increase for All Years" value="2.00" required>
                                             <div class="input-group-append">
                                                 <span class="input-group-text">%</span>
                                             </div>
@@ -334,11 +334,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-6">
                                         <label for="add__renters_insurance">Renters Insurance</label>
                                         <div class="input-group mb-3">
                                             <input type="text" class="add__renters_insurance form-control" id="add__renters_insurance" aria-label="Amount"
-                                                placeholder="Percentage of the property's value" required>
+                                                placeholder="Percentage of the property's value" value="1.00" required>
                                             <div class="input-group-append">
                                                 <span class="input-group-text">%</span>
                                             </div>
@@ -357,7 +357,7 @@
                 <div style="text-align: center; margin-bottom:10px">
                     <button class="btn btn-primary mr-2 add__btn">Should I Rent or Buy?</button>
                     <div id='emptyInputsMsg'></div>
-                        <div class="row">
+                        <div class="row" id="resultRow" style="height: 0;">
                             <div id="graph_wrapper" class="col-sm-7">
                                 <canvas id="comparison_chart"></canvas>
                             </div>

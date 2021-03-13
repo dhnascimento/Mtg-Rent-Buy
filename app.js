@@ -856,21 +856,22 @@ const UIController = (function () {
             </div>
             <div id="collapse0Three" class="collapse" data-parent="#accordion2" style="">
                 <div class="card-body"> 
-                  <table class="table table-striped table-responsive"  style="font-size:90%;">
-                    <thead>
-                        <tr>
-                          <th class="ng-binding">Year #</th>
-                          <th>Mortgage</th>
-                          <th>Maintenance</th>
-                          <th>Property Tax</th>
-                          <th>Insurance</th>
-                          <th>Cash Outlay</th>
-                          <th>Mortgage Balance</th>
-                          <th>House Value</th>
-                          <th>Owner's Equity</th>
-                        </tr>
-                    </thead>
-                  <tbody>`;
+                  <div class="table-responsive">
+                    <table class="table table-striped"  style="font-size:90%;">
+                      <thead>
+                          <tr>
+                            <th class="ng-binding">Year #</th>
+                            <th>Mortgage</th>
+                            <th>Maintenance</th>
+                            <th>Property Tax</th>
+                            <th>Insurance</th>
+                            <th>Cash Outlay</th>
+                            <th>Mortgage Balance</th>
+                            <th>House Value</th>
+                            <th>Owner's Equity</th>
+                          </tr>
+                      </thead>
+                    <tbody>`;
 
       input.forEach(function (entry) {
         html += `
@@ -918,6 +919,7 @@ const UIController = (function () {
                     </div>
                 </div>
             </div>
+          </div>
                 `;
 
       return html;
@@ -1337,6 +1339,8 @@ const controller = (function (UICtrl) {
     const comparison = Comparison.selling(input);
 
     UICtrl.addElement("graph_wrapper", "canvas", "comparison_chart", "", true);
+    // Add height to div that holds the graph and the result text
+    document.getElementById("resultRow").style.height = "100%";
     UICtrl.addComparisonChart(comparison);
 
     UICtrl.addElement(
